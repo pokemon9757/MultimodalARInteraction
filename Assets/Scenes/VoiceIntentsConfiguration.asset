@@ -15,10 +15,21 @@ MonoBehaviour:
   AllVoiceIntents: []
   VoiceCommandsToAdd:
   - Id: 101
-    Value: Enable Gaze
+    Value: Unity Test
   - Id: 102
-    Value: Disable Gaze
+    Value: Hello Friend | Hello Buddy
   - Id: 103
-    Value: Create
-  AutoAllowAllSystemIntents: 1
+    Value: Slot Test for ({Shape}|{Color})
+  AutoAllowAllSystemIntents: 0
   SystemCommands: 2008
+  SlotsForVoiceCommands:
+  - name: Shape
+    values:
+    - Square
+    - Circle
+    - Triangle
+  - name: Color
+    values:
+    - Red
+    - Green
+    - Blue

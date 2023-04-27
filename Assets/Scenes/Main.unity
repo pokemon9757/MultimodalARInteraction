@@ -902,8 +902,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   leftEyeTextStatic: {fileID: 999243289}
-  rightEyeTextStatic: {fileID: 0}
-  bothEyesTextStatic: {fileID: 249324152}
+  rightEyeTextStatic: {fileID: 249324152}
+  bothEyesTextStatic: {fileID: 407641396}
   eyesFixationPoint: {fileID: 2076253347}
 --- !u!1 &461603034
 GameObject:
@@ -3840,7 +3840,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca80b992a5a043a4f8f92b36b527d822, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _voiceConfiguration: {fileID: 11400000, guid: 941e8dd446f9ffd4da913ebbb26a3580,
+  _voiceConfiguration: {fileID: 11400000, guid: f65bb31972c66d24a9f09aa52758eff9,
     type: 2}
 --- !u!1 &2057055795
 GameObject:

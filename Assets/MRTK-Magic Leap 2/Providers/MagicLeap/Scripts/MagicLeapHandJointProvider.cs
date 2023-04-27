@@ -13,13 +13,12 @@ using Microsoft.MixedReality.Toolkit;
 using Microsoft.MixedReality.Toolkit.Utilities;
 using UnityEngine;
 using UnityEngine.XR;
-using Mono.Cecil.Cil;
 using UnityEngine.XR.MagicLeap;
 using HandGestures = UnityEngine.XR.MagicLeap.InputSubsystem.Extensions.DeviceFeatureUsages.HandGesture;
 
 namespace MagicLeap.MRTK.DeviceManagement.Input
 {
-    public class MagicLeapHandJointProvider 
+    public class MagicLeapHandJointProvider
     {
         public Dictionary<TrackedHandJoint, MixedRealityPose> JointPoses;
 
@@ -156,9 +155,9 @@ namespace MagicLeap.MRTK.DeviceManagement.Input
             UpdateFingerBones(hand, HandFinger.Ring, keyPointsMask, ref this._ringFingerBones);
 
             UpdateFingerBones(hand, HandFinger.Pinky, keyPointsMask, ref this._pinkyFingerBones);
-          
+
             UpdateWristPosition(device);
-            UpdatePalmPose(device,gestureDevice);
+            UpdatePalmPose(device, gestureDevice);
         }
 
         private void UpdateWristPosition(InputDevice hand)
