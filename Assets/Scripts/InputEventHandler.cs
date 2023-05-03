@@ -8,6 +8,12 @@ namespace MMI
     using GestureClassification = InputSubsystem.Extensions.MLGestureClassification;
     public class InputEventHandler : MonoBehaviour
     {
+        public enum VoiceActions
+        {
+            Greetings = 0,
+            Create = 1,
+            ChangeColor = 2
+        }
         [SerializeField] GestureTracking _gestureTracking;
         [SerializeField] EyeTracking _eyeTracking;
         [SerializeField] VoiceIntents _voiceItents;
@@ -36,13 +42,18 @@ namespace MMI
         void OnCommandDetected(in bool wasSuccessful, in MLVoice.IntentEvent voiceEvent)
         {
             Debug.Log("Detected Voice Command : " + voiceEvent.EventName);
-            switch (voiceEvent.EventName)
+            switch ((VoiceActions)voiceEvent.EventID)
             {
-                case "Create":
+                case VoiceActions.Greetings:
+
+
+                    break;
+                case VoiceActions.Create:
                     GameObject test = GameObject.CreatePrimitive(PrimitiveType.Cube);
                     test.transform.position = _eyeTracking.EyesFixationPoint;
                     test.transform.localScale = Vector3.one;
-
+                    break;
+                case VoiceActions.ChangeColor:
                     break;
             }
 
