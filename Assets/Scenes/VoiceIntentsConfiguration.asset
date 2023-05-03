@@ -12,14 +12,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71122c582b923f04ab4f88f548a59fce, type: 3}
   m_Name: VoiceIntentsConfiguration
   m_EditorClassIdentifier: 
-  AllVoiceIntents: []
+  AllVoiceIntents:
+  - name: UnityApp_VoiceIntent_ID101
+    id: 101
+    value: Unity Test
+  - name: UnityApp_VoiceIntent_ID102
+    id: 102
+    value: Hello Friend | Hello Buddy
+  - name: UnityApp_VoiceIntent_ID103
+    id: 103
+    value: Slot Test for ({Shape}|{Color})
   VoiceCommandsToAdd:
-  - Id: 101
-    Value: Unity Test
-  - Id: 102
-    Value: Hello Friend | Hello Buddy
-  - Id: 103
-    Value: Slot Test for ({Shape}|{Color})
+  - Id: 0
+    Value: '[Hi|Hello there?] | Greetings'
+  - Id: 1
+    Value: 'Create [a? {Color}]? {Shape} '
+  - Id: 2
+    Value: Set [that|this|it]? color? to {Color}
   AutoAllowAllSystemIntents: 0
   SystemCommands: 2008
   SlotsForVoiceCommands:
