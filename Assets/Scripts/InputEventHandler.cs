@@ -18,10 +18,7 @@ namespace MMI
         [SerializeField] GestureTracking _gestureTracking;
         [SerializeField] EyeTracking _eyeTracking;
         [SerializeField] VoiceIntents _voiceItents;
-
-        [Header("Game action handlers")]
-        [SerializeField] GameActionHandler _handler;
-
+        GameActionHandler _handler;
 
         [Header("Create action parameters")]
         [SerializeField] Vector3 _initialScale;
@@ -36,6 +33,7 @@ namespace MMI
             _eyeTracking.Init();
             _gestureTracking.Init();
             _gestureTracking.OnGestureDetected += OnGestureDetected;
+            _handler = new GameActionHandler();
         }
 
         void Update()

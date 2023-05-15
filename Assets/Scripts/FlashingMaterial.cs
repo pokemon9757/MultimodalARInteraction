@@ -5,55 +5,55 @@ namespace MMI
 {
     public class FlashingMaterial : MonoBehaviour
     {
-        public bool Active = false;
-        [SerializeField] float minIntensity = -0.5f;
-        [SerializeField] float maxIntensity = 1.5f;
-        [SerializeField] float transitionTime = 2f;
-        float timer = 0f;
-        bool tweeningForward = true;
-        Dictionary<MeshRenderer, Color> renderersColors = new Dictionary<MeshRenderer, Color>();
+        public bool IsActive = false;
+        [SerializeField] float _minIntensity = -0.5f;
+        [SerializeField] float _maxIntensity = 1.5f;
+        [SerializeField] float _transitionTime = 2f;
+        float _timer = 0f;
+        bool _tweeningForward = true;
+        Dictionary<MeshRenderer, Color> _renderersColors = new Dictionary<MeshRenderer, Color>();
 
         // Start is called before the first frame update
         void Start()
         {
             foreach (MeshRenderer m in GetComponentsInChildren<MeshRenderer>())
             {
-                renderersColors[m] = m.material.color;
+                _renderersColors[m] = m.material.color;
             }
         }
 
         // Update is called once per frame
         void Update()
         {
-            if (Active)
+            if (IsActive)
             {
-                foreach (KeyValuePair<MeshRenderer, Color> entry in renderersColors)
+                foreach (KeyValuePair<MeshRenderer, Color> entry in _renderersColors)
                 {
-                    float emissiveIntensity = Mathf.Lerp(minIntensity, maxIntensity, (float)timer / transitionTime);
+                    float emissiveIntensity = Mathf.Lerp(_minIntensity, _maxIntensity, (float)_timer / _transitionTime);
                     entry.Key.material.color = entry.Value * emissiveIntensity;
                     entry.Key.material.SetColor("_EmissionColor", entry.Value * emissiveIntensity);
                 }
-                timer += tweeningForward ? Time.deltaTime : -Time.deltaTime;
-                if (timer <= 0 || timer >= transitionTime)
+                _timer += _tweeningForward ? Time.deltaTime : -Time.deltaTime;
+                if (_timer <= 0 || _timer >= _transitionTime)
                 {
-                    timer = timer <= 0 ? 0 : transitionTime;
-                    tweeningForward = !tweeningForward;
+                    _timer = _timer <= 0 ? 0 : _transitionTime;
+                    _tweeningForward = !_tweeningForward;
                 }
             }
         }
 
         public void EnableFlashing(bool active)
         {
-            if (!Active)
+            if (!IsActive)
             {
                 foreach (MeshRenderer m in GetComponentsInChildren<MeshRenderer>())
                 {
-                    renderersColors[m] = m.material.color;
+                    _renderersColors[m] = m.material.color;
                 }
             }
-            Active = active;
+            IsActive = active;
             if (!active)
-                foreach (KeyValuePair<MeshRenderer, Color> entry in renderersColors)
+                foreach (KeyValuePair<MeshRenderer, Color> entry in _renderersColors)
                 {
                     entry.Key.material.color = entry.Value;
                     entry.Key.material.SetColor("_EmissionColor", entry.Value);

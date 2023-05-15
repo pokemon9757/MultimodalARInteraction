@@ -1,9 +1,7 @@
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 namespace MMI
 {
-    public class GameActionHandler : MonoBehaviour
+    public class GameActionHandler
     {
         Stack<IGameAction> _actionsList = new();
 

@@ -7,11 +7,11 @@ namespace MMI
     [RequireComponent(typeof(Rigidbody), typeof(XRGrabInteractable), typeof(FlashingMaterial))]
     public class InteractableObject : MonoBehaviour
     {
-        private MeshRenderer[] renderers;
-        private FlashingMaterial flashing;
-        private XRGrabInteractable grab;
-        private Rigidbody rb;
-        private bool initialized = false;
+        private MeshRenderer[] _renderers;
+        private FlashingMaterial _materialFlash;
+        private XRGrabInteractable _grab;
+        private Rigidbody _rb;
+        private bool _isInitialized = false;
 
         void Start()
         {
@@ -20,14 +20,14 @@ namespace MMI
 
         public void Init()
         {
-            if (initialized) return;
-            initialized = true;
-            renderers = gameObject.GetComponentsInChildren<MeshRenderer>();
-            flashing = GetComponent<FlashingMaterial>();
-            grab = GetComponent<XRGrabInteractable>();
-            rb = GetComponent<Rigidbody>();
-            rb.isKinematic = true;
-            grab.enabled = false;
+            if (_isInitialized) return;
+            _isInitialized = true;
+            _renderers = gameObject.GetComponentsInChildren<MeshRenderer>();
+            _materialFlash = GetComponent<FlashingMaterial>();
+            _grab = GetComponent<XRGrabInteractable>();
+            _rb = GetComponent<Rigidbody>();
+            _rb.isKinematic = true;
+            _grab.enabled = false;
         }
 
         void OnTriggerEnter(Collider other)
@@ -50,7 +50,7 @@ namespace MMI
 
         public void UpdateColor(Color c)
         {
-            foreach (Renderer r in renderers)
+            foreach (Renderer r in _renderers)
             {
                 r.material.color = c;
                 r.material.SetColor("_EmissionColor", c);
@@ -59,8 +59,8 @@ namespace MMI
 
         public void SetSelected(bool active)
         {
-            flashing.EnableFlashing(active);
-            grab.enabled = active;
+            _materialFlash.EnableFlashing(active);
+            _grab.enabled = active;
         }
 
         void OnDestroy()

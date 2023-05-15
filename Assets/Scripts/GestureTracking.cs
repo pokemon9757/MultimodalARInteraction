@@ -20,9 +20,9 @@ namespace MMI
 
         [SerializeField, Tooltip("The text used to display status information for the example.")]
         private Text statusText = null;
-        private string statusStringBuilder = "Starting Tracking...";
-        private InputDevice leftHandDevice;
-        private InputDevice rightHandDevice;
+        private string _statusStringBuilder = "Starting Tracking...";
+        private InputDevice _leftHandDevice;
+        private InputDevice _rightHandDevice;
 
         [SerializeField] GestureClassification.KeyPoseType[] _trackedKeyPose;
         [SerializeField] GestureClassification.PostureType[] _trackedPostureType;
@@ -60,7 +60,7 @@ namespace MMI
         }
         public void ProcessAbility()
         {
-            if (!leftHandDevice.isValid || !rightHandDevice.isValid)
+            if (!_leftHandDevice.isValid || !_rightHandDevice.isValid)
             {
                 List<InputDevice> foundDevices = new List<InputDevice>();
                 InputDevices.GetDevices(foundDevices);
@@ -69,17 +69,17 @@ namespace MMI
                 {
                     if (device.name == GestureClassification.LeftGestureInputDeviceName)
                     {
-                        leftHandDevice = device;
+                        _leftHandDevice = device;
                         continue;
                     }
 
                     if (device.name == GestureClassification.RightGestureInputDeviceName)
                     {
-                        rightHandDevice = device;
+                        _rightHandDevice = device;
                         continue;
                     }
 
-                    if (leftHandDevice.isValid && rightHandDevice.isValid)
+                    if (_leftHandDevice.isValid && _rightHandDevice.isValid)
                     {
                         break;
                     }
@@ -88,51 +88,51 @@ namespace MMI
             }
 
             // Check Enabled Status - Confirms a valid Handle, so only need to check one hand
-            leftHandDevice.TryGetFeatureValue(HandGestures.GesturesEnabled, out bool leftEnableCheck);
+            _leftHandDevice.TryGetFeatureValue(HandGestures.GesturesEnabled, out bool leftEnableCheck);
 
-            statusStringBuilder = "Gesture Tracking Enabled: " + leftEnableCheck.ToString();
+            _statusStringBuilder = "Gesture Tracking Enabled: " + leftEnableCheck.ToString();
 
             if (leftEnableCheck)
             {
                 // Hand Transforms
-                leftHandDevice.TryGetFeatureValue(HandGestures.GestureTransformPosition, out Vector3 leftPos);
-                leftHandDevice.TryGetFeatureValue(HandGestures.GestureTransformRotation, out Quaternion leftRot);
+                _leftHandDevice.TryGetFeatureValue(HandGestures.GestureTransformPosition, out Vector3 leftPos);
+                _leftHandDevice.TryGetFeatureValue(HandGestures.GestureTransformRotation, out Quaternion leftRot);
 
                 LeftTransform.localPosition = leftPos;
                 LeftTransform.localRotation = leftRot;
 
-                rightHandDevice.TryGetFeatureValue(HandGestures.GestureTransformPosition, out Vector3 rightPos);
-                rightHandDevice.TryGetFeatureValue(HandGestures.GestureTransformRotation, out Quaternion rightRot);
+                _rightHandDevice.TryGetFeatureValue(HandGestures.GestureTransformPosition, out Vector3 rightPos);
+                _rightHandDevice.TryGetFeatureValue(HandGestures.GestureTransformRotation, out Quaternion rightRot);
 
                 RightTransform.localPosition = rightPos;
                 RightTransform.localRotation = rightRot;
 
                 // Interaction Points
-                leftHandDevice.TryGetFeatureValue(HandGestures.GestureInteractionPosition, out Vector3 leftIntPos);
-                leftHandDevice.TryGetFeatureValue(HandGestures.GestureInteractionRotation, out Quaternion leftIntRot);
+                _leftHandDevice.TryGetFeatureValue(HandGestures.GestureInteractionPosition, out Vector3 leftIntPos);
+                _leftHandDevice.TryGetFeatureValue(HandGestures.GestureInteractionRotation, out Quaternion leftIntRot);
 
                 LeftInteractionPoint.localPosition = leftIntPos;
                 LeftInteractionPoint.localRotation = leftIntRot;
 
-                rightHandDevice.TryGetFeatureValue(HandGestures.GestureInteractionPosition, out Vector3 rightIntPos);
-                rightHandDevice.TryGetFeatureValue(HandGestures.GestureInteractionRotation, out Quaternion rightIntRot);
+                _rightHandDevice.TryGetFeatureValue(HandGestures.GestureInteractionPosition, out Vector3 rightIntPos);
+                _rightHandDevice.TryGetFeatureValue(HandGestures.GestureInteractionRotation, out Quaternion rightIntRot);
 
                 RightInteractionPoint.localPosition = rightIntPos;
                 RightInteractionPoint.localRotation = rightIntRot;
 
                 // Posture
-                GestureClassification.TryGetHandPosture(leftHandDevice, out GestureClassification.PostureType leftPosture);
-                GestureClassification.TryGetHandPosture(rightHandDevice, out GestureClassification.PostureType rightPosture);
+                GestureClassification.TryGetHandPosture(_leftHandDevice, out GestureClassification.PostureType leftPosture);
+                GestureClassification.TryGetHandPosture(_rightHandDevice, out GestureClassification.PostureType rightPosture);
 
-                statusStringBuilder += "\n\n<color=#B7B7B8><b>Left Posture</b></color>: " + leftPosture.ToString();
-                statusStringBuilder += "\n<color=#B7B7B8><b>Right Posture</b></color>: " + rightPosture.ToString();
+                _statusStringBuilder += "\n\n<color=#B7B7B8><b>Left Posture</b></color>: " + leftPosture.ToString();
+                _statusStringBuilder += "\n<color=#B7B7B8><b>Right Posture</b></color>: " + rightPosture.ToString();
 
                 // KeyPose
-                GestureClassification.TryGetHandKeyPose(leftHandDevice, out GestureClassification.KeyPoseType leftKeyPose);
-                GestureClassification.TryGetHandKeyPose(rightHandDevice, out GestureClassification.KeyPoseType rightKeyPose);
+                GestureClassification.TryGetHandKeyPose(_leftHandDevice, out GestureClassification.KeyPoseType leftKeyPose);
+                GestureClassification.TryGetHandKeyPose(_rightHandDevice, out GestureClassification.KeyPoseType rightKeyPose);
 
-                statusStringBuilder += "\n\n<color=#B7B7B8><b>Left KeyPose</b></color>: " + leftKeyPose.ToString();
-                statusStringBuilder += "\n<color=#B7B7B8><b>Right KeyPose</b></color>: " + rightKeyPose.ToString();
+                _statusStringBuilder += "\n\n<color=#B7B7B8><b>Left KeyPose</b></color>: " + leftKeyPose.ToString();
+                _statusStringBuilder += "\n<color=#B7B7B8><b>Right KeyPose</b></color>: " + rightKeyPose.ToString();
 
                 if (_trackedKeyPoseDict.ContainsKey(rightKeyPose) || _trackedPostureTypeDict.ContainsKey(rightPosture))
                 {
@@ -144,7 +144,7 @@ namespace MMI
 
         private void UpdateStatus()
         {
-            statusText.text = $"<color=#B7B7B8><b>Gesture Tracking Data</b></color>\n{statusStringBuilder}";
+            statusText.text = $"<color=#B7B7B8><b>Gesture Tracking Data</b></color>\n{_statusStringBuilder}";
         }
 
     }
