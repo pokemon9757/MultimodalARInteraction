@@ -11,7 +11,7 @@ namespace MMI
     using HandGestures = InputSubsystem.Extensions.DeviceFeatureUsages.HandGesture;
     using GestureClassification = InputSubsystem.Extensions.MLGestureClassification;
 
-    public class GestureTracking : MonoBehaviour, ITrackingAbility
+    public class GestureTracking : MonoBehaviour
     {
         public Transform LeftTransform;
         public Transform RightTransform;
@@ -140,10 +140,6 @@ namespace MMI
                 }
             }
             UpdateStatus();
-        }
-        public void SetDebugElementsActive(bool active)
-        {
-            throw new System.NotImplementedException();
         }
 
         private void UpdateStatus()

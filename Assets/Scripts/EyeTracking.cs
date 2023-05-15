@@ -13,7 +13,7 @@ namespace MMI
     /// <summary>
     /// Behaviour that moves object to fixation point position.
     /// </summary>
-    public class EyeTracking : MonoBehaviour, ITrackingAbility
+    public class EyeTracking : MonoBehaviour
     {
         [SerializeField, Tooltip("Left Eye Statistic Panel")]
         private Text leftEyeTextStatic;
@@ -43,7 +43,8 @@ namespace MMI
         // Was EyeTracking permission granted by user
         private bool permissionGranted = false;
         private readonly MLPermissions.Callbacks permissionCallbacks = new MLPermissions.Callbacks();
-
+        [SerializeField] bool isDebugActive = true;
+        [SerializeField] GameObject debugGameObjects;
         private void Awake()
         {
             permissionCallbacks.OnPermissionGranted += OnPermissionGranted;
@@ -57,6 +58,7 @@ namespace MMI
             mlInputs.Enable();
 
             MLPermissions.RequestPermission(MLPermission.EyeTracking, permissionCallbacks);
+            SetDebugElementsActive();
         }
 
         public void ProcessAbility()
@@ -142,9 +144,15 @@ namespace MMI
             permissionGranted = true;
         }
 
-        public void SetDebugElementsActive(bool active)
+        public void ToggleDebugElements()
         {
-            throw new NotImplementedException();
+            isDebugActive = !isDebugActive;
+            SetDebugElementsActive();
+        }
+
+        void SetDebugElementsActive()
+        {
+            debugGameObjects.SetActive(isDebugActive);
         }
     }
 }

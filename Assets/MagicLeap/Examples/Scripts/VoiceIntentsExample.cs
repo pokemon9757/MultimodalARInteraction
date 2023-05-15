@@ -30,7 +30,7 @@ public class VoiceIntentsExample : MonoBehaviour
 
     [SerializeField, Tooltip("Popup canvas to alert the user of error when Voice Input settings aren't enabled.")]
     private GameObject voiceInputErrorPopup;
-    
+
     private static bool userPromptedForSetting;
 
     private readonly MLPermissions.Callbacks permissionCallbacks = new MLPermissions.Callbacks();
@@ -172,7 +172,7 @@ public class VoiceIntentsExample : MonoBehaviour
         strBuilder.Append($"Event Unique Id: <i>{voiceEvent.EventID}</i>\n");
 
         strBuilder.Append($"Slots Used:\n");
-        strBuilder.AppendJoin("\n",voiceEvent.EventSlotsUsed.Select(v => $"Name: {v.SlotName} - Value: {v.SlotValue}"));
+        strBuilder.AppendJoin("\n", voiceEvent.EventSlotsUsed.Select(v => $"Name: {v.SlotName} - Value: {v.SlotValue}"));
 
         lastResults = strBuilder.ToString();
     }

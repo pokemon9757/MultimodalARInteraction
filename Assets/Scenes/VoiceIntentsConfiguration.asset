@@ -34,9 +34,9 @@ MonoBehaviour:
   SlotsForVoiceCommands:
   - name: Shape
     values:
-    - Square
-    - Circle
-    - Triangle
+    - Cube
+    - Sphere
+    - Capsule
   - name: Color
     values:
     - Red

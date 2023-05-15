@@ -8,29 +8,42 @@ namespace MMI
     using GestureClassification = InputSubsystem.Extensions.MLGestureClassification;
     public class InputEventHandler : MonoBehaviour
     {
-        public enum VoiceActions
+        private enum VoiceActions
         {
             Greetings = 0,
             Create = 1,
             ChangeColor = 2
         }
+        [Header("Input modals")]
         [SerializeField] GestureTracking _gestureTracking;
         [SerializeField] EyeTracking _eyeTracking;
         [SerializeField] VoiceIntents _voiceItents;
 
+        [Header("Game action handlers")]
+        [SerializeField] GameActionHandler _handler;
+
+
+        [Header("Create action parameters")]
+        [SerializeField] Vector3 _initialScale;
+        [SerializeField] Material _initialMaterial;
+
         void Start()
         {
-            _eyeTracking.Init();
+#if !UNITY_EDITOR
             _voiceItents.Init();
             MLVoice.OnVoiceEvent += OnCommandDetected;
+#endif
+            _eyeTracking.Init();
             _gestureTracking.Init();
             _gestureTracking.OnGestureDetected += OnGestureDetected;
         }
 
         void Update()
         {
-            _eyeTracking.ProcessAbility();
+#if !UNITY_EDITOR
             _voiceItents.ProcessAbility();
+#endif
+            _eyeTracking.ProcessAbility();
             _gestureTracking.ProcessAbility();
         }
 
@@ -41,22 +54,37 @@ namespace MMI
 
         void OnCommandDetected(in bool wasSuccessful, in MLVoice.IntentEvent voiceEvent)
         {
-            Debug.Log("Detected Voice Command : " + voiceEvent.EventName);
             switch ((VoiceActions)voiceEvent.EventID)
             {
                 case VoiceActions.Greetings:
-
-
                     break;
                 case VoiceActions.Create:
-                    GameObject test = GameObject.CreatePrimitive(PrimitiveType.Cube);
-                    test.transform.position = _eyeTracking.EyesFixationPoint;
-                    test.transform.localScale = Vector3.one;
+                    string shapeName = "";
+                    string colorName = "grey";
+                    foreach (MLVoice.EventSlot slot in voiceEvent.EventSlotsUsed)
+                    {
+                        if (slot.SlotName == "Shape")
+                            shapeName = slot.SlotValue;
+                        else if (slot.SlotName == "Color")
+                            colorName = slot.SlotValue;
+                    }
+                    CreateObject(shapeName, colorName);
                     break;
                 case VoiceActions.ChangeColor:
                     break;
             }
-
         }
+
+        void CreateObject(string shapeName, string colorName)
+        {
+            _handler.AddGameAction(new CreateObjectAction(_eyeTracking.EyesFixationPoint, _initialScale, _initialMaterial, colorName, shapeName));
+        }
+
+        #region Debug UI Functions
+        public void CreateCube()
+        {
+            CreateObject("cube", "blue");
+        }
+        #endregion
     }
 }

@@ -146,7 +146,7 @@ namespace UnityEngine.XR.MagicLeap
         /// <summary>
         /// This callback will be invoked whenever a voice intent event is detected.
         /// </summary>
-        /// /// <param name="wasSuccessful">Voice event handling result. In case of false, voiceEvent member variables should be ignored. (voiceEvent.EventName will be NULL)</param>
+        /// <param name="wasSuccessful">Voice event handling result. In case of false, voiceEvent member variables should be ignored. (voiceEvent.EventName will be NULL)</param>
         /// <param name="voiceEvent">Voice intent event.</param>
         public delegate void OnVoiceEventDelegate(in bool wasSuccessful, in IntentEvent voiceEvent);
 

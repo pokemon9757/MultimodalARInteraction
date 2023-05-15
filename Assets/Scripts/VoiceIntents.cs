@@ -8,77 +8,74 @@ using UnityEngine.UI;
 using UnityEngine.XR.MagicLeap;
 namespace MMI
 {
-    public class VoiceIntents : MonoBehaviour, ITrackingAbility
+    public class VoiceIntents : MonoBehaviour
     {
         [SerializeField, Tooltip("The text used to display status information for the example.")]
         private Text _statusText = null;
 
         [SerializeField, Tooltip("The text used to display input controls for the example.")]
-        private Text controlsText = null;
+        private Text _controlsText = null;
 
         [SerializeField, Tooltip("The configuration file that holds the list of intents used for this application.")]
-        private MLVoiceIntentsConfiguration voiceConfiguration;
+        private MLVoiceIntentsConfiguration _voiceConfiguration;
 
-        private MagicLeapInputs mlInputs;
-        private MagicLeapInputs.ControllerActions controllerActions;
-
-        private string startupStatus = "Requesting Permission...";
-        private string lastResults = "";
-        private bool isProcessing = false;
+        private MagicLeapInputs _mlInputs;
+        private MagicLeapInputs.ControllerActions _controllerActions;
+        private string _startupStatus = "Requesting Permission...";
+        private string _lastResults = "";
+        private bool _isProcessing = false;
 
         [SerializeField, Tooltip("Popup canvas to direct user to Voice Input settings page.")]
-        private GameObject voiceInputSettingsPopup = null;
+        private GameObject _voiceInputSettingsPopup = null;
 
         [SerializeField, Tooltip("Popup canvas to alert the user of error when Voice Input settings aren't enabled.")]
-        private GameObject voiceInputErrorPopup;
-
-        private static bool userPromptedForSetting;
-
-        private readonly MLPermissions.Callbacks permissionCallbacks = new MLPermissions.Callbacks();
+        private GameObject _voiceInputErrorPopup;
+        private static bool _userPromptedForSetting;
+        private readonly MLPermissions.Callbacks _permissionCallbacks = new MLPermissions.Callbacks();
 
         private void Awake()
         {
-            permissionCallbacks.OnPermissionDenied += OnPermissionDenied;
-            permissionCallbacks.OnPermissionDeniedAndDontAskAgain += OnPermissionDenied;
+            _permissionCallbacks.OnPermissionDenied += OnPermissionDenied;
+            _permissionCallbacks.OnPermissionDeniedAndDontAskAgain += OnPermissionDenied;
         }
 
 
         public void Init()
         {
-            mlInputs = new MagicLeapInputs();
-            mlInputs.Enable();
-            controllerActions = new MagicLeapInputs.ControllerActions(mlInputs);
+            _mlInputs = new MagicLeapInputs();
+            _mlInputs.Enable();
+            _controllerActions = new MagicLeapInputs.ControllerActions(_mlInputs);
             Initialize();
         }
 
-        void OnApplicationPause(bool pauseStatus)
-        {
-            if (!pauseStatus)
-                Initialize();
-        }
+        // void OnApplicationPause(bool pauseStatus)
+        // {
+        //     if (!pauseStatus)
+        //         Initialize();
+        // }
 
         private void Initialize()
         {
             if (!MLPermissions.CheckPermission(MLPermission.VoiceInput).IsOk)
             {
-                MLPermissions.RequestPermission(MLPermission.VoiceInput, permissionCallbacks);
+                MLPermissions.RequestPermission(MLPermission.VoiceInput, _permissionCallbacks);
                 return;
             }
 
             bool isEnabled = MLVoice.VoiceEnabled;
-            startupStatus = "System Supports Voice Intents: " + isEnabled.ToString();
+            _startupStatus = "System Supports Voice Intents: " + isEnabled.ToString();
 
             if (isEnabled)
             {
-                voiceInputSettingsPopup.SetActive(false);
-                voiceInputErrorPopup.SetActive(false);
+                _voiceInputSettingsPopup.SetActive(false);
+                _voiceInputErrorPopup.SetActive(false);
 
-                MLResult result = MLVoice.SetupVoiceIntents(voiceConfiguration);
+                MLResult result = MLVoice.SetupVoiceIntents(_voiceConfiguration);
 
                 if (result.IsOk)
                 {
-                    controllerActions.Bumper.performed += HandleOnBumper;
-                    isProcessing = true;
+                    _controllerActions.Bumper.performed += HandleOnBumper;
+                    _isProcessing = true;
 
                     MLVoice.OnVoiceEvent += VoiceEvent;
 
@@ -86,22 +83,22 @@ namespace MMI
                 }
                 else
                 {
-                    startupStatus += "\nSetup failed with result: " + result.ToString();
+                    _startupStatus += "\nSetup failed with result: " + result.ToString();
                     Debug.LogError("Failed to Setup Voice Intents with result: " + result);
                 }
             }
             else
             {
-                if (!userPromptedForSetting)
+                if (!_userPromptedForSetting)
                 {
-                    userPromptedForSetting = true;
-                    voiceInputSettingsPopup.SetActive(true);
+                    _userPromptedForSetting = true;
+                    _voiceInputSettingsPopup.SetActive(true);
                 }
                 else
                 {
                     Debug.LogError("Voice Commands has not been enabled. Voice intents requires this setting to enabled. It is found in system settings inside Magic Leap Inputs.");
-                    voiceInputSettingsPopup.SetActive(false);
-                    voiceInputErrorPopup.SetActive(true);
+                    _voiceInputSettingsPopup.SetActive(false);
+                    _voiceInputErrorPopup.SetActive(true);
                 }
             }
         }
@@ -109,10 +106,10 @@ namespace MMI
         private void OnDestroy()
         {
             MLVoice.OnVoiceEvent -= VoiceEvent;
-            controllerActions.Bumper.performed -= HandleOnBumper;
+            _controllerActions.Bumper.performed -= HandleOnBumper;
 
-            permissionCallbacks.OnPermissionDenied -= OnPermissionDenied;
-            permissionCallbacks.OnPermissionDeniedAndDontAskAgain -= OnPermissionDenied;
+            _permissionCallbacks.OnPermissionDenied -= OnPermissionDenied;
+            _permissionCallbacks.OnPermissionDeniedAndDontAskAgain -= OnPermissionDenied;
         }
 
 
@@ -123,10 +120,10 @@ namespace MMI
 
         private void UpdateStatus()
         {
-            _statusText.text = $"<color=#B7B7B8><b>Voice Intents Data</b></color>\n{startupStatus}";
-            _statusText.text += "\n\nIs Processing: " + isProcessing;
+            _statusText.text += $"\n<color=#B7B7B8><b>Voice Intents Data</b></color>\n{_startupStatus}";
+            _statusText.text += "\n\nIs Processing: " + _isProcessing;
             _statusText.text += "\n\nInstructions and List of commands in Controls Tab";
-            _statusText.text += lastResults;
+            _statusText.text += _lastResults;
         }
 
         private void SetControlsText()
@@ -136,13 +133,13 @@ namespace MMI
             controlsScrollview.Append($"<color=#B7B7B8><b>Speak the App Specific command out loud</b></color>\n");
             controlsScrollview.Append($"Use one of these listed commands: \n");
 
-            controlsScrollview.AppendJoin('\n', voiceConfiguration.GetValues());
+            controlsScrollview.AppendJoin('\n', _voiceConfiguration.GetValues());
 
             controlsScrollview.Append($"\n\n<color=#B7B7B8><b>To Use a System Intent speak \"Hey Magic Leap\"</b></color>\nDots to indicate the device is listening should appear. Then speak one of the enabled system commands: \n");
 
             foreach (MLVoiceIntentsConfiguration.SystemIntentFlags flag in System.Enum.GetValues(typeof(MLVoiceIntentsConfiguration.SystemIntentFlags)))
             {
-                if (voiceConfiguration.AutoAllowAllSystemIntents || voiceConfiguration.SystemCommands.HasFlag(flag))
+                if (_voiceConfiguration.AutoAllowAllSystemIntents || _voiceConfiguration.SystemCommands.HasFlag(flag))
                 {
                     controlsScrollview.Append($"{flag.ToString()}\n");
 
@@ -152,14 +149,14 @@ namespace MMI
             controlsScrollview.Append($"\n\n<color=#B7B7B8><b>Slots</b></color>\nA Slot is a placeholder for a list of possible values. The name of the slot is placed between brackets within the App Specific commands value and when uttering the phrase one of the slots values is used in its place.\n");
             controlsScrollview.Append($"Slots Values Used:");
 
-            foreach (MLVoiceIntentsConfiguration.SlotData slot in voiceConfiguration.SlotsForVoiceCommands)
+            foreach (MLVoiceIntentsConfiguration.SlotData slot in _voiceConfiguration.SlotsForVoiceCommands)
             {
                 controlsScrollview.Append($"\n{slot.name} : {string.Join(" - ", slot.values)}");
             }
 
             controlsScrollview.Append($"\n\n<color=#B7B7B8><b>Controller Bumper</b></color>\nBy Default this example scene starts processing Voice Intents. Tap the bumper to stop processing, then tap it again to begin processing again.");
 
-            controlsText.text = controlsScrollview.ToString();
+            _controlsText.text = controlsScrollview.ToString();
         }
 
         void VoiceEvent(in bool wasSuccessful, in MLVoice.IntentEvent voiceEvent)
@@ -175,7 +172,7 @@ namespace MMI
             strBuilder.Append($"Slots Used:\n");
             strBuilder.AppendJoin("\n", voiceEvent.EventSlotsUsed.Select(v => $"Name: {v.SlotName} - Value: {v.SlotValue}"));
 
-            lastResults = strBuilder.ToString();
+            _lastResults = strBuilder.ToString();
         }
 
         private void HandleOnBumper(InputAction.CallbackContext obj)
@@ -185,12 +182,12 @@ namespace MMI
             if (bumperDown)
             {
                 MLResult result;
-                if (isProcessing)
+                if (_isProcessing)
                 {
                     result = MLVoice.Stop();
                     if (result.IsOk)
                     {
-                        isProcessing = false;
+                        _isProcessing = false;
                     }
                     else
                     {
@@ -199,10 +196,10 @@ namespace MMI
                 }
                 else
                 {
-                    result = MLVoice.SetupVoiceIntents(voiceConfiguration);
+                    result = MLVoice.SetupVoiceIntents(_voiceConfiguration);
                     if (result.IsOk)
                     {
-                        isProcessing = true;
+                        _isProcessing = true;
                     }
                     else
                     {
@@ -215,36 +212,27 @@ namespace MMI
 
         private void OnPermissionDenied(string permission)
         {
-            startupStatus = "<color=#ff0000><b>Permission Denied!</b></color>";
+            _startupStatus = "<color=#ff0000><b>Permission Denied!</b></color>";
         }
 
         public void OnVoiceInputSettingsPopupOpen()
         {
             UnityEngine.XR.MagicLeap.SettingsIntentsLauncher.LaunchSystemVoiceInputSettings();
 
-            if (voiceInputSettingsPopup != null)
+            if (_voiceInputSettingsPopup != null)
             {
-                voiceInputSettingsPopup.SetActive(false);
+                _voiceInputSettingsPopup.SetActive(false);
             }
         }
 
         public void OnVoiceInputSettingsPopupCancel()
         {
-            if (voiceInputSettingsPopup != null)
+            if (_voiceInputSettingsPopup != null)
             {
-                voiceInputSettingsPopup.SetActive(false);
+                _voiceInputSettingsPopup.SetActive(false);
             }
         }
 
-        public void ProcessAbility()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public void SetDebugElementsActive(bool active)
-        {
-            throw new System.NotImplementedException();
-        }
     }
 
 }
