@@ -29,8 +29,10 @@ MonoBehaviour:
     Value: 'Create [a? {Color}]? {Shape} '
   - Id: 2
     Value: Set [that|this|it]? color? to {Color}
+  - Id: 3
+    Value: Delete|Remove|Erase|Destroy
   AutoAllowAllSystemIntents: 0
-  SystemCommands: 2008
+  SystemCommands: 0
   SlotsForVoiceCommands:
   - name: Shape
     values:
@@ -43,3 +45,12 @@ MonoBehaviour:
     - Red
     - Green
     - Blue
+    - Purple
+    - Green
+    - White
+    - Grey
+    - Black
+    - Orange
+    - Yellow
+    - Pink
+    - Brown

@@ -60,13 +60,8 @@ namespace MMI
             renderer.material = _material;
             var interactable = _createdObject.AddComponent<InteractableObject>();
             interactable.UpdateColor(_color);
-
-            // CoroutineHandler.Instance.StartCoroutine(UpdateObjectColor(interactable));
-        }
-
-        IEnumerator UpdateObjectColor(InteractableObject interactable)
-        {
-            yield return 0; // Wait for 1 frame
+            var collider = _createdObject.GetComponent<Collider>();
+            collider.isTrigger = true;
         }
     }
 }

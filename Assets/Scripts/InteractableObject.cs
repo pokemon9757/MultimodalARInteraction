@@ -40,6 +40,7 @@ namespace MMI
 
         public void SetSelected(bool active)
         {
+            Debug.Log("Set selected " + active);
             _materialFlash.EnableFlashing(active);
             _grab.enabled = active;
         }
