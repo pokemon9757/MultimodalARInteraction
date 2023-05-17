@@ -5776,7 +5776,6 @@ MonoBehaviour:
   _gestureTracking: {fileID: 831016752}
   _eyeTracking: {fileID: 444040837}
   _voiceItents: {fileID: 1959870297}
-  _handler: {fileID: 0}
   _initialScale: {x: 0.1, y: 0.1, z: 0.1}
   _initialMaterial: {fileID: 2100000, guid: f211f7920835d67419d1e13a798b6664, type: 2}
 --- !u!1 &1699074834

@@ -1,23 +1,25 @@
 using System.Security.Cryptography;
 using System.Linq;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.XR.Interaction.Toolkit;
-using System;
 
 namespace MMI
 {
     public class ObjectModifier : MonoBehaviour
     {
-        public void OnTriggerEnterAction(InteractableObject interactableObject)
+        Dictionary<InteractableObject, bool> _selectedObjects = new(); // A dictionary of selected objects to perform actions to all
+        InteractableObject _collidedObject; // Only one object can be collided at a time
+
+        void OnTriggerEnter(Collider other)
         {
-            Debug.Log("On Trigger enter action " + name);
+            if (other.gameObject.tag != "InteractableObject") return;
+            _collidedObject = other.GetComponent<InteractableObject>();
+            _collidedObject.SetSelected(true);
         }
 
-        public void OnTriggerExitAction(InteractableObject interactableObject)
+        void OnTriggerExit(Collider other)
         {
-            Debug.Log("On Trigger exit action " + name);
+            if (other.gameObject.tag != "InteractableObject") return;
         }
     }
 }

@@ -38,9 +38,6 @@ namespace MMI
 
         void Update()
         {
-#if !UNITY_EDITOR
-            _voiceItents.ProcessAbility();
-#endif
             _eyeTracking.ProcessAbility();
             _gestureTracking.ProcessAbility();
         }

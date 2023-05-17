@@ -11,17 +11,14 @@ namespace MMI
         private FlashingMaterial _materialFlash;
         private XRGrabInteractable _grab;
         private Rigidbody _rb;
-        private bool _isInitialized = false;
 
         void Start()
         {
             Init();
         }
 
-        public void Init()
+        void Init()
         {
-            if (_isInitialized) return;
-            _isInitialized = true;
             _renderers = gameObject.GetComponentsInChildren<MeshRenderer>();
             _materialFlash = GetComponent<FlashingMaterial>();
             _grab = GetComponent<XRGrabInteractable>();
@@ -30,26 +27,10 @@ namespace MMI
             _grab.enabled = false;
         }
 
-        void OnTriggerEnter(Collider other)
-        {
-            ObjectModifier mod = other.gameObject.GetComponent<ObjectModifier>();
-            if (mod != null)
-            {
-                mod.OnTriggerEnterAction(this);
-            }
-        }
-
-        void OnTriggerExit(Collider other)
-        {
-            ObjectModifier mod = other.gameObject.GetComponent<ObjectModifier>();
-            if (mod != null)
-            {
-                mod.OnTriggerExitAction(this);
-            }
-        }
-
         public void UpdateColor(Color c)
         {
+            if (_renderers == null) _renderers = gameObject.GetComponentsInChildren<MeshRenderer>();
+
             foreach (Renderer r in _renderers)
             {
                 r.material.color = c;
@@ -62,6 +43,7 @@ namespace MMI
             _materialFlash.EnableFlashing(active);
             _grab.enabled = active;
         }
+
 
         void OnDestroy()
         {

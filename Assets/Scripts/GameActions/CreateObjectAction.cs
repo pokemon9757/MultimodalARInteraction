@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 
@@ -54,13 +55,18 @@ namespace MMI
             _createdObject = GameObject.CreatePrimitive(_shape);
             _createdObject.transform.position = _position;
             _createdObject.transform.localScale = _scale;
+            _createdObject.gameObject.tag = "InteractableObject";
             var renderer = _createdObject.GetComponent<Renderer>();
             renderer.material = _material;
             var interactable = _createdObject.AddComponent<InteractableObject>();
-            interactable.Init();
             interactable.UpdateColor(_color);
 
-            Debug.Log("Created a shape " + _shape.ToString());
+            // CoroutineHandler.Instance.StartCoroutine(UpdateObjectColor(interactable));
+        }
+
+        IEnumerator UpdateObjectColor(InteractableObject interactable)
+        {
+            yield return 0; // Wait for 1 frame
         }
     }
 }

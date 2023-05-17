@@ -37,6 +37,7 @@ MonoBehaviour:
     - Cube
     - Sphere
     - Capsule
+    - Cylinder
   - name: Color
     values:
     - Red
