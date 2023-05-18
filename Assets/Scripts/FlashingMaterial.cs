@@ -8,7 +8,7 @@ namespace MMI
         public bool IsActive = false;
         [SerializeField] float _minIntensity = -0.5f;
         [SerializeField] float _maxIntensity = 1.5f;
-        [SerializeField] float _transitionTime = 2f;
+        [SerializeField] float _transitionTime = 1f;
         float _timer = 0f;
         bool _tweeningForward = true;
         Dictionary<MeshRenderer, Color> _renderersColors = new Dictionary<MeshRenderer, Color>();

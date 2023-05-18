@@ -23,14 +23,43 @@ namespace MMI
         private string _statusStringBuilder = "Starting Tracking...";
         private InputDevice _leftHandDevice;
         private InputDevice _rightHandDevice;
+        private GestureClassification.PostureType _leftPosture;
 
-        [SerializeField] GestureClassification.KeyPoseType[] _trackedKeyPose;
-        [SerializeField] GestureClassification.PostureType[] _trackedPostureType;
+        private GestureClassification.PostureType _rightPosture;
 
-        Dictionary<GestureClassification.KeyPoseType, bool> _trackedKeyPoseDict = new();
-        Dictionary<GestureClassification.PostureType, bool> _trackedPostureTypeDict = new();
+        private GestureClassification.KeyPoseType _leftKeyPose;
 
-        public event UnityAction<GestureClassification.KeyPoseType, GestureClassification.PostureType> OnGestureDetected;
+        private GestureClassification.KeyPoseType _rightKeyPose;
+
+        public GestureClassification.PostureType LeftPosture
+        {
+            get
+            {
+                return _leftPosture;
+            }
+        }
+        public GestureClassification.PostureType RightPosture
+        {
+            get
+            {
+                return _rightPosture;
+            }
+        }
+        public GestureClassification.KeyPoseType LeftKeyPose
+        {
+            get
+            {
+                return _leftKeyPose;
+            }
+        }
+        public GestureClassification.KeyPoseType RightKeyPose
+        {
+            get
+            {
+                return _rightKeyPose;
+            }
+        }
+
 
         public void Init()
         {
@@ -49,15 +78,8 @@ namespace MMI
                 Debug.LogError($"One or More required references are missing from the GestureTrackingExample script. Example is disabled until fixed.");
                 return;
             }
-            foreach (var pose in _trackedKeyPose)
-            {
-                _trackedKeyPoseDict[pose] = true;
-            }
-            foreach (var posture in _trackedPostureType)
-            {
-                _trackedPostureTypeDict[posture] = true;
-            }
         }
+
         public void ProcessAbility()
         {
             if (!_leftHandDevice.isValid || !_rightHandDevice.isValid)
@@ -121,23 +143,18 @@ namespace MMI
                 RightInteractionPoint.localRotation = rightIntRot;
 
                 // Posture
-                GestureClassification.TryGetHandPosture(_leftHandDevice, out GestureClassification.PostureType leftPosture);
-                GestureClassification.TryGetHandPosture(_rightHandDevice, out GestureClassification.PostureType rightPosture);
+                GestureClassification.TryGetHandPosture(_leftHandDevice, out _leftPosture);
+                GestureClassification.TryGetHandPosture(_rightHandDevice, out _rightPosture);
 
-                _statusStringBuilder += "\n\n<color=#B7B7B8><b>Left Posture</b></color>: " + leftPosture.ToString();
-                _statusStringBuilder += "\n<color=#B7B7B8><b>Right Posture</b></color>: " + rightPosture.ToString();
+                _statusStringBuilder += "\n\n<color=#B7B7B8><b>Left Posture</b></color>: " + _leftPosture.ToString();
+                _statusStringBuilder += "\n<color=#B7B7B8><b>Right Posture</b></color>: " + _rightPosture.ToString();
 
                 // KeyPose
-                GestureClassification.TryGetHandKeyPose(_leftHandDevice, out GestureClassification.KeyPoseType leftKeyPose);
-                GestureClassification.TryGetHandKeyPose(_rightHandDevice, out GestureClassification.KeyPoseType rightKeyPose);
+                GestureClassification.TryGetHandKeyPose(_leftHandDevice, out _leftKeyPose);
+                GestureClassification.TryGetHandKeyPose(_rightHandDevice, out _rightKeyPose);
 
-                _statusStringBuilder += "\n\n<color=#B7B7B8><b>Left KeyPose</b></color>: " + leftKeyPose.ToString();
-                _statusStringBuilder += "\n<color=#B7B7B8><b>Right KeyPose</b></color>: " + rightKeyPose.ToString();
-
-                if (_trackedKeyPoseDict.ContainsKey(rightKeyPose) || _trackedPostureTypeDict.ContainsKey(rightPosture))
-                {
-                    OnGestureDetected.Invoke(rightKeyPose, rightPosture);
-                }
+                _statusStringBuilder += "\n\n<color=#B7B7B8><b>Left KeyPose</b></color>: " + _leftKeyPose.ToString();
+                _statusStringBuilder += "\n<color=#B7B7B8><b>Right KeyPose</b></color>: " + _rightKeyPose.ToString();
             }
             UpdateStatus();
         }
@@ -146,6 +163,5 @@ namespace MMI
         {
             statusText.text = $"<color=#B7B7B8><b>Gesture Tracking Data</b></color>\n{_statusStringBuilder}";
         }
-
     }
 }

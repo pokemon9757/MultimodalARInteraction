@@ -32,7 +32,6 @@ namespace MMI
 #endif
             _eyeTracking.Init();
             _gestureTracking.Init();
-            _gestureTracking.OnGestureDetected += OnGestureDetected;
             _handler = new GameActionHandler();
         }
 
@@ -40,11 +39,6 @@ namespace MMI
         {
             _eyeTracking.ProcessAbility();
             _gestureTracking.ProcessAbility();
-        }
-
-        void OnGestureDetected(GestureClassification.KeyPoseType keyPoseType, GestureClassification.PostureType postureType)
-        {
-            Debug.Log("Detected pose " + keyPoseType.ToString() + " and posture " + postureType.ToString());
         }
 
         void OnCommandDetected(in bool wasSuccessful, in MLVoice.IntentEvent voiceEvent)

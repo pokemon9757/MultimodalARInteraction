@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace MMI
 {
-    public class ObjectModifier : MonoBehaviour
+    public class ObjectInteractor : MonoBehaviour
     {
         InteractableObject _collidedObject; // Only one object can be collided at a time
 

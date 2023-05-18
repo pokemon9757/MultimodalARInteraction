@@ -2949,8 +2949,6 @@ MonoBehaviour:
   LeftInteractionPoint: {fileID: 305337563}
   RightInteractionPoint: {fileID: 1086231478}
   statusText: {fileID: 672325583}
-  _trackedKeyPose: 
-  _trackedPostureType: 
 --- !u!1001 &855262162
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5795,7 +5793,7 @@ PrefabInstance:
     - target: {fileID: 5609791579423962305, guid: fe799b2d0a84dfe43b001b56276fd2fb,
         type: 3}
       propertyPath: near clip plane
-      value: 0.37
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 8775117256685371215, guid: fe799b2d0a84dfe43b001b56276fd2fb,
         type: 3}
@@ -7248,6 +7246,7 @@ GameObject:
   - component: {fileID: 1840559416}
   - component: {fileID: 4713829122485247}
   - component: {fileID: 4713829122485248}
+  - component: {fileID: 4713829122485249}
   m_Layer: 0
   m_Name: HandVisualizer - Right
   m_TagString: Untagged
@@ -7267,6 +7266,7 @@ GameObject:
   - component: {fileID: 1932652061}
   - component: {fileID: 4713828627902678}
   - component: {fileID: 4713828627902679}
+  - component: {fileID: 4713828627902680}
   m_Layer: 0
   m_Name: HandVisualizer - Left
   m_TagString: Untagged
@@ -7335,7 +7335,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1014955295374055}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b47b8dfaca54f7d4a915c5447d2ea89f, type: 3}
+  m_Script: {fileID: 11500000, guid: 06edbba0cc39cba4693cc95a0ef2b81d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!54 &4713828627902679
@@ -7365,6 +7365,20 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &4713828627902680
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1014955295374055}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57505177aca4d0c4b86c3e0f957aa591, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _gestureTracking: {fileID: 831016752}
+  IsLeftHand: 1
 --- !u!4 &4713829122485246
 Transform:
   m_ObjectHideFlags: 0
@@ -7390,7 +7404,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1014955253080524}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b47b8dfaca54f7d4a915c5447d2ea89f, type: 3}
+  m_Script: {fileID: 11500000, guid: 06edbba0cc39cba4693cc95a0ef2b81d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!54 &4713829122485248
@@ -7420,6 +7434,20 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &4713829122485249
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1014955253080524}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57505177aca4d0c4b86c3e0f957aa591, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _gestureTracking: {fileID: 831016752}
+  IsLeftHand: 0
 --- !u!4 &4984166258384859
 Transform:
   m_ObjectHideFlags: 0
