@@ -105,13 +105,13 @@ namespace MMI
 
         private void OnDestroy()
         {
+#if !UNITY_EDITOR
             MLVoice.OnVoiceEvent -= VoiceEvent;
             _controllerActions.Bumper.performed -= HandleOnBumper;
-
             _permissionCallbacks.OnPermissionDenied -= OnPermissionDenied;
             _permissionCallbacks.OnPermissionDeniedAndDontAskAgain -= OnPermissionDenied;
+#endif
         }
-
 
         void Update()
         {

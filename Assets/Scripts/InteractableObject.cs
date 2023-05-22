@@ -24,7 +24,6 @@ namespace MMI
             _grab = GetComponent<XRGrabInteractable>();
             _rb = GetComponent<Rigidbody>();
             _rb.isKinematic = true;
-            _grab.enabled = false;
         }
 
         public void UpdateColor(Color c)
@@ -41,7 +40,6 @@ namespace MMI
         public void SetSelected(bool active)
         {
             _materialFlash.EnableFlashing(active);
-            _grab.enabled = active;
         }
 
 

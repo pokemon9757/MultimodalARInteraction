@@ -46,7 +46,7 @@ namespace MMI
                 case "cylinder":
                     return PrimitiveType.Cylinder;
                 default:
-                    Debug.LogError("Invalid shape name " + shapeName.ToLower());
+                    Debug.LogError("Invalid shape name " + shapeName);
                     return PrimitiveType.Cube;
             }
         }

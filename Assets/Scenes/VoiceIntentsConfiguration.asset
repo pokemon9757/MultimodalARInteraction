@@ -28,7 +28,7 @@ MonoBehaviour:
   - Id: 1
     Value: 'Create [a? {Color}]? {Shape} '
   - Id: 2
-    Value: Set [that|this|it]? color? to {Color}
+    Value: Set|Change [that|this|it]? color? to {Color}
   - Id: 3
     Value: Delete|Remove|Erase|Destroy
   AutoAllowAllSystemIntents: 0

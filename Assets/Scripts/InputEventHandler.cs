@@ -69,10 +69,19 @@ namespace MMI
             _handler.AddGameAction(new CreateObjectAction(_eyeTracking.EyesFixationPoint, _initialScale, _initialMaterial, colorName, shapeName));
         }
 
+        void DeleteObject()
+        {
+        }
+
         #region Debug UI Functions
         public void CreateCube()
         {
             CreateObject("cube", "blue");
+        }
+
+        public void DeleteSelected()
+        {
+
         }
         #endregion
     }
