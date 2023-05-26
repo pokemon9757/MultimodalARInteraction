@@ -30,15 +30,13 @@ namespace MMI
 
         void Update()
         {
-#if !UNITY_EDITOR
             // For debugging, check for input to switch between interactors
             if (Input.GetKeyDown(KeyCode.Alpha1))
-                SwitchInteractor(InteractorType.Method1);
+                SwitchInteractor(InteractorType.ControllerRay);
             else if (Input.GetKeyDown(KeyCode.Alpha2))
-                SwitchInteractor(InteractorType.Method2);
+                SwitchInteractor(InteractorType.EyeGaze);
             else if (Input.GetKeyDown(KeyCode.Alpha3))
-                SwitchInteractor(InteractorType.Method3);
-#endif
+                SwitchInteractor(InteractorType.FingerPoint);
         }
 
         void SwitchInteractor(InteractorType interactorType)

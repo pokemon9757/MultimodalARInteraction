@@ -4624,7 +4624,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Version: 2
+  m_Version: 3
   m_UsePipelineSettings: 1
   m_AdditionalLightsShadowResolutionTier: 2
   m_LightLayerMask: 1
@@ -4634,7 +4634,7 @@ MonoBehaviour:
   m_ShadowRenderingLayers: 1
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
-  m_SoftShadowQuality: 1
+  m_SoftShadowQuality: 2
 --- !u!1 &277476230
 GameObject:
   m_ObjectHideFlags: 0
@@ -16688,6 +16688,13 @@ MonoBehaviour:
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
   m_Version: 2
+  m_TaaSettings:
+    quality: 3
+    frameInfluence: 0.1
+    jitterScale: 1
+    mipBias: 0
+    varianceClampScale: 0.9
+    contrastAdaptiveSharpening: 0
 --- !u!114 &1087739265
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26023,7 +26030,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1698852959}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.067, y: 0.171, z: 0.9871897}
+  m_LocalPosition: {x: 0.067, y: 0.171, z: 0.761}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -27155,32 +27162,32 @@ PrefabInstance:
     - target: {fileID: 1707457439844171174, guid: 323a2bd17e52849699715ba4a3c32d30,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1707457439844171174, guid: 323a2bd17e52849699715ba4a3c32d30,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1707457439844171174, guid: 323a2bd17e52849699715ba4a3c32d30,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 623.19995
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1707457439844171174, guid: 323a2bd17e52849699715ba4a3c32d30,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 72
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1707457439844171174, guid: 323a2bd17e52849699715ba4a3c32d30,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 333.59998
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1707457439844171174, guid: 323a2bd17e52849699715ba4a3c32d30,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -54
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1707457439844171175, guid: 323a2bd17e52849699715ba4a3c32d30,
         type: 3}
@@ -27191,6 +27198,26 @@ PrefabInstance:
         interactions such as Press, Touch, Grab, Scroll, Move, Rotate, and Scale.
         You can find common UI and interaction building blocks that are part of HoloLens
         shell.'
+      objectReference: {fileID: 0}
+    - target: {fileID: 1707457440234628734, guid: 323a2bd17e52849699715ba4a3c32d30,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1707457440234628734, guid: 323a2bd17e52849699715ba4a3c32d30,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1707457440234628734, guid: 323a2bd17e52849699715ba4a3c32d30,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1707457440234628734, guid: 323a2bd17e52849699715ba4a3c32d30,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1707457440360418506, guid: 323a2bd17e52849699715ba4a3c32d30,
         type: 3}
@@ -27300,6 +27327,46 @@ PrefabInstance:
     - target: {fileID: 1707457440360418507, guid: 323a2bd17e52849699715ba4a3c32d30,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1707457440679773455, guid: 323a2bd17e52849699715ba4a3c32d30,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1707457440679773455, guid: 323a2bd17e52849699715ba4a3c32d30,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1707457440679773455, guid: 323a2bd17e52849699715ba4a3c32d30,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1707457440679773455, guid: 323a2bd17e52849699715ba4a3c32d30,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7965694775446683067, guid: 323a2bd17e52849699715ba4a3c32d30,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7965694775446683067, guid: 323a2bd17e52849699715ba4a3c32d30,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7965694775446683067, guid: 323a2bd17e52849699715ba4a3c32d30,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7965694775446683067, guid: 323a2bd17e52849699715ba4a3c32d30,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

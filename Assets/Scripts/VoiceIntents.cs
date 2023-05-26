@@ -116,6 +116,8 @@ namespace MMI
         void Update()
         {
             UpdateStatus();
+            string micName = Microphone.devices[0];
+            
         }
 
         private void UpdateStatus()
