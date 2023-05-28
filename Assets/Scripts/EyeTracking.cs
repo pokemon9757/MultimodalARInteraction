@@ -1,12 +1,7 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
+using Microsoft.MixedReality.Toolkit;
+using Microsoft.MixedReality.Toolkit.Input;
+using Microsoft.MixedReality.Toolkit.Utilities;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.UI;
-using UnityEngine.XR;
-using UnityEngine.XR.MagicLeap;
-using InputDevice = UnityEngine.XR.InputDevice;
 
 namespace MMI
 {
@@ -15,139 +10,65 @@ namespace MMI
     /// </summary>
     public class EyeTracking : MonoBehaviour
     {
-        [SerializeField, Tooltip("Left Eye Statistic Panel")]
-        private Text leftEyeTextStatic;
-        [SerializeField, Tooltip("Right Eye Statistic Panel")]
-        private Text rightEyeTextStatic;
-        [SerializeField, Tooltip("Both Eyes Statistic Panel")]
-        private Text bothEyesTextStatic;
-        [SerializeField, Tooltip("Fixation Point marker")]
-        private Transform eyesFixationPoint;
-
-        // Used to get ml inputs.
-        private MagicLeapInputs _mlInputs;
-
-        // Used to get eyes action data.
-        private MagicLeapInputs.EyesActions _eyesActions;
-        public Vector3 EyesFixationPoint
-        {
-            get
-            {
-                return _eyesActions.Data.ReadValue<UnityEngine.InputSystem.XR.Eyes>().fixationPoint;
-            }
-        }
-
-        // Used to get other eye data
-        private InputDevice _eyesDevice;
-
-        // Was EyeTracking permission granted by user
-        private bool _permissionGranted = false;
-        private readonly MLPermissions.Callbacks _permissionCallbacks = new MLPermissions.Callbacks();
-        [SerializeField] bool isDebugActive = true;
-        [SerializeField] GameObject debugGameObjects;
-        private void Awake()
-        {
-            _permissionCallbacks.OnPermissionGranted += OnPermissionGranted;
-            _permissionCallbacks.OnPermissionDenied += OnPermissionDenied;
-            _permissionCallbacks.OnPermissionDeniedAndDontAskAgain += OnPermissionDenied;
-        }
+        [Tooltip("Display the game object along the eye gaze ray at a default distance (in meters).")]
+        [SerializeField] float _defaultDistanceInMeters = 2f;
+        [SerializeField, Tooltip("Fixation Point marker")] Transform _eyesMarker;
+        [SerializeField] bool _isDebugActive = true;
+        IMixedRealityEyeGazeProvider _eyeGazeProvider;
+        public Vector3 GazeMarkerPosition { get { return _eyesMarker.position; } }
+        public Vector3 GazeOrigin { get { return _eyeGazeProvider.GazeOrigin; } }
+        public Vector3 GazeDirection { get { return _eyeGazeProvider.GazeDirection; } }
 
         public void Init()
         {
-            _mlInputs = new MagicLeapInputs();
-            _mlInputs.Enable();
-
-            MLPermissions.RequestPermission(MLPermission.EyeTracking, _permissionCallbacks);
+            _eyeGazeProvider = CoreServices.InputSystem?.EyeGazeProvider;
             SetDebugElementsActive();
         }
 
         public void ProcessAbility()
         {
-            if (!_permissionGranted)
+            if (_eyeGazeProvider == null)
             {
-                return;
+                Init();
             }
 
-            if (!_eyesDevice.isValid)
+            _eyesMarker.position = _eyeGazeProvider.GazeOrigin + _eyeGazeProvider.GazeDirection.normalized * _defaultDistanceInMeters;
+
+            EyeTrackingTarget lookedAtEyeTarget = EyeTrackingTarget.LookedAtEyeTarget;
+
+            // Update GameObject to the current eye gaze position at a given distance
+            if (lookedAtEyeTarget != null)
             {
-                this._eyesDevice = InputSubsystem.Utils.FindMagicLeapDevice(InputDeviceCharacteristics.EyeTracking | InputDeviceCharacteristics.TrackedDevice);
-                return;
+                // Show the object at the center of the currently looked at target.
+                if (lookedAtEyeTarget.EyeCursorSnapToTargetCenter)
+                {
+                    Ray rayToCenter = new Ray(CameraCache.Main.transform.position, lookedAtEyeTarget.transform.position - CameraCache.Main.transform.position);
+                    RaycastHit hitInfo;
+                    UnityEngine.Physics.Raycast(rayToCenter, out hitInfo);
+                    _eyesMarker.position = hitInfo.point;
+                }
+                else
+                {
+                    // Show the object at the hit position of the user's eye gaze ray with the target.
+                    _eyesMarker.position = _eyeGazeProvider.GazeOrigin + _eyeGazeProvider.GazeDirection.normalized * _defaultDistanceInMeters;
+                }
             }
-
-            // Eye data provided by the engine for all XR devices.
-            // Used here only to update the status text. The 
-            // left/right eye centers are moved to their respective positions &
-            // orientations using InputSystem's TrackedPoseDriver component.
-            var eyes = _eyesActions.Data.ReadValue<UnityEngine.InputSystem.XR.Eyes>();
-
-            // Manually set fixation point marker so we can apply rotation, since UnityXREyes
-            // does not provide it
-            eyesFixationPoint.position = eyes.fixationPoint;
-            eyesFixationPoint.rotation = Quaternion.LookRotation(eyes.fixationPoint - Camera.main.transform.position);
-
-            // Eye data specific to Magic Leap
-            InputSubsystem.Extensions.TryGetEyeTrackingState(_eyesDevice, out var trackingState);
-
-            var leftEyeForwardGaze = eyes.leftEyeRotation * Vector3.forward;
-
-            string leftEyeText =
-                $"Center:\n({eyes.leftEyePosition.x:F2}, {eyes.leftEyePosition.y:F2}, {eyes.leftEyePosition.z:F2})\n" +
-                $"Gaze:\n({leftEyeForwardGaze.x:F2}, {leftEyeForwardGaze.y:F2}, {leftEyeForwardGaze.z:F2})\n" +
-                $"Confidence:\n{trackingState.LeftCenterConfidence:F2}\n" +
-                $"Pupil Size:\n{eyes.leftEyeOpenAmount:F2}";
-
-            leftEyeTextStatic.text = leftEyeText;
-
-            var rightEyeForwardGaze = eyes.rightEyeRotation * Vector3.forward;
-
-            string rightEyeText =
-                $"Center:\n({eyes.rightEyePosition.x:F2}, {eyes.rightEyePosition.y:F2}, {eyes.rightEyePosition.z:F2})\n" +
-                $"Gaze:\n({rightEyeForwardGaze.x:F2}, {rightEyeForwardGaze.y:F2}, {rightEyeForwardGaze.z:F2})\n" +
-                $"Confidence:\n{trackingState.RightCenterConfidence:F2}\n" +
-                $"Pupil Size:\n{eyes.rightEyeOpenAmount:F2}";
-
-            rightEyeTextStatic.text = rightEyeText;
-
-            string bothEyesText =
-                $"Fixation Point:\n({eyes.fixationPoint.x:F2}, {eyes.fixationPoint.y:F2}, {eyes.fixationPoint.z:F2})\n" +
-                $"Confidence:\n{trackingState.FixationConfidence:F2}";
-
-            bothEyesTextStatic.text = $"{bothEyesText}";
-        }
-
-        private void OnDestroy()
-        {
-            _permissionCallbacks.OnPermissionGranted -= OnPermissionGranted;
-            _permissionCallbacks.OnPermissionDenied -= OnPermissionDenied;
-            _permissionCallbacks.OnPermissionDeniedAndDontAskAgain -= OnPermissionDenied;
-
-            _mlInputs.Disable();
-            _mlInputs.Dispose();
-
-            InputSubsystem.Extensions.MLEyes.StopTracking();
-        }
-
-        private void OnPermissionDenied(string permission)
-        {
-            MLPluginLog.Error($"{permission} denied, example won't function.");
-        }
-
-        private void OnPermissionGranted(string permission)
-        {
-            InputSubsystem.Extensions.MLEyes.StartTracking();
-            _eyesActions = new MagicLeapInputs.EyesActions(_mlInputs);
-            _permissionGranted = true;
+            else
+            {
+                // If no target is hit, show the object at a default distance along the gaze ray.
+                _eyesMarker.position = _eyeGazeProvider.GazeOrigin + _eyeGazeProvider.GazeDirection.normalized * _defaultDistanceInMeters;
+            }
         }
 
         public void ToggleDebugElements()
         {
-            isDebugActive = !isDebugActive;
+            _isDebugActive = !_isDebugActive;
             SetDebugElementsActive();
         }
 
         void SetDebugElementsActive()
         {
-            debugGameObjects.SetActive(isDebugActive);
+            _eyesMarker.gameObject.SetActive(_isDebugActive);
         }
     }
 }

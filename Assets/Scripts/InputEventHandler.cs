@@ -5,7 +5,6 @@ using UnityEngine.XR.MagicLeap;
 
 namespace MMI
 {
-    using GestureClassification = InputSubsystem.Extensions.MLGestureClassification;
     public class InputEventHandler : MonoBehaviour
     {
         private enum VoiceActions
@@ -27,13 +26,18 @@ namespace MMI
         [Header("Create action parameters")]
         [SerializeField] Vector3 _initialScale;
         [SerializeField] Material _initialMaterial;
+        bool _isEditor = false;
 
         void Start()
         {
-#if !UNITY_EDITOR
-            _voiceItents.Init();
-            MLVoice.OnVoiceEvent += OnCommandDetected;
+#if UNITY_EDITOR
+            _isEditor = true;
 #endif
+            if (!_isEditor)
+            {
+                _voiceItents.Init();
+                MLVoice.OnVoiceEvent += OnCommandDetected;
+            }
             _eyeTracking.Init();
             _gestureTracking.Init();
             _handler = new GameActionHandler();
@@ -72,7 +76,7 @@ namespace MMI
 
         void CreateObject(string shapeName, string colorName)
         {
-            _handler.AddGameAction(new CreateObjectAction(_eyeTracking.EyesFixationPoint, _initialScale, _initialMaterial, colorName, shapeName));
+            _handler.AddGameAction(new CreateObjectAction(_eyeTracking.GazeMarkerPosition, _initialScale, _initialMaterial, colorName, shapeName));
         }
 
         void DeleteObject()

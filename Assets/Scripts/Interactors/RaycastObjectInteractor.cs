@@ -6,15 +6,15 @@ namespace MMI
 {
     public class RaycastObjectInteractor : BaseObjectInteractor
     {
-        public LayerMask interactableLayer;
-        public float raycastDistance = 10f;
+        [SerializeField] float _raycastDistance = Mathf.Infinity;
+        [SerializeField] EyeTracking _eyeTracking;
         void Update()
         {
             // Perform a raycast in a given direction
-            Ray ray = new Ray(transform.position, transform.forward);
+            Ray ray = new Ray(_eyeTracking.GazeOrigin, _eyeTracking.GazeDirection);
             RaycastHit hit;
 
-            if (Physics.Raycast(ray, out hit, raycastDistance, interactableLayer))
+            if (Physics.Raycast(ray, out hit, _raycastDistance))
             {
                 // If the raycast hits an object with the tag "InteractableObject"
                 if (hit.collider.gameObject.tag == "InteractableObject" && _selectedObject == null)
