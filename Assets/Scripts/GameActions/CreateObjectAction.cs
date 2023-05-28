@@ -1,4 +1,7 @@
 using System.Collections;
+using Microsoft.MixedReality.Toolkit.Input;
+using Microsoft.MixedReality.Toolkit.UI;
+using Microsoft.MixedReality.Toolkit.UI.BoundsControl;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 
@@ -60,8 +63,13 @@ namespace MMI
             renderer.material = _material;
             var interactable = _createdObject.AddComponent<InteractableObject>();
             interactable.UpdateColor(_color);
-            var collider = _createdObject.GetComponent<Collider>();
-            collider.isTrigger = true;
+            _createdObject.GetComponent<Collider>();
+            var bounds = _createdObject.AddComponent<BoundsControl>();
+            bounds.BoundsControlActivation = Microsoft.MixedReality.Toolkit.UI.BoundsControlTypes.BoundsControlActivationType.ActivateByProximityAndPointer;
+            _createdObject.AddComponent<MinMaxScaleConstraint>();
+            _createdObject.AddComponent<NearInteractionGrabbable>();
+            _createdObject.AddComponent<ObjectManipulator>();
+
         }
     }
 }

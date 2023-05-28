@@ -4,12 +4,11 @@ using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 namespace MMI
 {
-    [RequireComponent(typeof(Rigidbody), typeof(XRGrabInteractable), typeof(FlashingMaterial))]
+    [RequireComponent(typeof(Rigidbody), typeof(FlashingMaterial))]
     public class InteractableObject : MonoBehaviour
     {
         private MeshRenderer[] _renderers;
         private FlashingMaterial _materialFlash;
-        private XRGrabInteractable _grab;
         private Rigidbody _rb;
 
         void Start()
@@ -21,7 +20,6 @@ namespace MMI
         {
             _renderers = gameObject.GetComponentsInChildren<MeshRenderer>();
             _materialFlash = GetComponent<FlashingMaterial>();
-            _grab = GetComponent<XRGrabInteractable>();
             _rb = GetComponent<Rigidbody>();
             _rb.isKinematic = true;
         }

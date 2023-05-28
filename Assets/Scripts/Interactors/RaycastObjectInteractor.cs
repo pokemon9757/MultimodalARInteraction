@@ -17,19 +17,19 @@ namespace MMI
             if (Physics.Raycast(ray, out hit, raycastDistance, interactableLayer))
             {
                 // If the raycast hits an object with the tag "InteractableObject"
-                if (hit.collider.gameObject.tag == "InteractableObject" && _collidedObject == null)
+                if (hit.collider.gameObject.tag == "InteractableObject" && _selectedObject == null)
                 {
-                    _collidedObject = hit.collider.GetComponent<InteractableObject>();
+                    _selectedObject = hit.collider.GetComponent<InteractableObject>();
                     SetObjectSelected(true);
                 }
             }
             else
             {
                 // If the raycast hits nothing, perform the same action as OnTriggerExit
-                if (_collidedObject != null)
+                if (_selectedObject != null)
                 {
                     SetObjectSelected(false);
-                    _collidedObject = null;
+                    _selectedObject = null;
                 }
             }
         }

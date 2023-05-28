@@ -9,19 +9,19 @@ namespace MMI
     {
         void OnTriggerEnter(Collider other)
         {
-            if (other.gameObject.tag == "InteractableObject" && _collidedObject == null)
+            if (other.gameObject.tag == "InteractableObject" && _selectedObject == null)
             {
-                _collidedObject = other.GetComponent<InteractableObject>();
+                _selectedObject = other.GetComponent<InteractableObject>();
                 SetObjectSelected(true);
             }
         }
 
         void OnTriggerExit(Collider other)
         {
-            if (other.gameObject.tag == "InteractableObject" && _collidedObject != null && _collidedObject.gameObject == other.gameObject)
+            if (other.gameObject.tag == "InteractableObject" && _selectedObject != null && _selectedObject.gameObject == other.gameObject)
             {
                 SetObjectSelected(false);
-                _collidedObject = null;
+                _selectedObject = null;
             }
         }
     }

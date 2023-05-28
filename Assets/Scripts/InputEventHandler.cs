@@ -12,12 +12,16 @@ namespace MMI
         {
             Greetings = 0,
             Create = 1,
-            ChangeColor = 2
+            ChangeColor = 2,
+            Delete = 3
         }
+        [SerializeField] InteractorsManager _interactorsManager;
+
         [Header("Input modals")]
         [SerializeField] GestureTracking _gestureTracking;
         [SerializeField] EyeTracking _eyeTracking;
         [SerializeField] VoiceIntents _voiceItents;
+
         GameActionHandler _handler;
 
         [Header("Create action parameters")]
@@ -61,6 +65,8 @@ namespace MMI
                     break;
                 case VoiceActions.ChangeColor:
                     break;
+                case VoiceActions.Delete:
+                    break;
             }
         }
 
@@ -71,6 +77,7 @@ namespace MMI
 
         void DeleteObject()
         {
+
         }
 
         #region Debug UI Functions

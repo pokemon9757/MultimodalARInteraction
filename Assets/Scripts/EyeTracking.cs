@@ -113,11 +113,6 @@ namespace MMI
                 $"Confidence:\n{trackingState.FixationConfidence:F2}";
 
             bothEyesTextStatic.text = $"{bothEyesText}";
-
-            if (trackingState.RightBlink || trackingState.LeftBlink)
-            {
-                Debug.Log($"Eye Tracking Blink Registered Right Eye Blink: {trackingState.RightBlink} Left Eye Blink: {trackingState.LeftBlink}");
-            }
         }
 
         private void OnDestroy()
