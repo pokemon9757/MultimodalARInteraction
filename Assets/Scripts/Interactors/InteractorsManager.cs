@@ -8,9 +8,10 @@ namespace MMI
 {
     public class InteractorsManager : MonoBehaviour
     {
-        List<BaseObjectInteractor> _interactors;
+        InteractableObject _selectedObject;
+        public InteractableObject SelectedObject { get { return _selectedObject; } }
         static InteractorsManager _instance;
-        public InteractorsManager Instance
+        public static InteractorsManager Instance
         {
             get
             {
@@ -29,7 +30,6 @@ namespace MMI
                         DontDestroyOnLoad(singletonObject);
                     }
                 }
-
                 return _instance;
             }
         }
@@ -47,26 +47,23 @@ namespace MMI
                 DontDestroyOnLoad(gameObject);
             }
         }
-
-        void Start()
+        /// <summary>
+        /// Trigger the change of selected object  
+        /// </summary>
+        public void TriggerSelectObject(InteractableObject obj, bool active)
         {
-            _interactors = FindObjectsOfType<BaseObjectInteractor>().ToList();
-            Debug.Log("Grabbed " + _interactors.Count + " interactors");
-            // Sort interactors based on priority (highest to lowest)
-            _interactors.Sort((a, b) => b.Priority.CompareTo(a.Priority));
-        }
-
-        public InteractableObject GetSelectedObject()
-        {
-            foreach (var interactor in _interactors)
+            if (_selectedObject != obj)
             {
-                if (interactor.enabled && interactor.SelectedObject != null)
-                {
-                    // Return the selected object with highest priority
-                    return interactor.SelectedObject;
-                }
+                if (!active) return;
+                _selectedObject?.SetSelected(false);
+                _selectedObject = obj;
+                _selectedObject.SetSelected(true);
+                return;
             }
-            return null;
+
+            if (active) return;
+            _selectedObject.SetSelected(false);
+            _selectedObject = null;
         }
     }
 }

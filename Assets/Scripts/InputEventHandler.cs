@@ -70,6 +70,7 @@ namespace MMI
                 case VoiceActions.ChangeColor:
                     break;
                 case VoiceActions.Delete:
+                    DeleteObject();
                     break;
             }
         }
@@ -81,7 +82,9 @@ namespace MMI
 
         void DeleteObject()
         {
-
+            var objToDelete = InteractorsManager.Instance.SelectedObject;
+            if (objToDelete == null) return;
+            _handler.AddGameAction(new DeleteObjectAction(objToDelete.gameObject));
         }
 
         #region Debug UI Functions
@@ -92,7 +95,7 @@ namespace MMI
 
         public void DeleteSelected()
         {
-
+            DeleteObject();
         }
         #endregion
     }

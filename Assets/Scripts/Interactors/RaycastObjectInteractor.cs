@@ -17,9 +17,10 @@ namespace MMI
             if (Physics.Raycast(ray, out hit, _raycastDistance))
             {
                 // If the raycast hits an object with the tag "InteractableObject"
-                if (hit.collider.gameObject.tag == "InteractableObject" && _selectedObject == null)
+                if (hit.collider.gameObject.tag == "InteractableObject")
                 {
                     _selectedObject = hit.collider.GetComponent<InteractableObject>();
+                    InteractorsManager.Instance.TriggerSelectObject(_selectedObject, true);
                 }
             }
             else
@@ -27,6 +28,7 @@ namespace MMI
                 // If the raycast hits nothing, perform the same action as OnTriggerExit
                 if (_selectedObject != null)
                 {
+                    InteractorsManager.Instance.TriggerSelectObject(_selectedObject, false);
                     _selectedObject = null;
                 }
             }

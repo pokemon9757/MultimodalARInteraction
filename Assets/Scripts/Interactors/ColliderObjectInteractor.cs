@@ -9,16 +9,18 @@ namespace MMI
     {
         void OnTriggerEnter(Collider other)
         {
-            if (other.gameObject.tag == "InteractableObject" && _selectedObject == null)
+            if (other.gameObject.tag == "InteractableObject")
             {
                 _selectedObject = other.GetComponent<InteractableObject>();
+                InteractorsManager.Instance.TriggerSelectObject(_selectedObject, true);
             }
         }
 
         void OnTriggerExit(Collider other)
         {
-            if (other.gameObject.tag == "InteractableObject" && _selectedObject != null && _selectedObject.gameObject == other.gameObject)
+            if (other.gameObject.tag == "InteractableObject")
             {
+                InteractorsManager.Instance.TriggerSelectObject(_selectedObject, false);
                 _selectedObject = null;
             }
         }
