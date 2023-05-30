@@ -20,7 +20,6 @@ namespace MMI
                 if (hit.collider.gameObject.tag == "InteractableObject" && _selectedObject == null)
                 {
                     _selectedObject = hit.collider.GetComponent<InteractableObject>();
-                    SetObjectSelected(true);
                 }
             }
             else
@@ -28,7 +27,6 @@ namespace MMI
                 // If the raycast hits nothing, perform the same action as OnTriggerExit
                 if (_selectedObject != null)
                 {
-                    SetObjectSelected(false);
                     _selectedObject = null;
                 }
             }

@@ -12,7 +12,6 @@ namespace MMI
             if (other.gameObject.tag == "InteractableObject" && _selectedObject == null)
             {
                 _selectedObject = other.GetComponent<InteractableObject>();
-                SetObjectSelected(true);
             }
         }
 
@@ -20,7 +19,6 @@ namespace MMI
         {
             if (other.gameObject.tag == "InteractableObject" && _selectedObject != null && _selectedObject.gameObject == other.gameObject)
             {
-                SetObjectSelected(false);
                 _selectedObject = null;
             }
         }
