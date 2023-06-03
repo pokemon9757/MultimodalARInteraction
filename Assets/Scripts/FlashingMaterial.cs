@@ -44,14 +44,17 @@ namespace MMI
 
         public void EnableFlashing(bool active)
         {
+            // Enabling Flash
             if (!IsActive)
             {
+                // Store the renderers original colors
                 foreach (MeshRenderer m in GetComponentsInChildren<MeshRenderer>())
                 {
                     _renderersColors[m] = m.material.color;
                 }
             }
             IsActive = active;
+            // Disabling flash
             if (!active)
                 foreach (KeyValuePair<MeshRenderer, Color> entry in _renderersColors)
                 {

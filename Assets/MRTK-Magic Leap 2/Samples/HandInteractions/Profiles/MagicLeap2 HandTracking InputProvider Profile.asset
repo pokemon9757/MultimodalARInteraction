@@ -14,5 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isCustomProfile: 1
   HandednessSettings: 3
+  DisableHandHoldingController: 0
   GestureInteractionType: 2
-  Smoothing: 2
+  PinchMaintainValue: 0.1
+  PinchTriggerValue: 0.5

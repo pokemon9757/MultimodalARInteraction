@@ -150,7 +150,7 @@ public class MLVoiceIntentsConfiguration : ScriptableObject
     /// <summary>
     /// List of the system intent names to be added to the JSON file.
     /// </summary>
-    private List<String> supportedSystemIntents = new List<string> { "ML_CAPTURE_STILL", "ML_CAPTURE_VIDEO_START", "ML_CAPTURE_VIDEO_STOP", "ML_CLOSE" , "ML_GLOBAL_HOME", "ML_LAUNCH" , "ML_SYSAUDIO_MUTE" , "ML_SYSAUDIO_UNMUTE" , "ML_SYSAUDIO_VOLUME_DOWN" , "ML_SYSAUDIO_VOLUME_SET" , "ML_SYSAUDIO_VOLUME_UP" , "ML_GLOBAL_HELP" };
+    private List<String> supportedSystemIntents = new List<string> { "ML_CAPTURE_STILL", "ML_CAPTURE_VIDEO_START", "ML_CAPTURE_VIDEO_STOP", "ML_CLOSE", "ML_GLOBAL_HOME", "ML_LAUNCH", "ML_SYSAUDIO_MUTE", "ML_SYSAUDIO_UNMUTE", "ML_SYSAUDIO_VOLUME_DOWN", "ML_SYSAUDIO_VOLUME_SET", "ML_SYSAUDIO_VOLUME_UP", "ML_GLOBAL_HELP" };
 
     /// <summary>
     /// Return a string of the proper JSON format needed by the Voice Intents API.
@@ -159,7 +159,7 @@ public class MLVoiceIntentsConfiguration : ScriptableObject
     {
         SetupJSONContainer();
 
-        if(AutoAllowAllSystemIntents)
+        if (AutoAllowAllSystemIntents)
         {
             SetupJSONContainerAutoSystem();
             return JsonUtility.ToJson(containerAutoSys);
@@ -204,9 +204,9 @@ public class MLVoiceIntentsConfiguration : ScriptableObject
         AddSlotsToJSON();
 
         int index = 0;
-        foreach(SystemIntentFlags flag in Enum.GetValues(typeof(SystemIntentFlags)))
+        foreach (SystemIntentFlags flag in Enum.GetValues(typeof(SystemIntentFlags)))
         {
-            if(SystemCommands.HasFlag(flag))
+            if (SystemCommands.HasFlag(flag))
             {
                 container.sys_intent_list.name.Add(supportedSystemIntents[index]);
             }
@@ -242,7 +242,7 @@ public class MLVoiceIntentsConfiguration : ScriptableObject
 
     private void AddSlotsToJSON()
     {
-        if(SlotsForVoiceCommands.Count == 0)
+        if (SlotsForVoiceCommands.Count == 0)
         {
             return;
         }
@@ -295,7 +295,8 @@ public class MLVoiceIntentsConfiguration : ScriptableObject
 
         if (!idsUnique || !valuesUnique)
         {
-            Debug.LogError("The Voice Intents Configuration File has detected duplicate Values or Ids used. This could cause unwanted behaviour.");
+            string error = !idsUnique ? "IDs" : "Values";
+            Debug.LogError("The Voice Intents Configuration File has detected duplicate " + error + " used.This could cause unwanted behaviour.");
         }
     }
 }

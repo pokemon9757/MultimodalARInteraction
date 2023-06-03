@@ -1,10 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using Microsoft.MixedReality.Toolkit.Input;
+using Microsoft.MixedReality.Toolkit.UI;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 namespace MMI
 {
-    [RequireComponent(typeof(Rigidbody), typeof(FlashingMaterial))]
+    [RequireComponent(typeof(Rigidbody), typeof(FlashingMaterial), typeof(ObjectManipulator))]
+    [RequireComponent(typeof(MinMaxScaleConstraint))]
     public class InteractableObject : MonoBehaviour
     {
         private MeshRenderer[] _renderers;
@@ -18,6 +21,7 @@ namespace MMI
 
         void Init()
         {
+            gameObject.tag = "InteractableObject";
             _renderers = gameObject.GetComponentsInChildren<MeshRenderer>();
             _materialFlash = GetComponent<FlashingMaterial>();
             _rb = GetComponent<Rigidbody>();
@@ -46,6 +50,9 @@ namespace MMI
             Destroy(GetComponent<FlashingMaterial>());
             Destroy(GetComponent<XRGrabInteractable>());
             Destroy(GetComponent<Rigidbody>());
+            Destroy(GetComponent<NearInteractionGrabbable>());
+            Destroy(GetComponent<MinMaxScaleConstraint>());
+            Destroy(GetComponent<ObjectManipulator>());
         }
     }
 }

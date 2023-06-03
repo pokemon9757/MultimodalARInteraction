@@ -26878,6 +26878,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: UI
       objectReference: {fileID: 0}
+    - target: {fileID: 1707457440360418506, guid: 323a2bd17e52849699715ba4a3c32d30,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1707457440360418507, guid: 323a2bd17e52849699715ba4a3c32d30,
         type: 3}
       propertyPath: m_Pivot.x
@@ -26982,6 +26987,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1707457440360418509, guid: 323a2bd17e52849699715ba4a3c32d30,
+        type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1707457440679773455, guid: 323a2bd17e52849699715ba4a3c32d30,
         type: 3}

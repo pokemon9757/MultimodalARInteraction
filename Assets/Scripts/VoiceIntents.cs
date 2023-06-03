@@ -4,17 +4,11 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.UI;
 using UnityEngine.XR.MagicLeap;
 namespace MMI
 {
     public class VoiceIntents : MonoBehaviour
     {
-        [SerializeField, Tooltip("The text used to display status information for the example.")]
-        private Text _statusText = null;
-
-        [SerializeField, Tooltip("The text used to display input controls for the example.")]
-        private Text _controlsText = null;
 
         [SerializeField, Tooltip("The configuration file that holds the list of intents used for this application.")]
         private MLVoiceIntentsConfiguration _voiceConfiguration;
@@ -113,21 +107,6 @@ namespace MMI
 #endif
         }
 
-        void Update()
-        {
-            UpdateStatus();
-            string micName = Microphone.devices[0];
-            
-        }
-
-        private void UpdateStatus()
-        {
-            _statusText.text += $"\n<color=#B7B7B8><b>Voice Intents Data</b></color>\n{_startupStatus}";
-            _statusText.text += "\n\nIs Processing: " + _isProcessing;
-            _statusText.text += "\n\nInstructions and List of commands in Controls Tab";
-            _statusText.text += _lastResults;
-        }
-
         private void SetControlsText()
         {
             StringBuilder controlsScrollview = new StringBuilder();
@@ -157,8 +136,6 @@ namespace MMI
             }
 
             controlsScrollview.Append($"\n\n<color=#B7B7B8><b>Controller Bumper</b></color>\nBy Default this example scene starts processing Voice Intents. Tap the bumper to stop processing, then tap it again to begin processing again.");
-
-            _controlsText.text = controlsScrollview.ToString();
         }
 
         void VoiceEvent(in bool wasSuccessful, in MLVoice.IntentEvent voiceEvent)

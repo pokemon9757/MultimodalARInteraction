@@ -18,8 +18,6 @@ namespace MMI
         public Transform LeftInteractionPoint;
         public Transform RightInteractionPoint;
 
-        [SerializeField, Tooltip("The text used to display status information for the example.")]
-        private Text statusText = null;
         private string _statusStringBuilder = "Starting Tracking...";
         private InputDevice _leftHandDevice;
         private InputDevice _rightHandDevice;
@@ -69,7 +67,7 @@ namespace MMI
                 return;
             }
 
-            if (LeftTransform && RightTransform && LeftInteractionPoint && RightInteractionPoint && statusText)
+            if (LeftTransform && RightTransform && LeftInteractionPoint && RightInteractionPoint)
             {
                 GestureClassification.StartTracking();
             }
@@ -156,12 +154,6 @@ namespace MMI
                 _statusStringBuilder += "\n\n<color=#B7B7B8><b>Left KeyPose</b></color>: " + _leftKeyPose.ToString();
                 _statusStringBuilder += "\n<color=#B7B7B8><b>Right KeyPose</b></color>: " + _rightKeyPose.ToString();
             }
-            UpdateStatus();
-        }
-
-        private void UpdateStatus()
-        {
-            statusText.text = $"<color=#B7B7B8><b>Gesture Tracking Data</b></color>\n{_statusStringBuilder}";
         }
     }
 }

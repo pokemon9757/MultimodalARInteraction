@@ -841,12 +841,12 @@ PrefabInstance:
     - target: {fileID: 1359980009267695964, guid: 6906f74934047d24e9a47bbdd1afb57a,
         type: 3}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1359980009267695964, guid: 6906f74934047d24e9a47bbdd1afb57a,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5355557165450182212, guid: 6906f74934047d24e9a47bbdd1afb57a,
         type: 3}
@@ -1133,6 +1133,11 @@ PrefabInstance:
       propertyPath: m_Text
       value: Filled in from Example Script
       objectReference: {fileID: 0}
+    - target: {fileID: 9144045080844022169, guid: 6906f74934047d24e9a47bbdd1afb57a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9144045080852108117, guid: 6906f74934047d24e9a47bbdd1afb57a,
         type: 3}
       propertyPath: m_SizeDelta.y
@@ -1142,6 +1147,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9144045080929779760, guid: 6906f74934047d24e9a47bbdd1afb57a,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: -302.91
       objectReference: {fileID: 0}
     - target: {fileID: 9144045080993300992, guid: 6906f74934047d24e9a47bbdd1afb57a,
         type: 3}
@@ -1188,6 +1198,46 @@ PrefabInstance:
         by this feature</b></color>\n-  Settings > Magic Leap Inputs > Voice > Voice
         Commands\n\n<color=#B7B7B8><b>Mandatory permissions required by this feature</b></color>\n-
         SpatialMapping\n"
+      objectReference: {fileID: 0}
+    - target: {fileID: 9144045081096290919, guid: 6906f74934047d24e9a47bbdd1afb57a,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9144045081096290919, guid: 6906f74934047d24e9a47bbdd1afb57a,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9144045081349396370, guid: 6906f74934047d24e9a47bbdd1afb57a,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9144045081349396370, guid: 6906f74934047d24e9a47bbdd1afb57a,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9144045081349396370, guid: 6906f74934047d24e9a47bbdd1afb57a,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 182.99997
+      objectReference: {fileID: 0}
+    - target: {fileID: 9144045081349396370, guid: 6906f74934047d24e9a47bbdd1afb57a,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 15.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 9144045081349396370, guid: 6906f74934047d24e9a47bbdd1afb57a,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 113.499985
+      objectReference: {fileID: 0}
+    - target: {fileID: 9144045081349396370, guid: 6906f74934047d24e9a47bbdd1afb57a,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -25.75
       objectReference: {fileID: 0}
     - target: {fileID: 9144045081354614237, guid: 6906f74934047d24e9a47bbdd1afb57a,
         type: 3}

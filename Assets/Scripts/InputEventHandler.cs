@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Microsoft.MixedReality.Toolkit.UI.BoundsControl;
 using UnityEngine;
 using UnityEngine.XR.MagicLeap;
 
@@ -12,7 +13,11 @@ namespace MMI
             Greetings = 0,
             Create = 1,
             ChangeColor = 2,
-            Delete = 3
+            Delete = 3,
+            StartGroup = 4,
+            CompleteGroup = 5,
+            Select = 6,
+            Deselect = 7,
         }
         [SerializeField] InteractorsManager _interactorsManager;
 
@@ -51,6 +56,7 @@ namespace MMI
 
         void OnCommandDetected(in bool wasSuccessful, in MLVoice.IntentEvent voiceEvent)
         {
+            Debug.Log("--- \nVOICE DETECTED: " + ((VoiceActions)voiceEvent.EventID).ToString());
             switch ((VoiceActions)voiceEvent.EventID)
             {
                 case VoiceActions.Greetings:
@@ -71,6 +77,18 @@ namespace MMI
                     break;
                 case VoiceActions.Delete:
                     DeleteObject();
+                    break;
+                case VoiceActions.StartGroup:
+                    _interactorsManager.StartGrouping();
+                    break;
+                case VoiceActions.CompleteGroup:
+                    _interactorsManager.CompleteGrouping();
+                    break;
+                case VoiceActions.Select:
+                    _interactorsManager.SelectObjectToGroup(true);
+                    break;
+                case VoiceActions.Deselect:
+                    _interactorsManager.SelectObjectToGroup(false);
                     break;
             }
         }

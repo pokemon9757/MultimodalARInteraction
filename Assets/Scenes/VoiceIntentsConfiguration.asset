@@ -31,6 +31,14 @@ MonoBehaviour:
     Value: Set|Change [that|this|it]? color? to {Color}
   - Id: 3
     Value: Delete|Remove|Erase|Destroy
+  - Id: 4
+    Value: Begin|Start Group|Grouping
+  - Id: 5
+    Value: End|Finish|Complete|Stop Group|Grouping
+  - Id: 6
+    Value: Select
+  - Id: 7
+    Value: Deselect
   AutoAllowAllSystemIntents: 0
   SystemCommands: 0
   SlotsForVoiceCommands:

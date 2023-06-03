@@ -58,18 +58,10 @@ namespace MMI
             _createdObject = GameObject.CreatePrimitive(_shape);
             _createdObject.transform.position = _position;
             _createdObject.transform.localScale = _scale;
-            _createdObject.gameObject.tag = "InteractableObject";
             var renderer = _createdObject.GetComponent<Renderer>();
             renderer.material = _material;
             var interactable = _createdObject.AddComponent<InteractableObject>();
             interactable.UpdateColor(_color);
-            _createdObject.GetComponent<Collider>();
-            var bounds = _createdObject.AddComponent<BoundsControl>();
-            bounds.BoundsControlActivation = Microsoft.MixedReality.Toolkit.UI.BoundsControlTypes.BoundsControlActivationType.ActivateByProximityAndPointer;
-            _createdObject.AddComponent<MinMaxScaleConstraint>();
-            _createdObject.AddComponent<NearInteractionGrabbable>();
-            _createdObject.AddComponent<ObjectManipulator>();
-
         }
     }
 }

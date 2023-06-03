@@ -2,6 +2,8 @@ using Microsoft.MixedReality.Toolkit;
 using Microsoft.MixedReality.Toolkit.Input;
 using Microsoft.MixedReality.Toolkit.Utilities;
 using UnityEngine;
+using UnityEngine.XR;
+using UnityEngine.XR.MagicLeap;
 
 namespace MMI
 {
@@ -11,53 +13,79 @@ namespace MMI
     public class EyeTracking : MonoBehaviour
     {
         [Tooltip("Display the game object along the eye gaze ray at a default distance (in meters).")]
-        [SerializeField] float _defaultDistanceInMeters = 2f;
+        [SerializeField] float _maxDistanceInMeters = 2f;
         [SerializeField, Tooltip("Fixation Point marker")] Transform _eyesMarker;
         [SerializeField] bool _isDebugActive = true;
-        IMixedRealityEyeGazeProvider _eyeGazeProvider;
+        public Vector3 GazeFixationPoint { get { return _eyesActions.Data.ReadValue<UnityEngine.InputSystem.XR.Eyes>().fixationPoint; } }
         public Vector3 GazeMarkerPosition { get { return _eyesMarker.position; } }
-        public Vector3 GazeOrigin { get { return _eyeGazeProvider.GazeOrigin; } }
-        public Vector3 GazeDirection { get { return _eyeGazeProvider.GazeDirection; } }
+        public Vector3 GazeOrigin { get { return CoreServices.InputSystem.EyeGazeProvider.GazeOrigin; } }
+        public Vector3 GazeDirection { get { return CoreServices.InputSystem.EyeGazeProvider.GazeDirection; } }
+        // Used to get ml inputs.
+        private MagicLeapInputs _mlInputs;
+
+        // Used to get eyes action data.
+        private MagicLeapInputs.EyesActions _eyesActions;
+        // Used to get other eye data
+        private InputDevice _eyesDevice;
+
+        // Was EyeTracking permission granted by user
+        private bool _permissionGranted = false;
+        private readonly MLPermissions.Callbacks _permissionCallbacks = new MLPermissions.Callbacks();
+
+
+        private void Awake()
+        {
+            _permissionCallbacks.OnPermissionGranted += OnPermissionGranted;
+        }
 
         public void Init()
         {
-            _eyeGazeProvider = CoreServices.InputSystem?.EyeGazeProvider;
+            _mlInputs = new MagicLeapInputs();
+            _mlInputs.Enable();
+
+            MLPermissions.RequestPermission(MLPermission.EyeTracking, _permissionCallbacks);
             SetDebugElementsActive();
         }
 
         public void ProcessAbility()
         {
-            if (_eyeGazeProvider == null)
+            if (!_permissionGranted)
             {
-                Init();
+                return;
             }
 
-            _eyesMarker.position = _eyeGazeProvider.GazeOrigin + _eyeGazeProvider.GazeDirection.normalized * _defaultDistanceInMeters;
-
-            EyeTrackingTarget lookedAtEyeTarget = EyeTrackingTarget.LookedAtEyeTarget;
-
-            // Update GameObject to the current eye gaze position at a given distance
-            if (lookedAtEyeTarget != null)
+            if (!_eyesDevice.isValid)
             {
-                // Show the object at the center of the currently looked at target.
-                if (lookedAtEyeTarget.EyeCursorSnapToTargetCenter)
-                {
-                    Ray rayToCenter = new Ray(CameraCache.Main.transform.position, lookedAtEyeTarget.transform.position - CameraCache.Main.transform.position);
-                    RaycastHit hitInfo;
-                    UnityEngine.Physics.Raycast(rayToCenter, out hitInfo);
-                    _eyesMarker.position = hitInfo.point;
-                }
-                else
-                {
-                    // Show the object at the hit position of the user's eye gaze ray with the target.
-                    _eyesMarker.position = _eyeGazeProvider.GazeOrigin + _eyeGazeProvider.GazeDirection.normalized * _defaultDistanceInMeters;
-                }
+                this._eyesDevice = InputSubsystem.Utils.FindMagicLeapDevice(InputDeviceCharacteristics.EyeTracking | InputDeviceCharacteristics.TrackedDevice);
+                return;
             }
-            else
+
+            // Manually set fixation point marker so we can apply rotation, since UnityXREyes
+            // does not provide it
+            Vector3 markerPosition = GazeFixationPoint;
+            float dist = Vector3.Distance(GazeOrigin, GazeFixationPoint);
+
+            if (dist > _maxDistanceInMeters)
             {
-                // If no target is hit, show the object at a default distance along the gaze ray.
-                _eyesMarker.position = _eyeGazeProvider.GazeOrigin + _eyeGazeProvider.GazeDirection.normalized * _defaultDistanceInMeters;
+                markerPosition = GazeOrigin + GazeDirection.normalized * _maxDistanceInMeters;
             }
+            _eyesMarker.position = markerPosition;
+            _eyesMarker.rotation = Quaternion.LookRotation(GazeFixationPoint - Camera.main.transform.position);
+        }
+
+        private void OnDestroy()
+        {
+            _permissionCallbacks.OnPermissionGranted -= OnPermissionGranted;
+            _mlInputs.Disable();
+            _mlInputs.Dispose();
+            InputSubsystem.Extensions.MLEyes.StopTracking();
+        }
+
+        private void OnPermissionGranted(string permission)
+        {
+            InputSubsystem.Extensions.MLEyes.StartTracking();
+            _eyesActions = new MagicLeapInputs.EyesActions(_mlInputs);
+            _permissionGranted = true;
         }
 
         public void ToggleDebugElements()
