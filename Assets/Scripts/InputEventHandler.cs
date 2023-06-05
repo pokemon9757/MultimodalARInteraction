@@ -56,7 +56,7 @@ namespace MMI
 
         void OnCommandDetected(in bool wasSuccessful, in MLVoice.IntentEvent voiceEvent)
         {
-            Debug.Log("--- \nVOICE DETECTED: " + ((VoiceActions)voiceEvent.EventID).ToString());
+            Debug.Log("--- VOICE DETECTED: " + ((VoiceActions)voiceEvent.EventID).ToString() + " ---");
             switch ((VoiceActions)voiceEvent.EventID)
             {
                 case VoiceActions.Greetings:

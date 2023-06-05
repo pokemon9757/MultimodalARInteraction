@@ -16,18 +16,17 @@ namespace MMI
         [SerializeField] float _maxDistanceInMeters = 2f;
         [SerializeField, Tooltip("Fixation Point marker")] Transform _eyesMarker;
         [SerializeField] bool _isDebugActive = true;
+        [SerializeField] RaycastObjectInteractor _rayInteractor;
         public Vector3 GazeFixationPoint { get { return _eyesActions.Data.ReadValue<UnityEngine.InputSystem.XR.Eyes>().fixationPoint; } }
         public Vector3 GazeMarkerPosition { get { return _eyesMarker.position; } }
         public Vector3 GazeOrigin { get { return CoreServices.InputSystem.EyeGazeProvider.GazeOrigin; } }
-        public Vector3 GazeDirection { get { return CoreServices.InputSystem.EyeGazeProvider.GazeDirection; } }
+        public Vector3 GazeDirection { get { return _eyesActions.Data.ReadValue<UnityEngine.InputSystem.XR.Eyes>().fixationPoint - CoreServices.InputSystem.EyeGazeProvider.GazeOrigin; } }
         // Used to get ml inputs.
         private MagicLeapInputs _mlInputs;
-
         // Used to get eyes action data.
         private MagicLeapInputs.EyesActions _eyesActions;
         // Used to get other eye data
         private InputDevice _eyesDevice;
-
         // Was EyeTracking permission granted by user
         private bool _permissionGranted = false;
         private readonly MLPermissions.Callbacks _permissionCallbacks = new MLPermissions.Callbacks();
@@ -71,6 +70,7 @@ namespace MMI
             }
             _eyesMarker.position = markerPosition;
             _eyesMarker.rotation = Quaternion.LookRotation(GazeFixationPoint - Camera.main.transform.position);
+            _rayInteractor.PerformRaycast(GazeOrigin, GazeDirection, _maxDistanceInMeters);
         }
 
         private void OnDestroy()

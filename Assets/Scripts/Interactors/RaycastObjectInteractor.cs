@@ -6,20 +6,21 @@ namespace MMI
 {
     public class RaycastObjectInteractor : BaseObjectInteractor
     {
-        [SerializeField] float _raycastDistance = Mathf.Infinity;
-        [SerializeField] EyeTracking _eyeTracking;
-        void Update()
+        public void PerformRaycast(Vector3 origin, Vector3 direction, float distance)
         {
             // Perform a raycast in a given direction
-            Ray ray = new Ray(_eyeTracking.GazeOrigin, _eyeTracking.GazeDirection);
+            Ray ray = new Ray(origin, direction);
             RaycastHit hit;
 
-            if (Physics.Raycast(ray, out hit, _raycastDistance))
+            if (Physics.Raycast(ray, out hit, distance))
             {
                 // If the raycast hits an object with the tag "InteractableObject"
                 if (hit.collider.gameObject.tag == "InteractableObject")
                 {
                     _selectedObject = hit.collider.GetComponent<InteractableObject>();
+                    // Might have been grouped
+                    if (!_selectedObject) _selectedObject = hit.collider.gameObject.GetComponentInParent<InteractableObject>();
+                    if (!_selectedObject) return;
                     InteractorsManager.Instance.TriggerSelectObject(_selectedObject, true);
                 }
             }

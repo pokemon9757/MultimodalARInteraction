@@ -11,6 +11,9 @@ namespace MMI
         {
             if (other.gameObject.tag == "InteractableObject")
             {
+                // Might have been grouped
+                if (!_selectedObject) _selectedObject = other.gameObject.GetComponentInParent<InteractableObject>();
+                if (!_selectedObject) return;
                 _selectedObject = other.GetComponent<InteractableObject>();
                 InteractorsManager.Instance.TriggerSelectObject(_selectedObject, true);
             }

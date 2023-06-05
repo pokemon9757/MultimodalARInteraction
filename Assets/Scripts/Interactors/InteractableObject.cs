@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using Microsoft.MixedReality.Toolkit.Input;
 using Microsoft.MixedReality.Toolkit.UI;
 using UnityEngine;
-using UnityEngine.XR.Interaction.Toolkit;
 namespace MMI
 {
     [RequireComponent(typeof(Rigidbody), typeof(FlashingMaterial), typeof(ObjectManipulator))]
@@ -30,8 +29,7 @@ namespace MMI
 
         public void UpdateColor(Color c)
         {
-            if (_renderers == null) _renderers = gameObject.GetComponentsInChildren<MeshRenderer>();
-
+            if (_renderers == null || _renderers.Length == 0) _renderers = GetComponentsInChildren<MeshRenderer>();
             foreach (Renderer r in _renderers)
             {
                 r.material.color = c;
@@ -48,11 +46,9 @@ namespace MMI
         void OnDestroy()
         {
             Destroy(GetComponent<FlashingMaterial>());
-            Destroy(GetComponent<XRGrabInteractable>());
-            Destroy(GetComponent<Rigidbody>());
-            Destroy(GetComponent<NearInteractionGrabbable>());
             Destroy(GetComponent<MinMaxScaleConstraint>());
             Destroy(GetComponent<ObjectManipulator>());
+            Destroy(GetComponent<Rigidbody>());
         }
     }
 }

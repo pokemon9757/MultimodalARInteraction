@@ -5,18 +5,19 @@ namespace MMI
 {
     public class FlashingMaterial : MonoBehaviour
     {
-        public bool IsActive = false;
         [SerializeField] float _minIntensity = -0.5f;
         [SerializeField] float _maxIntensity = 1.5f;
         [SerializeField] float _transitionTime = 1f;
+        bool _isActive = false;
         float _timer = 0f;
         bool _tweeningForward = true;
         Dictionary<MeshRenderer, Color> _renderersColors = new Dictionary<MeshRenderer, Color>();
-
+        MeshRenderer[] _renderers;
         // Start is called before the first frame update
         void Start()
         {
-            foreach (MeshRenderer m in GetComponentsInChildren<MeshRenderer>())
+            _renderers = GetComponentsInChildren<MeshRenderer>();
+            foreach (MeshRenderer m in _renderers)
             {
                 _renderersColors[m] = m.material.color;
             }
@@ -25,7 +26,7 @@ namespace MMI
         // Update is called once per frame
         void Update()
         {
-            if (IsActive)
+            if (_isActive)
             {
                 foreach (KeyValuePair<MeshRenderer, Color> entry in _renderersColors)
                 {
@@ -44,16 +45,17 @@ namespace MMI
 
         public void EnableFlashing(bool active)
         {
+            if (_renderers.Length == 0) _renderers = GetComponentsInChildren<MeshRenderer>();
             // Enabling Flash
-            if (!IsActive)
+            if (!_isActive)
             {
                 // Store the renderers original colors
-                foreach (MeshRenderer m in GetComponentsInChildren<MeshRenderer>())
+                foreach (MeshRenderer m in _renderers)
                 {
                     _renderersColors[m] = m.material.color;
                 }
             }
-            IsActive = active;
+            _isActive = active;
             // Disabling flash
             if (!active)
                 foreach (KeyValuePair<MeshRenderer, Color> entry in _renderersColors)

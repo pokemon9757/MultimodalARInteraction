@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: MagicLeap2 HandTrackingProfile
   m_EditorClassIdentifier: 
   isCustomProfile: 1
-  jointPrefab: {fileID: 1955475817299902, guid: 6a3f88d2571cd234a86d95ee5856b9ec,
+  jointPrefab: {fileID: 1955475817299902, guid: 82ced882057514d4ea05b742eaa08ba4,
     type: 3}
   palmPrefab: {fileID: 6797406804172968804, guid: 750bdc3344567a447960aae3eda2b462,
     type: 3}
-  fingertipPrefab: {fileID: 7094064642998883381, guid: b37dde41a983d664c8a09a91313733e7,
+  fingertipPrefab: {fileID: 7094064642998883381, guid: 6a1cd2c1fd7696241ae4aabd6331c14a,
     type: 3}
   systemHandMeshMaterial: {fileID: 0}
   riggedHandMeshMaterial: {fileID: 0}

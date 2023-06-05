@@ -9,6 +9,7 @@ namespace MMI
     public class InteractorsManager : MonoBehaviour
     {
         public InteractableObject SelectedObject { get { return _selectedObject; } }
+        public Color _selectedColor = Color.blue;
         public static InteractorsManager Instance
         {
             get
@@ -58,13 +59,18 @@ namespace MMI
             if (obj == null) return;
             if (_selectedObject != obj)
             {
-                // Set a new selected object
+                // Trying to disable a not selected object
+                if (!active) return;
+
+                // Set active a new selected object
                 _selectedObject?.SetSelected(false);
-                _lastSelectedObject = _selectedObject ? _selectedObject : null;
+                _lastSelectedObject = _selectedObject;
                 _selectedObject = obj;
                 _selectedObject.SetSelected(true);
                 return;
             }
+
+            // Else  _selectedObject == obj
             // Trying to select an already selected object
             if (active) return;
             // Deselect current object
