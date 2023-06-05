@@ -28,7 +28,7 @@ namespace MMI
         private Color StringToColor(string colorName)
         {
             Color color;
-            if (!ColorUtility.TryParseHtmlString(colorName, out color))
+            if (!ColorUtility.TryParseHtmlString(colorName.ToLower(), out color))
             {
                 Debug.LogError("Invalid color name " + colorName);
                 return Color.grey;
@@ -38,7 +38,7 @@ namespace MMI
 
         private PrimitiveType StringToPrimitiveType(string shapeName)
         {
-            switch (shapeName.ToLower())
+            switch (shapeName)
             {
                 case "cube":
                     return PrimitiveType.Cube;
@@ -50,11 +50,13 @@ namespace MMI
                     return PrimitiveType.Cylinder;
                 default:
                     Debug.LogError("Invalid shape name " + shapeName);
-                    return PrimitiveType.Cube;
+                    return PrimitiveType.Plane;
             }
         }
         public void Execute()
         {
+            if (_shape == PrimitiveType.Plane)
+                return;
             _createdObject = GameObject.CreatePrimitive(_shape);
             _createdObject.transform.position = _position;
             _createdObject.transform.localScale = _scale;

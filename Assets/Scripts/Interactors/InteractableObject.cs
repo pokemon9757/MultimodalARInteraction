@@ -12,7 +12,7 @@ namespace MMI
         private MeshRenderer[] _renderers;
         private FlashingMaterial _materialFlash;
         private Rigidbody _rb;
-
+        private Dictionary<MeshRenderer, Color> _cachedColorsDict = new();
         void Start()
         {
             Init();
@@ -30,8 +30,27 @@ namespace MMI
         public void UpdateColor(Color c)
         {
             if (_renderers == null || _renderers.Length == 0) _renderers = GetComponentsInChildren<MeshRenderer>();
-            foreach (Renderer r in _renderers)
+            SetSelected(false);
+            foreach (MeshRenderer r in _renderers)
             {
+                _cachedColorsDict[r] = r.material.color;
+                r.material.color = c;
+                r.material.SetColor("_EmissionColor", c);
+            }
+        }
+
+        public void RecoverUpdatedColors()
+        {
+            SetSelected(false);
+            if (_cachedColorsDict == null || _cachedColorsDict.Count == 0)
+            {
+                Debug.LogError("Cannot recover updated color as dict is empty");
+                return;
+            }
+
+            foreach (MeshRenderer r in _renderers)
+            {
+                Color c = _cachedColorsDict[r];
                 r.material.color = c;
                 r.material.SetColor("_EmissionColor", c);
             }
@@ -41,7 +60,6 @@ namespace MMI
         {
             _materialFlash.EnableFlashing(active);
         }
-
 
         void OnDestroy()
         {

@@ -18,6 +18,9 @@ namespace MMI
             CompleteGroup = 5,
             Select = 6,
             Deselect = 7,
+            ToggleUI = 8,
+            ScaleUp = 9,
+            ScaleDown = 10,
         }
         [SerializeField] InteractorsManager _interactorsManager;
 
@@ -62,18 +65,10 @@ namespace MMI
                 case VoiceActions.Greetings:
                     break;
                 case VoiceActions.Create:
-                    string shapeName = "";
-                    string colorName = "grey";
-                    foreach (MLVoice.EventSlot slot in voiceEvent.EventSlotsUsed)
-                    {
-                        if (slot.SlotName == "Shape")
-                            shapeName = slot.SlotValue;
-                        else if (slot.SlotName == "Color")
-                            colorName = slot.SlotValue;
-                    }
-                    CreateObject(shapeName, colorName);
+                    CreateObject(GetSlotValue(voiceEvent, "Shape"), GetSlotValue(voiceEvent, "Color"));
                     break;
                 case VoiceActions.ChangeColor:
+                    _interactorsManager.ChangeSelectedObjectColor(GetSlotValue(voiceEvent, "Color"));
                     break;
                 case VoiceActions.Delete:
                     DeleteObject();
@@ -90,11 +85,26 @@ namespace MMI
                 case VoiceActions.Deselect:
                     _interactorsManager.SelectObjectToGroup(false);
                     break;
+                case VoiceActions.ScaleUp:
+                    _interactorsManager.ScaleSelectedObject(GetSlotValue(voiceEvent, "Percentage"), true);
+                    break;
+                case VoiceActions.ScaleDown:
+                    _interactorsManager.ScaleSelectedObject(GetSlotValue(voiceEvent, "Percentage"), false);
+                    break;
             }
         }
 
+        string GetSlotValue(MLVoice.IntentEvent voiceEvent, string slotName)
+        {
+            foreach (MLVoice.EventSlot slot in voiceEvent.EventSlotsUsed)
+            {
+                if (slot.SlotName == slotName) return slot.SlotValue;
+            }
+            return "Could not find";
+        }
         void CreateObject(string shapeName, string colorName)
         {
+            Debug.Log("Creating " + shapeName + " " + colorName);
             _handler.AddGameAction(new CreateObjectAction(_eyeTracking.GazeMarkerPosition, _initialScale, _initialMaterial, colorName, shapeName));
         }
 

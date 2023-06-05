@@ -24,30 +24,36 @@ MonoBehaviour:
     value: Slot Test for ({Shape}|{Color})
   VoiceCommandsToAdd:
   - Id: 0
-    Value: '[Hi|Hello there?] | Greetings'
+    Value: (Hi|[Hello there] | Greetings)
   - Id: 1
-    Value: 'Create [a? {Color}]? {Shape} '
+    Value: 'Create a? {Color} {Shape} '
   - Id: 2
-    Value: Set|Change [that|this|it]? color? to {Color}
+    Value: (Set|Change) (that|this|it)? color to {Color}
   - Id: 3
     Value: Delete|Remove|Erase|Destroy
   - Id: 4
-    Value: Begin|Start Group|Grouping
+    Value: (Begin|Start) (Group|Grouping)
   - Id: 5
-    Value: End|Finish|Complete|Stop Group|Grouping
+    Value: (End|Finish|Complete|Stop) (Group|Grouping)
   - Id: 6
     Value: Select
   - Id: 7
     Value: Deselect
-  AutoAllowAllSystemIntents: 0
+  - Id: 8
+    Value: Turn? UI {Boolean}
+  - Id: 9
+    Value: Scale up {Percentage} percent?
+  - Id: 10
+    Value: Scale down {Percentage} percent?
+  AutoAllowAllSystemIntents: 1
   SystemCommands: 0
   SlotsForVoiceCommands:
   - name: Shape
     values:
-    - Cube
-    - Sphere
-    - Capsule
-    - Cylinder
+    - cube
+    - sphere
+    - capsule
+    - cylinder
   - name: Color
     values:
     - Red
@@ -62,3 +68,19 @@ MonoBehaviour:
     - Yellow
     - Pink
     - Brown
+  - name: Boolean
+    values:
+    - True
+    - False
+  - name: Percentage
+    values:
+    - 10
+    - 20
+    - 30
+    - 40
+    - 50
+    - 60
+    - 70
+    - 80
+    - 90
+    - 100

@@ -11,7 +11,7 @@ namespace MMI
         bool _isActive = false;
         float _timer = 0f;
         bool _tweeningForward = true;
-        Dictionary<MeshRenderer, Color> _renderersColors = new Dictionary<MeshRenderer, Color>();
+        Dictionary<MeshRenderer, Color> _renderersOrigColors = new Dictionary<MeshRenderer, Color>();
         MeshRenderer[] _renderers;
         // Start is called before the first frame update
         void Start()
@@ -19,7 +19,7 @@ namespace MMI
             _renderers = GetComponentsInChildren<MeshRenderer>();
             foreach (MeshRenderer m in _renderers)
             {
-                _renderersColors[m] = m.material.color;
+                _renderersOrigColors[m] = m.material.color;
             }
         }
 
@@ -28,7 +28,7 @@ namespace MMI
         {
             if (_isActive)
             {
-                foreach (KeyValuePair<MeshRenderer, Color> entry in _renderersColors)
+                foreach (KeyValuePair<MeshRenderer, Color> entry in _renderersOrigColors)
                 {
                     float emissiveIntensity = Mathf.Lerp(_minIntensity, _maxIntensity, (float)_timer / _transitionTime);
                     entry.Key.material.color = entry.Value * emissiveIntensity;
@@ -52,13 +52,13 @@ namespace MMI
                 // Store the renderers original colors
                 foreach (MeshRenderer m in _renderers)
                 {
-                    _renderersColors[m] = m.material.color;
+                    _renderersOrigColors[m] = m.material.color;
                 }
             }
             _isActive = active;
             // Disabling flash
             if (!active)
-                foreach (KeyValuePair<MeshRenderer, Color> entry in _renderersColors)
+                foreach (KeyValuePair<MeshRenderer, Color> entry in _renderersOrigColors)
                 {
                     entry.Key.material.color = entry.Value;
                     entry.Key.material.SetColor("_EmissionColor", entry.Value);

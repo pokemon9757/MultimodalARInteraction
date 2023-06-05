@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,6 +37,7 @@ namespace MMI
         InteractableObject _selectedObject;
         InteractableObject _lastSelectedObject;
         Dictionary<InteractableObject, bool> _objectsToGroupDict = new();
+        Dictionary<InteractableObject, Color> _objectsOriginalColor = new();
         bool _isInGroupMode = false;
 
         void Awake()
@@ -64,7 +66,7 @@ namespace MMI
 
                 // Set active a new selected object
                 _selectedObject?.SetSelected(false);
-                _lastSelectedObject = _selectedObject;
+                _lastSelectedObject = _selectedObject == null ? _lastSelectedObject : _selectedObject;
                 _selectedObject = obj;
                 _selectedObject.SetSelected(true);
                 return;
@@ -74,7 +76,7 @@ namespace MMI
             // Trying to select an already selected object
             if (active) return;
             // Deselect current object
-            _selectedObject.SetSelected(false);
+            _selectedObject?.SetSelected(false);
             _lastSelectedObject = _selectedObject;
             _selectedObject = null;
         }
@@ -99,20 +101,12 @@ namespace MMI
             _isInGroupMode = false;
 
             // Perform grouping 
-            List<InteractableObject> toBeGrouped = new List<InteractableObject>();
-            foreach (KeyValuePair<InteractableObject, bool> entry in _objectsToGroupDict)
-            {
-                if (entry.Value)
-                {
-                    toBeGrouped.Add(entry.Key);
-                }
-            }
-            if (toBeGrouped.Count == 0) return;
+            if (_objectsToGroupDict.Count == 0) return;
             bool setParentPos = false;
             Transform parent = new GameObject("Grouped Objects").transform;
-            foreach (InteractableObject obj in toBeGrouped)
+            foreach (InteractableObject obj in _objectsToGroupDict.Keys)
             {
-                obj.SetSelected(false);
+                obj.RecoverUpdatedColors();
                 Destroy(obj.GetComponent<InteractableObject>());
 
                 // Set the parent transform to the first child
@@ -147,7 +141,49 @@ namespace MMI
                 Debug.LogWarning("Cannot perform " + action + " since no object has been recorded");
                 return;
             }
-            _objectsToGroupDict[obj] = active;
+            if (active)
+            {
+                obj.UpdateColor(_selectedColor);
+                _objectsToGroupDict[obj] = active;
+            }
+            else
+            {
+                // Recover to the original color if the dict contains the obj
+                if (_objectsToGroupDict.ContainsKey(obj))
+                {
+                    obj.RecoverUpdatedColors();
+                    _objectsToGroupDict.Remove(obj);
+                }
+            }
+        }
+
+        public void ChangeSelectedObjectColor(string colorName)
+        {
+            var obj = _selectedObject == null ? _selectedObject : _lastSelectedObject;
+            if (obj == null)
+            {
+                Debug.LogError("No object has been selected yet");
+                return;
+            }
+            Color color;
+            if (!ColorUtility.TryParseHtmlString(colorName.ToLower(), out color))
+            {
+                Debug.LogError("Invalid color name " + colorName);
+                color = Color.gray;
+            }
+            obj.UpdateColor(color);
+        }
+
+        public void ScaleSelectedObject(string percentageString, bool scaleUp)
+        {
+            var obj = _selectedObject == null ? _selectedObject : _lastSelectedObject;
+            if (obj == null)
+            {
+                Debug.LogError("No object has been selected yet");
+                return;
+            }
+            int percent = Int32.Parse(percentageString);
+            _selectedObject.transform.localScale *= scaleUp ? (percent + 100) / 100 : (100 - percent) / 100;
         }
     }
 }
