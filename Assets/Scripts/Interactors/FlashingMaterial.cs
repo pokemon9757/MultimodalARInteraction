@@ -13,15 +13,6 @@ namespace MMI
         bool _tweeningForward = true;
         Dictionary<MeshRenderer, Color> _renderersOrigColors = new Dictionary<MeshRenderer, Color>();
         MeshRenderer[] _renderers;
-        // Start is called before the first frame update
-        void Awake()
-        {
-            _renderers = GetComponentsInChildren<MeshRenderer>();
-            foreach (MeshRenderer m in _renderers)
-            {
-                _renderersOrigColors[m] = m.material.color;
-            }
-        }
 
         // Update is called once per frame
         void Update()
@@ -45,7 +36,7 @@ namespace MMI
 
         public void EnableFlashing(bool active)
         {
-            if (_renderers.Length == 0) _renderers = GetComponentsInChildren<MeshRenderer>();
+            if (_renderers == null || _renderers.Length == 0) _renderers = GetComponentsInChildren<MeshRenderer>();
             // Enabling Flash
             if (!_isActive)
             {

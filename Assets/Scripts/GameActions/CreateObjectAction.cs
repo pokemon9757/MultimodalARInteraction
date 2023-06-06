@@ -33,7 +33,7 @@ namespace MMI
 
         private PrimitiveType StringToPrimitiveType(string shapeName)
         {
-            switch (shapeName)
+            switch (shapeName.ToLower())
             {
                 case "cube":
                     return PrimitiveType.Cube;
@@ -53,7 +53,7 @@ namespace MMI
             _createdObject = GameObject.CreatePrimitive(_shape);
             _createdObject.transform.position = _position;
             _createdObject.transform.localScale = _scale;
-            var renderer = _createdObject.GetComponent<Renderer>();
+            var renderer = _createdObject.GetComponent<MeshRenderer>();
             renderer.material = _material;
             var interactable = _createdObject.AddComponent<InteractableObject>();
             interactable.UpdateColor(_color);

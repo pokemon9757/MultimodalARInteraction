@@ -14,12 +14,10 @@ namespace MMI
             Create = 1,
             ChangeColor = 2,
             Delete = 3,
-            StartGroup = 4,
-            CompleteGroup = 5,
-            Select = 6,
-            Deselect = 7,
-            ToggleUI = 8,
-            Scale = 9,
+            Group = 4,
+            Selection = 5,
+            Scale = 6,
+            ToggleUI = 7,
         }
         [SerializeField] InteractorsManager _interactorsManager;
 
@@ -50,7 +48,7 @@ namespace MMI
 
         void OnCommandDetected(bool wasSuccessful, MLVoice.IntentEvent voiceEvent)
         {
-            Debug.Log("--- VOICE DETECTED: " + ((VoiceActions)voiceEvent.EventID).ToString() + " ---");
+            Debug.Log("--- VOICE DETECTED: " + voiceEvent.EventName + " ---");
             switch ((VoiceActions)voiceEvent.EventID)
             {
                 case VoiceActions.Greetings:
@@ -82,23 +80,20 @@ namespace MMI
                 case VoiceActions.Delete:
                     DeleteObject();
                     break;
-                case VoiceActions.StartGroup:
-                    _interactorsManager.StartGrouping();
+                case VoiceActions.Group:
+                    string action = GetSlotValue(voiceEvent.EventName, "Action");
+                    bool isStartAction = action == "Start" || action == "Begin";
+                    if (isStartAction) _interactorsManager.StartGrouping();
+                    else _interactorsManager.CompleteGrouping();
                     break;
-                case VoiceActions.CompleteGroup:
-                    _interactorsManager.CompleteGrouping();
-                    break;
-                case VoiceActions.Select:
-                    _interactorsManager.SelectObjectToGroup(true);
-                    break;
-                case VoiceActions.Deselect:
-                    _interactorsManager.SelectObjectToGroup(false);
+                case VoiceActions.Selection:
+                    string selection = GetSlotValue(voiceEvent.EventName, "Selection");
+                    _interactorsManager.SelectObjectToGroup(selection == "Select");
                     break;
                 case VoiceActions.Scale:
                     bool isScaleUp = GetSlotValue(voiceEvent.EventName, "UpDown") == "Up";
                     _interactorsManager.ScaleSelectedObject(GetSlotValue(voiceEvent.EventName, "Percentage"), isScaleUp);
                     break;
-
             }
         }
 

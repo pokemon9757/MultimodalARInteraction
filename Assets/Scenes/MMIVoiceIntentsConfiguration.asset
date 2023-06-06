@@ -17,30 +17,28 @@ MonoBehaviour:
   - Id: 0
     Value: (Hi|[Hello there] | Greetings)
   - Id: 1
-    Value: 'Create a? {Color}? {Shape} '
+    Value: '[Create|Generate] [a|an]? {Color}? {Shape} '
   - Id: 2
     Value: (Set|Change)? (that|this|it)? color to {Color}
   - Id: 3
     Value: Delete|Remove|Erase|Destroy
-  - Id: 5
+  - Id: 4
     Value: '{Action} Group'
+  - Id: 5
+    Value: '{Selection}'
   - Id: 6
-    Value: Select
+    Value: Scale {UpDown} by? {Percentage} percent?
   - Id: 7
-    Value: Deselect
-  - Id: 8
     Value: Turn? UI {Boolean}
-  - Id: 9
-    Value: Scale {UpDown} {Percentage} percent?
   AutoAllowAllSystemIntents: 0
   SystemCommands: 2008
   SlotsForVoiceCommands:
   - name: Shape
     values:
-    - cube
-    - sphere
-    - capsule
-    - cylinder
+    - Cube
+    - Sphere
+    - Capsule
+    - Cylinder
   - name: Color
     values:
     - Red
@@ -73,10 +71,13 @@ MonoBehaviour:
     - 100
   - name: Action
     values:
-    - Begin
-    - Start
+    - Begin|Start
     - End|Complete
   - name: UpDown
     values:
     - Up
     - Down
+  - name: Selection
+    values:
+    - Select
+    - Deselect

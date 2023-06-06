@@ -116,6 +116,7 @@ namespace MMI
             Transform parent = new GameObject("Grouped Objects").transform;
             foreach (InteractableObject obj in _objectsToGroupDict.Keys)
             {
+                if (!obj.gameObject.activeSelf) continue;
                 obj.RecoverUpdatedColors();
                 Destroy(obj.GetComponent<InteractableObject>());
 
@@ -151,11 +152,14 @@ namespace MMI
                 Debug.LogWarning("Cannot perform " + action + " since no object has been recorded");
                 return;
             }
+
+            // If selecting
             if (active)
             {
                 obj.UpdateColor(_selectedColor);
                 _objectsToGroupDict[obj] = active;
             }
+            // Else if deselecting
             else
             {
                 // Recover to the original color if the dict contains the obj
@@ -173,6 +177,11 @@ namespace MMI
             if (obj == null)
             {
                 Debug.LogError("No object has been selected yet");
+                return;
+            }
+            if (_isInGroupMode && _objectsToGroupDict.ContainsKey(obj))
+            {
+                Debug.LogError("Cannot change color of a selected object in group mode");
                 return;
             }
             Color color;
@@ -193,9 +202,8 @@ namespace MMI
                 return;
             }
             int percent = Int32.Parse(percentageString);
-            Debug.Log("Scaling " + (scaleUp ? "up" : "down") + " " + percent);
-            float scaleValue = (scaleUp ? ((percent + 100) / 100) : ((100 - percent) / 100));
-            obj.transform.localScale *= scaleValue;
+            Vector3 origScale = obj.transform.localScale;
+            obj.transform.localScale = scaleUp ? origScale + (origScale * percent / 100f) : origScale - (origScale * percent / 100f);
         }
     }
 }

@@ -14,7 +14,7 @@ namespace MMI
 
         public void Execute()
         {
-            GameObject.Destroy(_objToDelete);
+            _objToDelete.SetActive(false);
         }
     }
 }

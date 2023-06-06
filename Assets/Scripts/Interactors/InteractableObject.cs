@@ -15,13 +15,12 @@ namespace MMI
         private Dictionary<MeshRenderer, Color> _cachedColorsDict = new();
         void Awake()
         {
-            Init();
-        }
-
-        void Init()
-        {
             gameObject.tag = "InteractableObject";
             _renderers = gameObject.GetComponentsInChildren<MeshRenderer>();
+            foreach (var r in _renderers)
+            {
+                r.gameObject.AddComponent<NearInteractionGrabbable>();
+            }
             _materialFlash = GetComponent<FlashingMaterial>();
             _rb = GetComponent<Rigidbody>();
             _rb.isKinematic = true;
@@ -29,7 +28,6 @@ namespace MMI
 
         public void UpdateColor(Color c)
         {
-            if (_renderers == null || _renderers.Length == 0) _renderers = gameObject.GetComponentsInChildren<MeshRenderer>();
             SetSelected(false);
             foreach (MeshRenderer r in _renderers)
             {
