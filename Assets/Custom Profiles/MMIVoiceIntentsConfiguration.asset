@@ -29,7 +29,11 @@ MonoBehaviour:
   - Id: 6
     Value: Scale {UpDown} by? {Percentage} percent?
   - Id: 7
-    Value: Turn? UI {Boolean}
+    Value: Turn? UI {OnOff}
+  - Id: 8
+    Value: '[{LockState} View] | [View {LockState}]'
+  - Id: 9
+    Value: Open menu {MenuName}
   AutoAllowAllSystemIntents: 0
   SystemCommands: 2008
   SlotsForVoiceCommands:
@@ -81,3 +85,17 @@ MonoBehaviour:
     values:
     - Select
     - Deselect
+  - name: LockState
+    values:
+    - Lock
+    - Unlock
+  - name: OnOff
+    values:
+    - On
+    - O
+  - name: MenuName
+    values:
+    - Overview
+    - Controls
+    - Issues
+    - Status

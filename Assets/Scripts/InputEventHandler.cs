@@ -17,7 +17,6 @@ namespace MMI
             Group = 4,
             Selection = 5,
             Scale = 6,
-            ToggleUI = 7,
         }
         [SerializeField] InteractorsManager _interactorsManager;
 
@@ -48,14 +47,13 @@ namespace MMI
 
         void OnCommandDetected(bool wasSuccessful, MLVoice.IntentEvent voiceEvent)
         {
-            Debug.Log("--- VOICE DETECTED: " + voiceEvent.EventName + " ---");
             switch ((VoiceActions)voiceEvent.EventID)
             {
                 case VoiceActions.Greetings:
                     break;
                 case VoiceActions.Create:
-                    string shapeName = GetSlotValue(voiceEvent.EventName, "Shape");
-                    string colorName = GetSlotValue(voiceEvent.EventName, "Color");
+                    string shapeName = UtilityScript.GetSlotValue(voiceEvent.EventName, "Shape");
+                    string colorName = UtilityScript.GetSlotValue(voiceEvent.EventName, "Color");
                     // Create { Color Orange} {Shape cube}
                     if (string.IsNullOrEmpty(shapeName))
                     {
@@ -69,7 +67,7 @@ namespace MMI
                     CreateObject(shapeName, colorName);
                     break;
                 case VoiceActions.ChangeColor:
-                    colorName = GetSlotValue(voiceEvent.EventName, "Color");
+                    colorName = UtilityScript.GetSlotValue(voiceEvent.EventName, "Color");
                     if (string.IsNullOrEmpty(colorName))
                     {
                         Debug.LogError("Something went terribly wrong with color change...");
@@ -81,40 +79,20 @@ namespace MMI
                     DeleteObject();
                     break;
                 case VoiceActions.Group:
-                    string action = GetSlotValue(voiceEvent.EventName, "Action");
+                    string action = UtilityScript.GetSlotValue(voiceEvent.EventName, "Action");
                     bool isStartAction = action == "Start" || action == "Begin";
                     if (isStartAction) _interactorsManager.StartGrouping();
                     else _interactorsManager.CompleteGrouping();
                     break;
                 case VoiceActions.Selection:
-                    string selection = GetSlotValue(voiceEvent.EventName, "Selection");
+                    string selection = UtilityScript.GetSlotValue(voiceEvent.EventName, "Selection");
                     _interactorsManager.SelectObjectToGroup(selection == "Select");
                     break;
                 case VoiceActions.Scale:
-                    bool isScaleUp = GetSlotValue(voiceEvent.EventName, "UpDown") == "Up";
-                    _interactorsManager.ScaleSelectedObject(GetSlotValue(voiceEvent.EventName, "Percentage"), isScaleUp);
+                    bool isScaleUp = UtilityScript.GetSlotValue(voiceEvent.EventName, "UpDown") == "Up";
+                    _interactorsManager.ScaleSelectedObject(UtilityScript.GetSlotValue(voiceEvent.EventName, "Percentage"), isScaleUp);
                     break;
             }
-        }
-
-        /// <summary>
-        /// Get slot value from voiceEvent.EventName
-        /// </summary>
-        /// <param name="inputString">event name from ML voice event</param>
-        /// <param name="keyword">Data slot</param>
-        /// <returns>Slot value, null if not found</returns>
-        string GetSlotValue(string inputString, string keyword)
-        {
-            string pattern = $@"{{\s*{keyword}\s*(.*?)}}"; // Regular expression pattern
-            Match match = Regex.Match(inputString, pattern, RegexOptions.Singleline);
-
-            if (match.Success)
-            {
-                // Return the captured group value
-                return match.Groups[1].Value.Trim();
-            }
-            // Keyword not found in the string
-            return null;
         }
 
         void CreateObject(string shapeName, string colorName)
