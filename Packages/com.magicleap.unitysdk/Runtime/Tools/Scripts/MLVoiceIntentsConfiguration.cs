@@ -289,7 +289,18 @@ public class MLVoiceIntentsConfiguration : ScriptableObject
 
         var unique_ids = new HashSet<string>(Ids);
         var unique_values = new HashSet<string>(Values);
-
+        var values_test = new HashSet<String>();
+        foreach (var v in Values)
+        {
+            if (values_test.Contains(v))
+            {
+                Debug.Log("Already contained " + v);
+            }
+            else
+            {
+                values_test.Add(v);
+            }
+        }
         bool idsUnique = unique_ids.Count == Ids.Count;
         bool valuesUnique = unique_values.Count == Values.Count;
 

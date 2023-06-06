@@ -13,7 +13,7 @@ namespace MMI
         private FlashingMaterial _materialFlash;
         private Rigidbody _rb;
         private Dictionary<MeshRenderer, Color> _cachedColorsDict = new();
-        void Start()
+        void Awake()
         {
             Init();
         }
@@ -29,7 +29,7 @@ namespace MMI
 
         public void UpdateColor(Color c)
         {
-            if (_renderers == null || _renderers.Length == 0) _renderers = GetComponentsInChildren<MeshRenderer>();
+            if (_renderers == null || _renderers.Length == 0) _renderers = gameObject.GetComponentsInChildren<MeshRenderer>();
             SetSelected(false);
             foreach (MeshRenderer r in _renderers)
             {

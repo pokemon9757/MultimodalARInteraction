@@ -1,9 +1,4 @@
-using System.Collections;
-using Microsoft.MixedReality.Toolkit.Input;
-using Microsoft.MixedReality.Toolkit.UI;
-using Microsoft.MixedReality.Toolkit.UI.BoundsControl;
 using UnityEngine;
-using UnityEngine.XR.Interaction.Toolkit;
 
 namespace MMI
 {
@@ -50,13 +45,11 @@ namespace MMI
                     return PrimitiveType.Cylinder;
                 default:
                     Debug.LogError("Invalid shape name " + shapeName);
-                    return PrimitiveType.Plane;
+                    return PrimitiveType.Cube;
             }
         }
         public void Execute()
         {
-            if (_shape == PrimitiveType.Plane)
-                return;
             _createdObject = GameObject.CreatePrimitive(_shape);
             _createdObject.transform.position = _position;
             _createdObject.transform.localScale = _scale;

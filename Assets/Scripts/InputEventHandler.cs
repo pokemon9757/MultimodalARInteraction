@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using Microsoft.MixedReality.Toolkit.UI.BoundsControl;
+using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.XR.MagicLeap;
 
@@ -19,8 +19,7 @@ namespace MMI
             Select = 6,
             Deselect = 7,
             ToggleUI = 8,
-            ScaleUp = 9,
-            ScaleDown = 10,
+            Scale = 9,
         }
         [SerializeField] InteractorsManager _interactorsManager;
 
@@ -34,21 +33,13 @@ namespace MMI
         [Header("Create action parameters")]
         [SerializeField] Vector3 _initialScale;
         [SerializeField] Material _initialMaterial;
-        bool _isEditor = false;
 
         void Start()
         {
-#if UNITY_EDITOR
-            _isEditor = true;
-#endif
-            if (!_isEditor)
-            {
-                _voiceItents.Init();
-                MLVoice.OnVoiceEvent += OnCommandDetected;
-            }
             _eyeTracking.Init();
             _gestureTracking.Init();
             _handler = new GameActionHandler();
+            _voiceItents.OnCommandDetected.AddListener(OnCommandDetected);
         }
 
         void Update()
@@ -57,7 +48,7 @@ namespace MMI
             _gestureTracking.ProcessAbility();
         }
 
-        void OnCommandDetected(in bool wasSuccessful, in MLVoice.IntentEvent voiceEvent)
+        void OnCommandDetected(bool wasSuccessful, MLVoice.IntentEvent voiceEvent)
         {
             Debug.Log("--- VOICE DETECTED: " + ((VoiceActions)voiceEvent.EventID).ToString() + " ---");
             switch ((VoiceActions)voiceEvent.EventID)
@@ -65,10 +56,28 @@ namespace MMI
                 case VoiceActions.Greetings:
                     break;
                 case VoiceActions.Create:
-                    CreateObject(GetSlotValue(voiceEvent, "Shape"), GetSlotValue(voiceEvent, "Color"));
+                    string shapeName = GetSlotValue(voiceEvent.EventName, "Shape");
+                    string colorName = GetSlotValue(voiceEvent.EventName, "Color");
+                    // Create { Color Orange} {Shape cube}
+                    if (string.IsNullOrEmpty(shapeName))
+                    {
+                        Debug.LogError("Shape not found");
+                        return;
+                    }
+                    if (string.IsNullOrEmpty(colorName))
+                    {
+                        colorName = "white";
+                    }
+                    CreateObject(shapeName, colorName);
                     break;
                 case VoiceActions.ChangeColor:
-                    _interactorsManager.ChangeSelectedObjectColor(GetSlotValue(voiceEvent, "Color"));
+                    colorName = GetSlotValue(voiceEvent.EventName, "Color");
+                    if (string.IsNullOrEmpty(colorName))
+                    {
+                        Debug.LogError("Something went terribly wrong with color change...");
+                        return;
+                    }
+                    _interactorsManager.ChangeSelectedObjectColor(colorName);
                     break;
                 case VoiceActions.Delete:
                     DeleteObject();
@@ -85,46 +94,48 @@ namespace MMI
                 case VoiceActions.Deselect:
                     _interactorsManager.SelectObjectToGroup(false);
                     break;
-                case VoiceActions.ScaleUp:
-                    _interactorsManager.ScaleSelectedObject(GetSlotValue(voiceEvent, "Percentage"), true);
+                case VoiceActions.Scale:
+                    bool isScaleUp = GetSlotValue(voiceEvent.EventName, "UpDown") == "Up";
+                    _interactorsManager.ScaleSelectedObject(GetSlotValue(voiceEvent.EventName, "Percentage"), isScaleUp);
                     break;
-                case VoiceActions.ScaleDown:
-                    _interactorsManager.ScaleSelectedObject(GetSlotValue(voiceEvent, "Percentage"), false);
-                    break;
+
             }
         }
 
-        string GetSlotValue(MLVoice.IntentEvent voiceEvent, string slotName)
+        /// <summary>
+        /// Get slot value from voiceEvent.EventName
+        /// </summary>
+        /// <param name="inputString">event name from ML voice event</param>
+        /// <param name="keyword">Data slot</param>
+        /// <returns>Slot value, null if not found</returns>
+        string GetSlotValue(string inputString, string keyword)
         {
-            foreach (MLVoice.EventSlot slot in voiceEvent.EventSlotsUsed)
+            string pattern = $@"{{\s*{keyword}\s*(.*?)}}"; // Regular expression pattern
+            Match match = Regex.Match(inputString, pattern, RegexOptions.Singleline);
+
+            if (match.Success)
             {
-                if (slot.SlotName == slotName) return slot.SlotValue;
+                // Return the captured group value
+                return match.Groups[1].Value.Trim();
             }
-            return "Could not find";
+            // Keyword not found in the string
+            return null;
         }
+
         void CreateObject(string shapeName, string colorName)
         {
-            Debug.Log("Creating " + shapeName + " " + colorName);
             _handler.AddGameAction(new CreateObjectAction(_eyeTracking.GazeMarkerPosition, _initialScale, _initialMaterial, colorName, shapeName));
         }
 
         void DeleteObject()
         {
-            var objToDelete = InteractorsManager.Instance.SelectedObject;
-            if (objToDelete == null) return;
+            var objToDelete = InteractorsManager.Instance.GetSelectedObject;
+            if (objToDelete == null)
+            {
+                Debug.LogError("No object has been selected yet");
+                return;
+            }
             _handler.AddGameAction(new DeleteObjectAction(objToDelete.gameObject));
         }
-
-        #region Debug UI Functions
-        public void CreateCube()
-        {
-            CreateObject("cube", "blue");
-        }
-
-        public void DeleteSelected()
-        {
-            DeleteObject();
-        }
-        #endregion
     }
 }

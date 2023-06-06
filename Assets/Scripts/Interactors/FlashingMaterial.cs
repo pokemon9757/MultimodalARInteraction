@@ -14,7 +14,7 @@ namespace MMI
         Dictionary<MeshRenderer, Color> _renderersOrigColors = new Dictionary<MeshRenderer, Color>();
         MeshRenderer[] _renderers;
         // Start is called before the first frame update
-        void Start()
+        void Awake()
         {
             _renderers = GetComponentsInChildren<MeshRenderer>();
             foreach (MeshRenderer m in _renderers)

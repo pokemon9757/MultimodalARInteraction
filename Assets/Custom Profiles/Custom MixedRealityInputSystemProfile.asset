@@ -29,13 +29,6 @@ MonoBehaviour:
     runtimePlatform: 7
     deviceManagerProfile: {fileID: 0}
   - componentType:
-      reference: Microsoft.MixedReality.Toolkit.Input.InputSimulationService, Microsoft.MixedReality.Toolkit.Services.InputSimulation
-    componentName: Input Simulation Service
-    priority: 0
-    runtimePlatform: 208
-    deviceManagerProfile: {fileID: 11400000, guid: 41478039094d47641bf4e09c20e61a5a,
-      type: 2}
-  - componentType:
       reference: Microsoft.MixedReality.Toolkit.Input.HandJointService, Microsoft.MixedReality.Toolkit
     componentName: Hand Joint Service
     priority: 0
@@ -84,7 +77,8 @@ MonoBehaviour:
     type: 2}
   pointerProfile: {fileID: 11400000, guid: 098356d57e67e0f49ae3678e14bd2459, type: 2}
   gesturesProfile: {fileID: 11400000, guid: bd7829a9b29409045a745b5a18299291, type: 2}
-  speechCommandsProfile: {fileID: 0}
+  speechCommandsProfile: {fileID: 11400000, guid: 465ced675bc6d274bab0ac0682721f6c,
+    type: 2}
   enableControllerMapping: 1
   controllerMappingProfile: {fileID: 11400000, guid: ab4a904258033be4aa3b630fd4419248,
     type: 2}

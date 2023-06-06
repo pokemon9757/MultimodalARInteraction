@@ -1830,6 +1830,30 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 15799660}
     m_Modifications:
+    - target: {fileID: 1418243607, guid: fe799b2d0a84dfe43b001b56276fd2fb, type: 3}
+      propertyPath: m_DirectionalAnchorRotationAction.m_Action.m_Id
+      value: 4a6bcf23-b8f5-439d-8078-7884b320d031
+      objectReference: {fileID: 0}
+    - target: {fileID: 1418243607, guid: fe799b2d0a84dfe43b001b56276fd2fb, type: 3}
+      propertyPath: m_DirectionalAnchorRotationAction.m_Action.m_Name
+      value: Directional Anchor Rotation
+      objectReference: {fileID: 0}
+    - target: {fileID: 1731473441, guid: fe799b2d0a84dfe43b001b56276fd2fb, type: 3}
+      propertyPath: m_DirectionalAnchorRotationAction.m_Action.m_Id
+      value: f41c13a2-b453-4481-a195-7eaf9ad3ae0d
+      objectReference: {fileID: 0}
+    - target: {fileID: 1731473441, guid: fe799b2d0a84dfe43b001b56276fd2fb, type: 3}
+      propertyPath: m_DirectionalAnchorRotationAction.m_Action.m_Name
+      value: Directional Anchor Rotation
+      objectReference: {fileID: 0}
+    - target: {fileID: 1731473443, guid: fe799b2d0a84dfe43b001b56276fd2fb, type: 3}
+      propertyPath: m_DirectionalAnchorRotationAction.m_Action.m_Id
+      value: 4e1ee602-adf4-4df4-94d0-72c416b18234
+      objectReference: {fileID: 0}
+    - target: {fileID: 1731473443, guid: fe799b2d0a84dfe43b001b56276fd2fb, type: 3}
+      propertyPath: m_DirectionalAnchorRotationAction.m_Action.m_Name
+      value: Directional Anchor Rotation
+      objectReference: {fileID: 0}
     - target: {fileID: 2062985119602007160, guid: fe799b2d0a84dfe43b001b56276fd2fb,
         type: 3}
       propertyPath: stereoConvergencePoint
@@ -2127,7 +2151,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _statusText: {fileID: 587049732}
   controlsText: {fileID: 587049733}
-  voiceConfiguration: {fileID: 11400000, guid: fcc23b1971b6efa418c12c9ff7cf490b, type: 2}
+  voiceConfiguration: {fileID: 11400000, guid: 7a77f4586a76a6b4fbd47edbdb7bcca8, type: 2}
   voiceInputSettingsPopup: {fileID: 1080811520}
   voiceInputErrorPopup: {fileID: 201242689}
 --- !u!1 &1845271348

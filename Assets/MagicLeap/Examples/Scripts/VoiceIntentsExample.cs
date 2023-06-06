@@ -173,7 +173,10 @@ public class VoiceIntentsExample : MonoBehaviour
 
         strBuilder.Append($"Slots Used:\n");
         strBuilder.AppendJoin("\n", voiceEvent.EventSlotsUsed.Select(v => $"Name: {v.SlotName} - Value: {v.SlotValue}"));
-
+        foreach (var eventSlot in voiceEvent.EventSlotsUsed)
+        {
+            Debug.Log("Found " + eventSlot.SlotName + " : " + eventSlot.SlotValue);
+        }
         lastResults = strBuilder.ToString();
     }
 

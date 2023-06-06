@@ -9,7 +9,13 @@ namespace MMI
 {
     public class InteractorsManager : MonoBehaviour
     {
-        public InteractableObject SelectedObject { get { return _selectedObject; } }
+        public InteractableObject GetSelectedObject
+        {
+            get
+            {
+                return _selectedObject ? _selectedObject : _lastSelectedObject;
+            }
+        }
         public Color _selectedColor = Color.blue;
         public static InteractorsManager Instance
         {
@@ -53,6 +59,8 @@ namespace MMI
                 DontDestroyOnLoad(gameObject);
             }
         }
+
+
         /// <summary>
         /// Trigger the change of selected object  
         /// </summary>
@@ -66,7 +74,6 @@ namespace MMI
 
                 // Set active a new selected object
                 _selectedObject?.SetSelected(false);
-                _lastSelectedObject = _selectedObject == null ? _lastSelectedObject : _selectedObject;
                 _selectedObject = obj;
                 _selectedObject.SetSelected(true);
                 return;
@@ -76,9 +83,12 @@ namespace MMI
             // Trying to select an already selected object
             if (active) return;
             // Deselect current object
-            _selectedObject?.SetSelected(false);
-            _lastSelectedObject = _selectedObject;
-            _selectedObject = null;
+            if (_selectedObject != null)
+            {
+                _selectedObject.SetSelected(false);
+                if (_lastSelectedObject != _selectedObject) _lastSelectedObject = _selectedObject;
+                _selectedObject = null;
+            }
         }
 
         public void StartGrouping()
@@ -159,7 +169,7 @@ namespace MMI
 
         public void ChangeSelectedObjectColor(string colorName)
         {
-            var obj = _selectedObject == null ? _selectedObject : _lastSelectedObject;
+            var obj = GetSelectedObject;
             if (obj == null)
             {
                 Debug.LogError("No object has been selected yet");
@@ -176,14 +186,16 @@ namespace MMI
 
         public void ScaleSelectedObject(string percentageString, bool scaleUp)
         {
-            var obj = _selectedObject == null ? _selectedObject : _lastSelectedObject;
+            var obj = GetSelectedObject;
             if (obj == null)
             {
                 Debug.LogError("No object has been selected yet");
                 return;
             }
             int percent = Int32.Parse(percentageString);
-            _selectedObject.transform.localScale *= scaleUp ? (percent + 100) / 100 : (100 - percent) / 100;
+            Debug.Log("Scaling " + (scaleUp ? "up" : "down") + " " + percent);
+            float scaleValue = (scaleUp ? ((percent + 100) / 100) : ((100 - percent) / 100));
+            obj.transform.localScale *= scaleValue;
         }
     }
 }

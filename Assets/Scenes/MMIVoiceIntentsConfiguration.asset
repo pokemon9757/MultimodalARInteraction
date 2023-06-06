@@ -10,31 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 71122c582b923f04ab4f88f548a59fce, type: 3}
-  m_Name: VoiceIntentsConfiguration
+  m_Name: MMIVoiceIntentsConfiguration
   m_EditorClassIdentifier: 
-  AllVoiceIntents:
-  - name: UnityApp_VoiceIntent_ID101
-    id: 101
-    value: Unity Test
-  - name: UnityApp_VoiceIntent_ID102
-    id: 102
-    value: Hello Friend | Hello Buddy
-  - name: UnityApp_VoiceIntent_ID103
-    id: 103
-    value: Slot Test for ({Shape}|{Color})
+  AllVoiceIntents: []
   VoiceCommandsToAdd:
   - Id: 0
     Value: (Hi|[Hello there] | Greetings)
   - Id: 1
-    Value: 'Create a? {Color} {Shape} '
+    Value: 'Create a? {Color}? {Shape} '
   - Id: 2
-    Value: (Set|Change) (that|this|it)? color to {Color}
+    Value: (Set|Change)? (that|this|it)? color to {Color}
   - Id: 3
     Value: Delete|Remove|Erase|Destroy
-  - Id: 4
-    Value: (Begin|Start) (Group|Grouping)
   - Id: 5
-    Value: (End|Finish|Complete|Stop) (Group|Grouping)
+    Value: '{Action} Group'
   - Id: 6
     Value: Select
   - Id: 7
@@ -42,11 +31,9 @@ MonoBehaviour:
   - Id: 8
     Value: Turn? UI {Boolean}
   - Id: 9
-    Value: Scale up {Percentage} percent?
-  - Id: 10
-    Value: Scale down {Percentage} percent?
-  AutoAllowAllSystemIntents: 1
-  SystemCommands: 0
+    Value: Scale {UpDown} {Percentage} percent?
+  AutoAllowAllSystemIntents: 0
+  SystemCommands: 2008
   SlotsForVoiceCommands:
   - name: Shape
     values:
@@ -84,3 +71,12 @@ MonoBehaviour:
     - 80
     - 90
     - 100
+  - name: Action
+    values:
+    - Begin
+    - Start
+    - End|Complete
+  - name: UpDown
+    values:
+    - Up
+    - Down
