@@ -17,7 +17,8 @@ namespace MMI
         {
             SetActive = 7,
             SetLock = 8,
-            SetMenu = 9
+            SetMenu = 9,
+            Help = 10
         }
 
         void Start()
@@ -53,6 +54,9 @@ namespace MMI
                             _statusMenuBtn.Pressed();
                             break;
                     }
+                    break;
+                case UIVoiceCommands.Help:
+                    _controlsMenuBtn.Pressed();
                     break;
             }
         }
