@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using MagicLeap.Examples;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.XR.MagicLeap;
 
 namespace MMI
@@ -13,10 +14,12 @@ namespace MMI
         [SerializeField] UIButton _controlsMenuBtn;
         [SerializeField] UIButton _issuesMenuBtn;
         [SerializeField] UIButton _statusMenuBtn;
+        [SerializeField] UIToggleButton _viewlockBtn;
+        [SerializeField] GameObject _userInterface;
         enum UIVoiceCommands
         {
             SetActive = 7,
-            SetLock = 8,
+            ToggleLock = 8,
             SetMenu = 9,
             Help = 10
         }
@@ -32,13 +35,13 @@ namespace MMI
             {
                 case UIVoiceCommands.SetActive:
                     bool isOn = UtilityScript.GetSlotValue(voiceEvent.EventName, "OnOff") == "On";
+                    _userInterface.SetActive(isOn);
                     break;
-                case UIVoiceCommands.SetLock:
-                    bool isLock = UtilityScript.GetSlotValue(voiceEvent.EventName, "LockState") == "Lock";
-
+                case UIVoiceCommands.ToggleLock:
+                    _viewlockBtn.Pressed();
                     break;
                 case UIVoiceCommands.SetMenu:
-                    string menuType = UtilityScript.GetSlotValue(voiceEvent.EventName, "MenuType");
+                    string menuType = UtilityScript.GetSlotValue(voiceEvent.EventName, "MenuName");
                     switch (menuType)
                     {
                         case "Overview":

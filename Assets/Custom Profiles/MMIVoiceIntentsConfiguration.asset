@@ -31,9 +31,9 @@ MonoBehaviour:
   - Id: 7
     Value: Turn? UI {OnOff}
   - Id: 8
-    Value: '[{LockState} View|UI] | [View|UI {LockState}]'
+    Value: Toggle UI? lock
   - Id: 9
-    Value: Open menu {MenuName}
+    Value: Open|Display menu? {MenuName}
   - Id: 10
     Value: Help|Assistance
   AutoAllowAllSystemIntents: 0
@@ -87,10 +87,6 @@ MonoBehaviour:
     values:
     - Select
     - Deselect
-  - name: LockState
-    values:
-    - Lock
-    - Unlock
   - name: OnOff
     values:
     - On

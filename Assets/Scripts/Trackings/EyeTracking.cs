@@ -70,7 +70,7 @@ namespace MMI
             }
             _eyesMarker.position = markerPosition;
             _eyesMarker.rotation = Quaternion.LookRotation(GazeFixationPoint - Camera.main.transform.position);
-            _rayInteractor.PerformRaycast(GazeOrigin, GazeDirection, _maxDistanceInMeters);
+            _rayInteractor.PerformRaycast(GazeOrigin, GazeDirection, Mathf.Infinity);
         }
 
         private void OnDestroy()
