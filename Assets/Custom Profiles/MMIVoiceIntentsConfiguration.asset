@@ -17,9 +17,9 @@ MonoBehaviour:
   - Id: 0
     Value: (Hi|[Hello there] | Greetings)
   - Id: 1
-    Value: '[Create|Generate] [a|an]? {Color}? {Shape} '
+    Value: '[Create|Generate|Make] [a|an]? {Color}? {Shape} '
   - Id: 2
-    Value: (Set|Change)? (that|this|it)? color to {Color}
+    Value: (Set|Change|Make)? (that|this|it)? {Color}
   - Id: 3
     Value: Delete|Remove|Erase|Destroy
   - Id: 4
@@ -27,11 +27,12 @@ MonoBehaviour:
   - Id: 5
     Value: '{Selection}'
   - Id: 6
-    Value: Scale {UpDown} by? {Percentage} percent?
+    Value: '[Scale {UpDown} by? {Percentage} percent?] | [Make it|that|this {Percentage}
+      percent {UpDown}'
   - Id: 7
     Value: Turn? UI {OnOff}
   - Id: 8
-    Value: Toggle UI? lock
+    Value: '[Toggle? UI? lock] | [lock UI?]'
   - Id: 9
     Value: Open|Display menu? {MenuName}
   - Id: 10
@@ -81,8 +82,8 @@ MonoBehaviour:
     - End|Complete
   - name: UpDown
     values:
-    - Up
-    - Down
+    - Up|Bigger
+    - Down|Smaller
   - name: Selection
     values:
     - Select

@@ -15,12 +15,11 @@ namespace MMI
         [Tooltip("Display the game object along the eye gaze ray at a default distance (in meters).")]
         [SerializeField] float _maxDistanceInMeters = 2f;
         [SerializeField, Tooltip("Fixation Point marker")] Transform _eyesMarker;
-        [SerializeField] bool _isDebugActive = true;
         [SerializeField] RaycastObjectInteractor _rayInteractor;
         public Vector3 GazeFixationPoint { get { return _eyesActions.Data.ReadValue<UnityEngine.InputSystem.XR.Eyes>().fixationPoint; } }
         public Vector3 GazeMarkerPosition { get { return _eyesMarker.position; } }
         public Vector3 GazeOrigin { get { return CoreServices.InputSystem.EyeGazeProvider.GazeOrigin; } }
-        public Vector3 GazeDirection { get { return _eyesActions.Data.ReadValue<UnityEngine.InputSystem.XR.Eyes>().fixationPoint - CoreServices.InputSystem.EyeGazeProvider.GazeOrigin; } }
+        public Vector3 GazeDirection { get { return CoreServices.InputSystem.EyeGazeProvider.GazeDirection; } }
         // Used to get ml inputs.
         private MagicLeapInputs _mlInputs;
         // Used to get eyes action data.
@@ -43,7 +42,6 @@ namespace MMI
             _mlInputs.Enable();
 
             MLPermissions.RequestPermission(MLPermission.EyeTracking, _permissionCallbacks);
-            SetDebugElementsActive();
         }
 
         public void ProcessAbility()
@@ -86,17 +84,6 @@ namespace MMI
             InputSubsystem.Extensions.MLEyes.StartTracking();
             _eyesActions = new MagicLeapInputs.EyesActions(_mlInputs);
             _permissionGranted = true;
-        }
-
-        public void ToggleDebugElements()
-        {
-            _isDebugActive = !_isDebugActive;
-            SetDebugElementsActive();
-        }
-
-        void SetDebugElementsActive()
-        {
-            _eyesMarker.gameObject.SetActive(_isDebugActive);
         }
     }
 }

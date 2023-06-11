@@ -54,10 +54,10 @@ namespace MagicLeap.Examples
                 _disabled = false;
             }
 
-            // if (_disabled)
-            // {
-            //     return;
-            // }
+            if (_disabled)
+            {
+                return;
+            }
 
             base.Default(reset);
 
@@ -70,10 +70,10 @@ namespace MagicLeap.Examples
         /// </summary>
         public override void Hover()
         {
-            // if (_disabled)
-            // {
-            //     return;
-            // }
+            if (_disabled)
+            {
+                return;
+            }
 
             base.Hover();
 
@@ -85,10 +85,10 @@ namespace MagicLeap.Examples
         /// </summary>
         public override void Pressed()
         {
-            // if (_disabled)
-            // {
-            //     return;
-            // }
+            if (_disabled)
+            {
+                return;
+            }
             if (IsActive && !allowSwitchOff)
             {
                 return;
