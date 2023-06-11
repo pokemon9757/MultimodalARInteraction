@@ -4,17 +4,13 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 namespace MMI
 {
-    public class DeleteObjectAction : IGameAction
+    public class DisableObjectAction : MonoBehaviour
     {
         GameObject _objToDelete;
-        public DeleteObjectAction(GameObject objToDelete)
+        public void DisableObject(GameObject objToDelete)
         {
-            _objToDelete = objToDelete;
-        }
+            objToDelete.SetActive(false);
 
-        public void Execute()
-        {
-            _objToDelete.SetActive(false);
         }
     }
 }

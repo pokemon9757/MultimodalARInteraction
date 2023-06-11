@@ -19,7 +19,8 @@ namespace MMI
             _renderers = gameObject.GetComponentsInChildren<MeshRenderer>();
             foreach (var r in _renderers)
             {
-                r.gameObject.AddComponent<NearInteractionGrabbable>();
+                if (r.gameObject.GetComponent<NearInteractionGrabbable>() == null)
+                    r.gameObject.AddComponent<NearInteractionGrabbable>();
             }
             _materialFlash = GetComponent<FlashingMaterial>();
             _rb = GetComponent<Rigidbody>();

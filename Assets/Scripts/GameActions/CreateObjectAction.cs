@@ -2,61 +2,44 @@ using UnityEngine;
 
 namespace MMI
 {
-    public class CreateObjectAction : IGameAction
+    public class CreateObjectAction : MonoBehaviour
     {
-        Vector3 _position;
-        Vector3 _scale;
-        Color _color;
-        PrimitiveType _shape;
+        [System.Serializable]
+        public struct ShapePrefabKVP
+        {
+            public string ShapeName;
+            public GameObject Prefab;
+        }
+        [SerializeField] ShapePrefabKVP[] _prefabsKVP;
+        [SerializeField] Vector3 _initialScale;
+        [SerializeField] Material _initialMaterial;
         GameObject _createdObject;
-        Material _material;
 
-        public CreateObjectAction(Vector3 pos, Vector3 scale, Material material, string colorName, string shapeName)
+        public void CreateNewObject(Vector3 pos, Color color, string shapeName)
         {
-            _position = pos;
-            _scale = scale;
-            _material = material;
-            _color = StringToColor(colorName);
-            _shape = StringToPrimitiveType(shapeName);
-        }
-
-        private Color StringToColor(string colorName)
-        {
-            Color color;
-            if (!ColorUtility.TryParseHtmlString(colorName.ToLower(), out color))
+            // Get prefab based on shapeName
+            GameObject selectedPrefab = null;
+            foreach (ShapePrefabKVP kvp in _prefabsKVP)
             {
-                Debug.LogError("Invalid color name " + colorName);
-                return Color.grey;
+                if (kvp.ShapeName.ToLower() == shapeName.ToLower())
+                {
+                    selectedPrefab = kvp.Prefab;
+                    break;
+                }
             }
-            return color;
-        }
-
-        private PrimitiveType StringToPrimitiveType(string shapeName)
-        {
-            switch (shapeName.ToLower())
+            if (selectedPrefab == null)
             {
-                case "cube":
-                    return PrimitiveType.Cube;
-                case "sphere":
-                    return PrimitiveType.Sphere;
-                case "capsule":
-                    return PrimitiveType.Capsule;
-                case "cylinder":
-                    return PrimitiveType.Cylinder;
-                default:
-                    Debug.LogError("Invalid shape name " + shapeName);
-                    return PrimitiveType.Cube;
+                Debug.LogError("Cannot find what you are looking for with ... " + shapeName);
+                return;
             }
-        }
-        public void Execute()
-        {
-            _createdObject = GameObject.CreatePrimitive(_shape);
-            _createdObject.transform.position = _position;
-            _createdObject.transform.localScale = _scale;
+            _createdObject = Instantiate(selectedPrefab);
+            _createdObject.transform.position = pos;
+            _createdObject.transform.localScale = _initialScale;
             var renderer = _createdObject.GetComponent<MeshRenderer>();
-            renderer.material = _material;
+            renderer.material = _initialMaterial;
             var interactable = _createdObject.AddComponent<InteractableObject>();
-            interactable.UpdateColor(_color);
+            interactable.UpdateColor(color);
         }
+
     }
 }

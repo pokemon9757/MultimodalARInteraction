@@ -128,6 +128,7 @@ namespace MMI
         void VoiceEvent(in bool wasSuccessful, in MLVoice.IntentEvent voiceEvent)
         {
             OnCommandDetected.Invoke(wasSuccessful, voiceEvent);
+            Debug.Log("Voice event " + voiceEvent.EventName);
             StringBuilder strBuilder = new StringBuilder();
             strBuilder.Append($"\n\n<color=#B7B7B8><b>Recognized voice command:</b></color> <i>{voiceEvent.EventName}</i>");
             lastResults = strBuilder.ToString();

@@ -134,6 +134,7 @@ namespace MagicLeap.Examples
         /// <param name="text">The text of the issue to add.</param>
         public void AddIssue(string text)
         {
+            Debug.Log("Adding an issue " + text);
             if (_issuesContent != null && _textEntryPrefab != null)
             {
                 GameObject textEntry = Instantiate(_textEntryPrefab, _issuesContent.transform, false);

@@ -26,5 +26,21 @@ namespace MMI
             // Keyword not found in the string
             return null;
         }
+        /// <summary>
+        /// Convert a string to color
+        /// </summary>
+        /// <param name="colorName">String of color name</param>
+        /// <returns>A color, grey by default if the color name is invalid</returns>
+        public static Color? StringToColor(string colorName)
+        {
+            Color color;
+            if (!ColorUtility.TryParseHtmlString(colorName.ToLower(), out color))
+            {
+                Debug.LogError("Invalid color name " + colorName);
+                return null;
+            }
+            return color;
+        }
+
     }
 }

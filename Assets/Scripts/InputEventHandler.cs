@@ -25,17 +25,15 @@ namespace MMI
         [SerializeField] EyeTracking _eyeTracking;
         [SerializeField] VoiceIntents _voiceItents;
 
-        GameActionHandler _handler;
-
         [Header("Create action parameters")]
         [SerializeField] Vector3 _initialScale;
         [SerializeField] Material _initialMaterial;
+        [SerializeField] CreateObjectAction _createObjectAction;
 
         void Start()
         {
             _eyeTracking.Init();
             _gestureTracking.Init();
-            _handler = new GameActionHandler();
             _voiceItents.OnCommandDetected.AddListener(OnCommandDetected);
         }
 
@@ -45,6 +43,11 @@ namespace MMI
             _gestureTracking.ProcessAbility();
         }
 
+        /// <summary>
+        /// Handle voice comands & Perform actions accordingly
+        /// </summary>
+        /// <param name="wasSuccessful">If the voice input was recognized successfully </param>
+        /// <param name="voiceEvent">The voice event data</param>
         void OnCommandDetected(bool wasSuccessful, MLVoice.IntentEvent voiceEvent)
         {
             switch ((VoiceActions)voiceEvent.EventID)
@@ -61,10 +64,17 @@ namespace MMI
                         return;
                     }
                     if (string.IsNullOrEmpty(colorName))
-                    {
                         colorName = "white";
+                    Color? nullableColor = UtilityScript.StringToColor(colorName);
+                    if (nullableColor == null)
+                    {
+                        Debug.LogWarning("The color is invalid, will not create a shape");
+                        return;
                     }
-                    CreateObject(shapeName, colorName);
+                    // Perform explicit conversion from nullable Color to non-nullable Color
+                    Color color = nullableColor ?? Color.white;
+                    _createObjectAction.CreateNewObject(_eyeTracking.GazeMarkerPosition, color, shapeName);
+
                     break;
                 case VoiceActions.ChangeColor:
                     colorName = UtilityScript.GetSlotValue(voiceEvent.EventName, "Color");
@@ -89,17 +99,16 @@ namespace MMI
                     _interactorsManager.SelectObjectToGroup(selection == "Select");
                     break;
                 case VoiceActions.Scale:
-                    bool isScaleUp = UtilityScript.GetSlotValue(voiceEvent.EventName, "UpDown") == "Up";
+                    string upDownValue = UtilityScript.GetSlotValue(voiceEvent.EventName, "UpDown");
+                    bool isScaleUp = upDownValue == "Up" || upDownValue == "Bigger";
                     _interactorsManager.ScaleSelectedObject(UtilityScript.GetSlotValue(voiceEvent.EventName, "Percentage"), isScaleUp);
                     break;
             }
         }
 
-        void CreateObject(string shapeName, string colorName)
-        {
-            _handler.AddGameAction(new CreateObjectAction(_eyeTracking.GazeMarkerPosition, _initialScale, _initialMaterial, colorName, shapeName));
-        }
-
+        /// <summary>
+        ///  Perform object deletion action
+        /// </summary>
         void DeleteObject()
         {
             var objToDelete = InteractorsManager.Instance.GetSelectedObject;
@@ -108,7 +117,7 @@ namespace MMI
                 Debug.LogError("No object has been selected yet");
                 return;
             }
-            _handler.AddGameAction(new DeleteObjectAction(objToDelete.gameObject));
+            objToDelete.gameObject.SetActive(false);
         }
     }
 }
