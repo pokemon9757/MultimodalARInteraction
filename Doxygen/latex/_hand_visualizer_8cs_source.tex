@@ -1,0 +1,278 @@
+\doxysection{Hand\+Visualizer.\+cs}
+\hypertarget{_hand_visualizer_8cs_source}{}\label{_hand_visualizer_8cs_source}\index{Assets/Scripts/Depreciated/HandVisualizer.cs@{Assets/Scripts/Depreciated/HandVisualizer.cs}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00001}00001\ \textcolor{comment}{//\ \%BANNER\_BEGIN\%}}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00002}00002\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00003}00003\ \textcolor{comment}{//\ \%COPYRIGHT\_BEGIN\%}}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00004}00004\ \textcolor{comment}{//\ Copyright\ (c)\ (2019-\/2022)\ Magic\ Leap,\ Inc.\ All\ Rights\ Reserved.}}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00005}00005\ \textcolor{comment}{//\ Use\ of\ this\ file\ is\ governed\ by\ the\ Software\ License\ Agreement,\ located\ here:\ https://www.magicleap.com/software-\/license-\/agreement-\/ml2}}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00006}00006\ \textcolor{comment}{//\ Terms\ and\ conditions\ applicable\ to\ third-\/party\ materials\ accompanying\ this\ distribution\ may\ also\ be\ found\ in\ the\ top-\/level\ NOTICE\ file\ appearing\ herein.}}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00007}00007\ \textcolor{comment}{//\ \%COPYRIGHT\_END\%}}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00008}00008\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00009}00009\ \textcolor{comment}{//\ \%BANNER\_END\%}}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00010}00010\ }
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00011}00011\ \textcolor{keyword}{using\ }System.Collections.Generic;}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00012}00012\ \textcolor{keyword}{using\ }UnityEngine;}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00013}00013\ \textcolor{keyword}{using\ }UnityEngine.XR;}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00014}00014\ \textcolor{keyword}{using\ }UnityEngine.XR.MagicLeap;}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00015}00015\ }
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00016}00016\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_m_m_i}{MMI}}}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00017}00017\ \{}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00018}00018\ \ \ \ \ \textcolor{keyword}{using\ }HandTracking\ =\ InputSubsystem.Extensions.MLHandTracking;}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00019}00019\ }
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00024}\mbox{\hyperlink{class_m_m_i_1_1_hand_visualizer}{00024}}\ \ \ \ \ \textcolor{keyword}{public}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_m_m_i_1_1_hand_visualizer}{HandVisualizer}}\ :\ MonoBehaviour}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00025}00025\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00026}00026\ \textcolor{preprocessor}{\#pragma\ warning\ disable\ 414}}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00027}00027\ \ \ \ \ \ \ \ \ [SerializeField,\ Tooltip(\textcolor{stringliteral}{"{}The\ hand\ to\ visualize."{}})]}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00028}00028\ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}\ HandTracking.HandType\ \_handType\ =\ HandTracking.HandType.Left;}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00029}00029\ \textcolor{preprocessor}{\#pragma\ warning\ restore\ 414}}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00030}00030\ }
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00031}00031\ \ \ \ \ \ \ \ \ [SerializeField,\ Tooltip(\textcolor{stringliteral}{"{}The\ GameObject\ to\ use\ for\ the\ Hand\ Center."{}})]}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00032}00032\ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}\ Transform\ \_center\ =\ \textcolor{keyword}{null};}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00033}00033\ }
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00034}00034\ \ \ \ \ \ \ \ \ [Header(\textcolor{stringliteral}{"{}Hand\ Keypoint\ Colors"{}})]}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00035}00035\ }
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00036}00036\ \ \ \ \ \ \ \ \ [SerializeField,\ Tooltip(\textcolor{stringliteral}{"{}The\ color\ assigned\ to\ the\ pinky\ finger\ keypoints."{}})]}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00037}00037\ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}\ Color\ \_pinkyColor\ =\ Color.cyan;}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00038}00038\ }
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00039}00039\ \ \ \ \ \ \ \ \ [SerializeField,\ Tooltip(\textcolor{stringliteral}{"{}The\ color\ assigned\ to\ the\ ring\ finger\ keypoints."{}})]}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00040}00040\ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}\ Color\ \_ringColor\ =\ Color.red;}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00041}00041\ }
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00042}00042\ \ \ \ \ \ \ \ \ [SerializeField,\ Tooltip(\textcolor{stringliteral}{"{}The\ color\ assigned\ to\ the\ middle\ finger\ keypoints."{}})]}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00043}00043\ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}\ Color\ \_middleColor\ =\ Color.blue;}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00044}00044\ }
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00045}00045\ \ \ \ \ \ \ \ \ [SerializeField,\ Tooltip(\textcolor{stringliteral}{"{}The\ color\ assigned\ to\ the\ index\ finger\ keypoints."{}})]}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00046}00046\ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}\ Color\ \_indexColor\ =\ Color.magenta;}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00047}00047\ }
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00048}00048\ \ \ \ \ \ \ \ \ [SerializeField,\ Tooltip(\textcolor{stringliteral}{"{}The\ color\ assigned\ to\ the\ thumb\ keypoints."{}})]}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00049}00049\ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}\ Color\ \_thumbColor\ =\ Color.yellow;}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00050}00050\ }
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00051}00051\ \ \ \ \ \ \ \ \ [SerializeField,\ Tooltip(\textcolor{stringliteral}{"{}The\ color\ assigned\ to\ the\ wrist\ keypoints."{}})]}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00052}00052\ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}\ Color\ \_wristColor\ =\ Color.white;}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00053}00053\ }
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00054}00054\ \ \ \ \ \ \ \ \ [SerializeField]}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00055}00055\ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}\ Material\ keypointMaterial\ =\ \textcolor{keyword}{null};}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00056}00056\ }
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00057}00057\ \ \ \ \ \ \ \ \ [SerializeField,\ Tooltip(\textcolor{stringliteral}{"{}Value\ to\ hide\ the\ Visualizer\ if\ the\ confidence\ is\ below."{}})]}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00058}00058\ \ \ \ \ \ \ \ \ [Range(0.0f,\ 1.0f)]}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00059}00059\ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}\ \textcolor{keywordtype}{float}\ confidenceThreshold\ =\ 0.6f;}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00060}00060\ }
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00061}00061\ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}\ List<Transform>\ \_pinkyFinger\ =\ \textcolor{keyword}{null};}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00062}00062\ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}\ List<Transform>\ \_ringFinger\ =\ \textcolor{keyword}{null};}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00063}00063\ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}\ List<Transform>\ \_middleFinger\ =\ \textcolor{keyword}{null};}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00064}00064\ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}\ List<Transform>\ \_indexFinger\ =\ \textcolor{keyword}{null};}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00065}00065\ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}\ List<Transform>\ \_thumb\ =\ \textcolor{keyword}{null};}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00066}00066\ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}\ List<Transform>\ \_wrist\ =\ \textcolor{keyword}{null};}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00067}00067\ }
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00068}00068\ }
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00069}00069\ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}\ List<Bone>\ \_pinkyFingerBones\ =\ \textcolor{keyword}{new}\ List<Bone>();}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00070}00070\ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}\ List<Bone>\ \_ringFingerBones\ =\ \textcolor{keyword}{new}\ List<Bone>();}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00071}00071\ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}\ List<Bone>\ \_middleFingerBones\ =\ \textcolor{keyword}{new}\ List<Bone>();}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00072}00072\ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}\ List<Bone>\ \_indexFingerBones\ =\ \textcolor{keyword}{new}\ List<Bone>();}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00073}00073\ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}\ List<Bone>\ \_thumbBones\ =\ \textcolor{keyword}{new}\ List<Bone>();}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00074}00074\ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}\ List<Bone>\ \_wristBones\ =\ \textcolor{keyword}{new}\ List<Bone>();}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00075}00075\ }
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00076}00076\ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}\ InputDevice\ handDevice;}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00077}00077\ }
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00081}00081\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ Start()}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00082}00082\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00083}00083\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\_center\ ==\ \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00084}00084\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00085}00085\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Debug.LogError(\textcolor{stringliteral}{"{}Error:\ HandVisualizer.\_center\ is\ not\ set,\ disabling\ script."{}});}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00086}00086\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ enabled\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00087}00087\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00088}00088\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00089}00089\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00090}00090\ }
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00094}00094\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ Update()}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00095}00095\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00096}00096\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!this.handDevice.isValid)}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00097}00097\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00098}00098\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Initialize();}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00099}00099\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00100}00100\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00101}00101\ }
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00102}00102\ \ \ \ \ \ \ \ \ \ \ \ \ GetFingerBones();}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00103}00103\ }
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00104}00104\ \ \ \ \ \ \ \ \ \ \ \ \ this.handDevice.TryGetFeatureValue(InputSubsystem.Extensions.DeviceFeatureUsages.Hand.Confidence,\ out\ \textcolor{keywordtype}{float}\ handConfidence);}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00105}00105\ }
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00106}00106\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ highConfidence\ =\ (handConfidence\ >\ confidenceThreshold);}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00107}00107\ }
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00108}00108\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Pinky}}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00109}00109\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ this.\_pinkyFingerBones.Count;\ ++i)}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00110}00110\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00111}00111\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ this.\_pinkyFingerBones[i].TryGetPosition(out\ Vector3\ bonePosition);}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00112}00112\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ this.\_pinkyFinger[i].localPosition\ =\ bonePosition;}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00113}00113\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ this.\_pinkyFingerBones[i].TryGetRotation(out\ Quaternion\ boneRotation);}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00114}00114\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ this.\_pinkyFinger[i].localRotation\ =\ boneRotation;}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00115}00115\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ this.\_pinkyFinger[i].gameObject.SetActive(highConfidence\ \&\&\ HandTracking.GetKeyPointStatus(\textcolor{keyword}{this}.handDevice,\ HandTracking.KeyPointLocation.Pinky,\ i));}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00116}00116\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00117}00117\ }
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00118}00118\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Ring}}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00119}00119\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ this.\_ringFingerBones.Count;\ ++i)}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00120}00120\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00121}00121\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ this.\_ringFingerBones[i].TryGetPosition(out\ Vector3\ bonePosition);}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00122}00122\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ this.\_ringFinger[i].localPosition\ =\ bonePosition;}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00123}00123\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ this.\_ringFingerBones[i].TryGetRotation(out\ Quaternion\ boneRotation);}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00124}00124\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ this.\_ringFinger[i].localRotation\ =\ boneRotation;}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00125}00125\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ this.\_ringFinger[i].gameObject.SetActive(highConfidence\ \&\&\ HandTracking.GetKeyPointStatus(\textcolor{keyword}{this}.handDevice,\ HandTracking.KeyPointLocation.Ring,\ i));}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00126}00126\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00127}00127\ }
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00128}00128\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Middle}}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00129}00129\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ this.\_middleFingerBones.Count;\ ++i)}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00130}00130\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00131}00131\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ this.\_middleFingerBones[i].TryGetPosition(out\ Vector3\ bonePosition);}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00132}00132\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ this.\_middleFinger[i].localPosition\ =\ bonePosition;}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00133}00133\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ this.\_middleFingerBones[i].TryGetRotation(out\ Quaternion\ boneRotation);}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00134}00134\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ this.\_middleFinger[i].localRotation\ =\ boneRotation;}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00135}00135\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ this.\_middleFinger[i].gameObject.SetActive(highConfidence\ \&\&\ HandTracking.GetKeyPointStatus(\textcolor{keyword}{this}.handDevice,\ HandTracking.KeyPointLocation.Middle,\ i));}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00136}00136\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00137}00137\ }
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00138}00138\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Index}}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00139}00139\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ this.\_indexFingerBones.Count;\ ++i)}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00140}00140\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00141}00141\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ this.\_indexFingerBones[i].TryGetPosition(out\ Vector3\ bonePosition);}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00142}00142\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ this.\_indexFinger[i].localPosition\ =\ bonePosition;}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00143}00143\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ this.\_indexFingerBones[i].TryGetRotation(out\ Quaternion\ boneRotation);}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00144}00144\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ this.\_indexFinger[i].localRotation\ =\ boneRotation;}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00145}00145\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ this.\_indexFinger[i].gameObject.SetActive(highConfidence\ \&\&\ HandTracking.GetKeyPointStatus(\textcolor{keyword}{this}.handDevice,\ HandTracking.KeyPointLocation.Index,\ i));}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00146}00146\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00147}00147\ }
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00148}00148\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Thumb}}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00149}00149\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ this.\_thumbBones.Count;\ ++i)}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00150}00150\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00151}00151\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ this.\_thumbBones[i].TryGetPosition(out\ Vector3\ bonePosition);}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00152}00152\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ this.\_thumb[i].localPosition\ =\ bonePosition;}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00153}00153\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ this.\_thumbBones[i].TryGetRotation(out\ Quaternion\ boneRotation);}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00154}00154\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ this.\_thumb[i].localRotation\ =\ boneRotation;}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00155}00155\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ this.\_thumb[i].gameObject.SetActive(highConfidence\ \&\&\ HandTracking.GetKeyPointStatus(\textcolor{keyword}{this}.handDevice,\ HandTracking.KeyPointLocation.Thumb,\ i));}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00156}00156\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00157}00157\ }
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00158}00158\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Wrist}}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00159}00159\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ this.\_wristBones.Count;\ ++i)}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00160}00160\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00161}00161\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ this.\_wristBones[i].TryGetPosition(out\ Vector3\ bonePosition);}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00162}00162\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ this.\_wrist[i].localPosition\ =\ bonePosition;}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00163}00163\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ this.\_wristBones[i].TryGetRotation(out\ Quaternion\ boneRotation);}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00164}00164\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ this.\_wrist[i].localRotation\ =\ boneRotation;}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00165}00165\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ this.\_wrist[i].gameObject.SetActive(highConfidence\ \&\&\ HandTracking.GetKeyPointStatus(\textcolor{keyword}{this}.handDevice,\ HandTracking.KeyPointLocation.Wrist,\ i));}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00166}00166\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00167}00167\ }
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00168}00168\ \ \ \ \ \ \ \ \ \ \ \ \ handDevice.TryGetFeatureValue(CommonUsages.devicePosition,\ out\ Vector3\ devicePosition);}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00169}00169\ \ \ \ \ \ \ \ \ \ \ \ \ handDevice.TryGetFeatureValue(CommonUsages.deviceRotation,\ out\ Quaternion\ deviceRotation);}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00170}00170\ }
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00171}00171\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Hand\ Center}}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00172}00172\ \ \ \ \ \ \ \ \ \ \ \ \ \_center.localPosition\ =\ devicePosition;}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00173}00173\ \ \ \ \ \ \ \ \ \ \ \ \ \_center.localRotation\ =\ deviceRotation;}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00174}00174\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Hand\ Center\ only\ has\ one\ keypoint\ so\ its'\ index\ would\ be\ 0\ for\ getting\ its'\ status.}}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00175}00175\ \ \ \ \ \ \ \ \ \ \ \ \ \_center.gameObject.SetActive(highConfidence\ \&\&\ HandTracking.GetKeyPointStatus(\textcolor{keyword}{this}.handDevice,\ HandTracking.KeyPointLocation.Center,\ 0));}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00176}00176\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00177}00177\ }
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00178}00178\ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}\ \textcolor{keywordtype}{void}\ GetFingerBones()}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00179}00179\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00180}00180\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Hand\ Key\ Points}}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00181}00181\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (handDevice.TryGetFeatureValue(CommonUsages.handData,\ out\ UnityEngine.XR.Hand\ hand))}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00182}00182\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00183}00183\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ hand.TryGetFingerBones(UnityEngine.XR.HandFinger.Index,\ \textcolor{keyword}{this}.\_indexFingerBones);}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00184}00184\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ hand.TryGetFingerBones(UnityEngine.XR.HandFinger.Middle,\ \textcolor{keyword}{this}.\_middleFingerBones);}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00185}00185\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ hand.TryGetFingerBones(UnityEngine.XR.HandFinger.Ring,\ \textcolor{keyword}{this}.\_ringFingerBones);}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00186}00186\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ hand.TryGetFingerBones(UnityEngine.XR.HandFinger.Pinky,\ \textcolor{keyword}{this}.\_pinkyFingerBones);}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00187}00187\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ hand.TryGetFingerBones(UnityEngine.XR.HandFinger.Thumb,\ \textcolor{keyword}{this}.\_thumbBones);}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00188}00188\ }
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00189}00189\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ this.\_wristBones.Clear();}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00190}00190\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ handDevice.TryGetFeatureValue(InputSubsystem.Extensions.DeviceFeatureUsages.Hand.WristCenter,\ out\ Bone\ wristBone);}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00191}00191\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ this.\_wristBones.Add(wristBone);}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00192}00192\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ handDevice.TryGetFeatureValue(InputSubsystem.Extensions.DeviceFeatureUsages.Hand.WristRadial,\ out\ wristBone);}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00193}00193\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ this.\_wristBones.Add(wristBone);}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00194}00194\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ handDevice.TryGetFeatureValue(InputSubsystem.Extensions.DeviceFeatureUsages.Hand.WristUlnar,\ out\ wristBone);}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00195}00195\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ this.\_wristBones.Add(wristBone);}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00196}00196\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00197}00197\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00201}00201\ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}\ \textcolor{keywordtype}{void}\ Initialize()}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00202}00202\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00203}00203\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!this.handDevice.isValid)}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00204}00204\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00205}00205\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ this.handDevice\ =\ InputSubsystem.Utils.FindMagicLeapDevice(InputDeviceCharacteristics.HandTracking\ |\ (\textcolor{keyword}{this}.\_handType\ ==\ HandTracking.HandType.Left\ ?\ InputDeviceCharacteristics.Left\ :\ InputDeviceCharacteristics.Right));}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00206}00206\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00207}00207\ }
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00208}00208\ \ \ \ \ \ \ \ \ \ \ \ \ GetFingerBones();}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00209}00209\ }
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00210}00210\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Pinky}}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00211}00211\ \ \ \ \ \ \ \ \ \ \ \ \ \_pinkyFinger\ =\ \textcolor{keyword}{new}\ List<Transform>();}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00212}00212\ }
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00213}00213\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ this.\_pinkyFingerBones.Count;\ ++i)}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00214}00214\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00215}00215\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \_pinkyFinger.Add(CreateKeyPoint(\_pinkyColor).transform);}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00216}00216\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00217}00217\ }
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00218}00218\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Ring}}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00219}00219\ \ \ \ \ \ \ \ \ \ \ \ \ \_ringFinger\ =\ \textcolor{keyword}{new}\ List<Transform>();}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00220}00220\ }
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00221}00221\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ this.\_ringFingerBones.Count;\ ++i)}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00222}00222\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00223}00223\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \_ringFinger.Add(CreateKeyPoint(\_ringColor).transform);}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00224}00224\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00225}00225\ }
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00226}00226\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Middle}}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00227}00227\ \ \ \ \ \ \ \ \ \ \ \ \ \_middleFinger\ =\ \textcolor{keyword}{new}\ List<Transform>();}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00228}00228\ }
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00229}00229\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ this.\_middleFingerBones.Count;\ ++i)}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00230}00230\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00231}00231\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \_middleFinger.Add(CreateKeyPoint(\_middleColor).transform);}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00232}00232\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00233}00233\ }
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00234}00234\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Index}}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00235}00235\ \ \ \ \ \ \ \ \ \ \ \ \ \_indexFinger\ =\ \textcolor{keyword}{new}\ List<Transform>();}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00236}00236\ }
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00237}00237\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ this.\_indexFingerBones.Count;\ ++i)}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00238}00238\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00239}00239\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \_indexFinger.Add(CreateKeyPoint(\_indexColor).transform);}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00240}00240\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00241}00241\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\_indexFinger.Count\ >\ 0)}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00242}00242\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00243}00243\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \_indexFinger[0].gameObject.name\ =\ \textcolor{stringliteral}{"{}Top\ index"{}};}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00244}00244\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \_indexFinger[0].gameObject.AddComponent<SphereCollider>();}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00245}00245\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00246}00246\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Thumb}}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00247}00247\ \ \ \ \ \ \ \ \ \ \ \ \ \_thumb\ =\ \textcolor{keyword}{new}\ List<Transform>();}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00248}00248\ }
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00249}00249\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ this.\_thumbBones.Count;\ ++i)}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00250}00250\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00251}00251\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \_thumb.Add(CreateKeyPoint(\_thumbColor).transform);}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00252}00252\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00253}00253\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\_thumb.Count\ >\ 0)}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00254}00254\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00255}00255\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \_thumb[0].gameObject.name\ =\ \textcolor{stringliteral}{"{}Top\ thumb"{}};}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00256}00256\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \_thumb[0].gameObject.AddComponent<SphereCollider>();}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00257}00257\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00258}00258\ }
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00259}00259\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Wrist}}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00260}00260\ \ \ \ \ \ \ \ \ \ \ \ \ \_wrist\ =\ \textcolor{keyword}{new}\ List<Transform>();}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00261}00261\ }
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00262}00262\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ this.\_wristBones.Count;\ ++i)}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00263}00263\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00264}00264\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \_wrist.Add(CreateKeyPoint(\_wristColor).transform);}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00265}00265\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00266}00266\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00267}00267\ }
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00272}00272\ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}\ GameObject\ CreateKeyPoint(Color\ color)}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00273}00273\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00274}00274\ \ \ \ \ \ \ \ \ \ \ \ \ GameObject\ newObject;}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00275}00275\ }
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00276}00276\ \ \ \ \ \ \ \ \ \ \ \ \ newObject\ =\ GameObject.CreatePrimitive(PrimitiveType.Sphere);}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00277}00277\ \ \ \ \ \ \ \ \ \ \ \ \ newObject.SetActive(\textcolor{keyword}{false});}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00278}00278\ \ \ \ \ \ \ \ \ \ \ \ \ newObject.transform.SetParent(transform);}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00279}00279\ \ \ \ \ \ \ \ \ \ \ \ \ newObject.transform.localScale\ =\ \textcolor{keyword}{new}\ Vector3(0.01f,\ 0.01f,\ 0.01f);}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00280}00280\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (keypointMaterial\ !=\ \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00281}00281\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00282}00282\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ newObject.GetComponent<Renderer>().material\ =\ \textcolor{keyword}{new}\ Material(keypointMaterial);}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00283}00283\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00284}00284\ \ \ \ \ \ \ \ \ \ \ \ \ newObject.GetComponent<Renderer>().material.color\ =\ color;}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00285}00285\ \ \ \ \ \ \ \ \ \ \ \ \ Destroy(newObject.GetComponent<Collider>());}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00286}00286\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ newObject;}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00287}00287\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00288}00288\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_hand_visualizer_8cs_source_l00289}00289\ \}}
+
+\end{DoxyCode}

@@ -1,0 +1,189 @@
+\doxysection{MMI.\+Interactors\+Manager Class Reference}
+\hypertarget{class_m_m_i_1_1_interactors_manager}{}\label{class_m_m_i_1_1_interactors_manager}\index{MMI.InteractorsManager@{MMI.InteractorsManager}}
+Inheritance diagram for MMI.\+Interactors\+Manager\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_m_m_i_1_1_interactors_manager}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_m_m_i_1_1_interactors_manager_aab39b997a64a569d2964fe4a99d60d59}{Trigger\+Select\+Object}} (\mbox{\hyperlink{class_m_m_i_1_1_interactable_object}{Interactable\+Object}} obj, bool active)
+\begin{DoxyCompactList}\small\item\em Trigger the change of selected object ~\newline
+ \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_m_m_i_1_1_interactors_manager_add396464959efd0128c302a9cbf3cc57}{Start\+Grouping}} ()
+\begin{DoxyCompactList}\small\item\em Start grouping mode. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_m_m_i_1_1_interactors_manager_a3d249caaf5b49866c26b5b367e986fb6}{Complete\+Grouping}} ()
+\begin{DoxyCompactList}\small\item\em End grouping mode, group all selected object. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_m_m_i_1_1_interactors_manager_a6de4bb5c53585d41f639d6d4bc020b72}{Select\+Object\+To\+Group}} (bool active)
+\begin{DoxyCompactList}\small\item\em Add the currently selected object to a list of objects to group once the Complete\+Group function is called. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_m_m_i_1_1_interactors_manager_a3b5de6d1a6a2b4ffa411b5df7666f620}{Change\+Selected\+Object\+Color}} (Color color)
+\begin{DoxyCompactList}\small\item\em Change the material color of the currently selected object. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_m_m_i_1_1_interactors_manager_aaf168d42a9a46784d75400e97001f8df}{Scale\+Selected\+Object}} (int percent, bool scale\+Up)
+\begin{DoxyCompactList}\small\item\em Scale the gameobject by the given percentage. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Color \mbox{\hyperlink{class_m_m_i_1_1_interactors_manager_a8b008d698ec01973d7a89048c67adc87}{\+\_\+selected\+Color}} = Color.\+blue
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_m_m_i_1_1_interactable_object}{Interactable\+Object}} \mbox{\hyperlink{class_m_m_i_1_1_interactors_manager_a31fb06358ecb70e50c7651d935412d65}{Get\+Selected\+Object}}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\item 
+static \mbox{\hyperlink{class_m_m_i_1_1_interactors_manager}{Interactors\+Manager}} \mbox{\hyperlink{class_m_m_i_1_1_interactors_manager_aee6f4d6b24b81b2078e5d1bac7955870}{Instance}}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{_interactors_manager_8cs_source_l00010}{10}} of file \mbox{\hyperlink{_interactors_manager_8cs_source}{Interactors\+Manager.\+cs}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_m_m_i_1_1_interactors_manager_a3b5de6d1a6a2b4ffa411b5df7666f620}\label{class_m_m_i_1_1_interactors_manager_a3b5de6d1a6a2b4ffa411b5df7666f620} 
+\index{MMI.InteractorsManager@{MMI.InteractorsManager}!ChangeSelectedObjectColor@{ChangeSelectedObjectColor}}
+\index{ChangeSelectedObjectColor@{ChangeSelectedObjectColor}!MMI.InteractorsManager@{MMI.InteractorsManager}}
+\doxysubsubsection{\texorpdfstring{ChangeSelectedObjectColor()}{ChangeSelectedObjectColor()}}
+{\footnotesize\ttfamily void MMI.\+Interactors\+Manager.\+Change\+Selected\+Object\+Color (\begin{DoxyParamCaption}\item[{Color}]{color }\end{DoxyParamCaption})}
+
+
+
+Change the material color of the currently selected object. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em color} & The new color to change into\\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{_interactors_manager_8cs_source_l00189}{189}} of file \mbox{\hyperlink{_interactors_manager_8cs_source}{Interactors\+Manager.\+cs}}.
+
+\Hypertarget{class_m_m_i_1_1_interactors_manager_a3d249caaf5b49866c26b5b367e986fb6}\label{class_m_m_i_1_1_interactors_manager_a3d249caaf5b49866c26b5b367e986fb6} 
+\index{MMI.InteractorsManager@{MMI.InteractorsManager}!CompleteGrouping@{CompleteGrouping}}
+\index{CompleteGrouping@{CompleteGrouping}!MMI.InteractorsManager@{MMI.InteractorsManager}}
+\doxysubsubsection{\texorpdfstring{CompleteGrouping()}{CompleteGrouping()}}
+{\footnotesize\ttfamily void MMI.\+Interactors\+Manager.\+Complete\+Grouping (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+End grouping mode, group all selected object. 
+
+
+
+Definition at line \mbox{\hyperlink{_interactors_manager_8cs_source_l00111}{111}} of file \mbox{\hyperlink{_interactors_manager_8cs_source}{Interactors\+Manager.\+cs}}.
+
+\Hypertarget{class_m_m_i_1_1_interactors_manager_aaf168d42a9a46784d75400e97001f8df}\label{class_m_m_i_1_1_interactors_manager_aaf168d42a9a46784d75400e97001f8df} 
+\index{MMI.InteractorsManager@{MMI.InteractorsManager}!ScaleSelectedObject@{ScaleSelectedObject}}
+\index{ScaleSelectedObject@{ScaleSelectedObject}!MMI.InteractorsManager@{MMI.InteractorsManager}}
+\doxysubsubsection{\texorpdfstring{ScaleSelectedObject()}{ScaleSelectedObject()}}
+{\footnotesize\ttfamily void MMI.\+Interactors\+Manager.\+Scale\+Selected\+Object (\begin{DoxyParamCaption}\item[{int}]{percent,  }\item[{bool}]{scale\+Up }\end{DoxyParamCaption})}
+
+
+
+Scale the gameobject by the given percentage. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em percentage\+String} & A number string\\
+\hline
+{\em scale\+Up} & Scale up if True, otherwise scale down\\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{_interactors_manager_8cs_source_l00210}{210}} of file \mbox{\hyperlink{_interactors_manager_8cs_source}{Interactors\+Manager.\+cs}}.
+
+\Hypertarget{class_m_m_i_1_1_interactors_manager_a6de4bb5c53585d41f639d6d4bc020b72}\label{class_m_m_i_1_1_interactors_manager_a6de4bb5c53585d41f639d6d4bc020b72} 
+\index{MMI.InteractorsManager@{MMI.InteractorsManager}!SelectObjectToGroup@{SelectObjectToGroup}}
+\index{SelectObjectToGroup@{SelectObjectToGroup}!MMI.InteractorsManager@{MMI.InteractorsManager}}
+\doxysubsubsection{\texorpdfstring{SelectObjectToGroup()}{SelectObjectToGroup()}}
+{\footnotesize\ttfamily void MMI.\+Interactors\+Manager.\+Select\+Object\+To\+Group (\begin{DoxyParamCaption}\item[{bool}]{active }\end{DoxyParamCaption})}
+
+
+
+Add the currently selected object to a list of objects to group once the Complete\+Group function is called. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em active} & Add the object if True, otherwise Remove \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{_interactors_manager_8cs_source_l00149}{149}} of file \mbox{\hyperlink{_interactors_manager_8cs_source}{Interactors\+Manager.\+cs}}.
+
+\Hypertarget{class_m_m_i_1_1_interactors_manager_add396464959efd0128c302a9cbf3cc57}\label{class_m_m_i_1_1_interactors_manager_add396464959efd0128c302a9cbf3cc57} 
+\index{MMI.InteractorsManager@{MMI.InteractorsManager}!StartGrouping@{StartGrouping}}
+\index{StartGrouping@{StartGrouping}!MMI.InteractorsManager@{MMI.InteractorsManager}}
+\doxysubsubsection{\texorpdfstring{StartGrouping()}{StartGrouping()}}
+{\footnotesize\ttfamily void MMI.\+Interactors\+Manager.\+Start\+Grouping (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Start grouping mode. 
+
+
+
+Definition at line \mbox{\hyperlink{_interactors_manager_8cs_source_l00098}{98}} of file \mbox{\hyperlink{_interactors_manager_8cs_source}{Interactors\+Manager.\+cs}}.
+
+\Hypertarget{class_m_m_i_1_1_interactors_manager_aab39b997a64a569d2964fe4a99d60d59}\label{class_m_m_i_1_1_interactors_manager_aab39b997a64a569d2964fe4a99d60d59} 
+\index{MMI.InteractorsManager@{MMI.InteractorsManager}!TriggerSelectObject@{TriggerSelectObject}}
+\index{TriggerSelectObject@{TriggerSelectObject}!MMI.InteractorsManager@{MMI.InteractorsManager}}
+\doxysubsubsection{\texorpdfstring{TriggerSelectObject()}{TriggerSelectObject()}}
+{\footnotesize\ttfamily void MMI.\+Interactors\+Manager.\+Trigger\+Select\+Object (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_m_m_i_1_1_interactable_object}{Interactable\+Object}}}]{obj,  }\item[{bool}]{active }\end{DoxyParamCaption})}
+
+
+
+Trigger the change of selected object ~\newline
+ 
+
+
+
+Definition at line \mbox{\hyperlink{_interactors_manager_8cs_source_l00068}{68}} of file \mbox{\hyperlink{_interactors_manager_8cs_source}{Interactors\+Manager.\+cs}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_m_m_i_1_1_interactors_manager_a8b008d698ec01973d7a89048c67adc87}\label{class_m_m_i_1_1_interactors_manager_a8b008d698ec01973d7a89048c67adc87} 
+\index{MMI.InteractorsManager@{MMI.InteractorsManager}!\_selectedColor@{\_selectedColor}}
+\index{\_selectedColor@{\_selectedColor}!MMI.InteractorsManager@{MMI.InteractorsManager}}
+\doxysubsubsection{\texorpdfstring{\_selectedColor}{\_selectedColor}}
+{\footnotesize\ttfamily Color MMI.\+Interactors\+Manager.\+\_\+selected\+Color = Color.\+blue}
+
+
+
+Definition at line \mbox{\hyperlink{_interactors_manager_8cs_source_l00020}{20}} of file \mbox{\hyperlink{_interactors_manager_8cs_source}{Interactors\+Manager.\+cs}}.
+
+
+
+\doxysubsection{Property Documentation}
+\Hypertarget{class_m_m_i_1_1_interactors_manager_a31fb06358ecb70e50c7651d935412d65}\label{class_m_m_i_1_1_interactors_manager_a31fb06358ecb70e50c7651d935412d65} 
+\index{MMI.InteractorsManager@{MMI.InteractorsManager}!GetSelectedObject@{GetSelectedObject}}
+\index{GetSelectedObject@{GetSelectedObject}!MMI.InteractorsManager@{MMI.InteractorsManager}}
+\doxysubsubsection{\texorpdfstring{GetSelectedObject}{GetSelectedObject}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_m_m_i_1_1_interactable_object}{Interactable\+Object}} MMI.\+Interactors\+Manager.\+Get\+Selected\+Object\hspace{0.3cm}{\ttfamily [get]}}
+
+
+
+Definition at line \mbox{\hyperlink{_interactors_manager_8cs_source_l00013}{13}} of file \mbox{\hyperlink{_interactors_manager_8cs_source}{Interactors\+Manager.\+cs}}.
+
+\Hypertarget{class_m_m_i_1_1_interactors_manager_aee6f4d6b24b81b2078e5d1bac7955870}\label{class_m_m_i_1_1_interactors_manager_aee6f4d6b24b81b2078e5d1bac7955870} 
+\index{MMI.InteractorsManager@{MMI.InteractorsManager}!Instance@{Instance}}
+\index{Instance@{Instance}!MMI.InteractorsManager@{MMI.InteractorsManager}}
+\doxysubsubsection{\texorpdfstring{Instance}{Instance}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_m_m_i_1_1_interactors_manager}{Interactors\+Manager}} MMI.\+Interactors\+Manager.\+Instance\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}
+
+
+
+Definition at line \mbox{\hyperlink{_interactors_manager_8cs_source_l00021}{21}} of file \mbox{\hyperlink{_interactors_manager_8cs_source}{Interactors\+Manager.\+cs}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Assets/\+Scripts/\+Interactors/Interactors\+Manager.\+cs\end{DoxyCompactItemize}

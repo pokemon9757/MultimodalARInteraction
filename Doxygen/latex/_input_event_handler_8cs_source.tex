@@ -1,0 +1,120 @@
+\doxysection{Input\+Event\+Handler.\+cs}
+\hypertarget{_input_event_handler_8cs_source}{}\label{_input_event_handler_8cs_source}\index{Assets/Scripts/InputEventHandler.cs@{Assets/Scripts/InputEventHandler.cs}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_input_event_handler_8cs_source_l00001}00001\ \textcolor{keyword}{using\ }System;}
+\DoxyCodeLine{\Hypertarget{_input_event_handler_8cs_source_l00002}00002\ \textcolor{keyword}{using\ }UnityEngine;}
+\DoxyCodeLine{\Hypertarget{_input_event_handler_8cs_source_l00003}00003\ \textcolor{keyword}{using\ }UnityEngine.XR.MagicLeap;}
+\DoxyCodeLine{\Hypertarget{_input_event_handler_8cs_source_l00004}00004\ }
+\DoxyCodeLine{\Hypertarget{_input_event_handler_8cs_source_l00005}00005\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_m_m_i}{MMI}}}
+\DoxyCodeLine{\Hypertarget{_input_event_handler_8cs_source_l00006}00006\ \{}
+\DoxyCodeLine{\Hypertarget{_input_event_handler_8cs_source_l00007}\mbox{\hyperlink{class_m_m_i_1_1_input_event_handler}{00007}}\ \ \ \ \ \textcolor{keyword}{public}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_m_m_i_1_1_input_event_handler}{InputEventHandler}}\ :\ MonoBehaviour}
+\DoxyCodeLine{\Hypertarget{_input_event_handler_8cs_source_l00008}00008\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_input_event_handler_8cs_source_l00012}00012\ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}\ \textcolor{keyword}{enum}\ VoiceActions}
+\DoxyCodeLine{\Hypertarget{_input_event_handler_8cs_source_l00013}00013\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_input_event_handler_8cs_source_l00014}00014\ \ \ \ \ \ \ \ \ \ \ \ \ Create\ =\ 1,\ }
+\DoxyCodeLine{\Hypertarget{_input_event_handler_8cs_source_l00015}00015\ \ \ \ \ \ \ \ \ \ \ \ \ ChangeColor\ =\ 2,\ }
+\DoxyCodeLine{\Hypertarget{_input_event_handler_8cs_source_l00016}00016\ \ \ \ \ \ \ \ \ \ \ \ \ Delete\ =\ 3,\ }
+\DoxyCodeLine{\Hypertarget{_input_event_handler_8cs_source_l00017}00017\ \ \ \ \ \ \ \ \ \ \ \ \ Group\ =\ 4,\ }
+\DoxyCodeLine{\Hypertarget{_input_event_handler_8cs_source_l00018}00018\ \ \ \ \ \ \ \ \ \ \ \ \ Selection\ =\ 5,\ }
+\DoxyCodeLine{\Hypertarget{_input_event_handler_8cs_source_l00019}00019\ \ \ \ \ \ \ \ \ \ \ \ \ Scale\ =\ 6,\ }
+\DoxyCodeLine{\Hypertarget{_input_event_handler_8cs_source_l00020}00020\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_input_event_handler_8cs_source_l00021}00021\ \ \ \ \ \ \ \ \ [SerializeField]\ \mbox{\hyperlink{class_m_m_i_1_1_interactors_manager}{InteractorsManager}}\ \_interactorsManager;}
+\DoxyCodeLine{\Hypertarget{_input_event_handler_8cs_source_l00022}00022\ \ \ \ \ \ \ \ \ [SerializeField]\ \mbox{\hyperlink{class_m_m_i_1_1_gesture_tracking}{GestureTracking}}\ \_gestureTracking;}
+\DoxyCodeLine{\Hypertarget{_input_event_handler_8cs_source_l00023}00023\ \ \ \ \ \ \ \ \ [SerializeField]\ \mbox{\hyperlink{class_m_m_i_1_1_eye_tracking}{EyeTracking}}\ \_eyeTracking;}
+\DoxyCodeLine{\Hypertarget{_input_event_handler_8cs_source_l00024}00024\ \ \ \ \ \ \ \ \ [SerializeField]\ \mbox{\hyperlink{class_m_m_i_1_1_voice_intents}{VoiceIntents}}\ \_voiceItents;}
+\DoxyCodeLine{\Hypertarget{_input_event_handler_8cs_source_l00025}00025\ \ \ \ \ \ \ \ \ [SerializeField]\ \mbox{\hyperlink{class_m_m_i_1_1_create_object_action}{CreateObjectAction}}\ \_createObjectAction;}
+\DoxyCodeLine{\Hypertarget{_input_event_handler_8cs_source_l00026}00026\ }
+\DoxyCodeLine{\Hypertarget{_input_event_handler_8cs_source_l00027}00027\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ Start()}
+\DoxyCodeLine{\Hypertarget{_input_event_handler_8cs_source_l00028}00028\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_input_event_handler_8cs_source_l00029}00029\ \ \ \ \ \ \ \ \ \ \ \ \ \_eyeTracking.Init();}
+\DoxyCodeLine{\Hypertarget{_input_event_handler_8cs_source_l00030}00030\ \ \ \ \ \ \ \ \ \ \ \ \ \_gestureTracking.Init();}
+\DoxyCodeLine{\Hypertarget{_input_event_handler_8cs_source_l00031}00031\ \ \ \ \ \ \ \ \ \ \ \ \ \_voiceItents.\mbox{\hyperlink{class_m_m_i_1_1_voice_intents_a5d63860f115ad7d3a8661edefc4ca60f}{OnCommandDetected}}.AddListener(OnCommandDetected);}
+\DoxyCodeLine{\Hypertarget{_input_event_handler_8cs_source_l00032}00032\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_input_event_handler_8cs_source_l00033}00033\ }
+\DoxyCodeLine{\Hypertarget{_input_event_handler_8cs_source_l00034}00034\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ Update()}
+\DoxyCodeLine{\Hypertarget{_input_event_handler_8cs_source_l00035}00035\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_input_event_handler_8cs_source_l00036}00036\ \ \ \ \ \ \ \ \ \ \ \ \ \_eyeTracking.ProcessAbility();}
+\DoxyCodeLine{\Hypertarget{_input_event_handler_8cs_source_l00037}00037\ \ \ \ \ \ \ \ \ \ \ \ \ \_gestureTracking.ProcessAbility();}
+\DoxyCodeLine{\Hypertarget{_input_event_handler_8cs_source_l00038}00038\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_input_event_handler_8cs_source_l00039}00039\ }
+\DoxyCodeLine{\Hypertarget{_input_event_handler_8cs_source_l00045}00045\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ OnCommandDetected(\textcolor{keywordtype}{bool}\ wasSuccessful,\ MLVoice.IntentEvent\ voiceEvent)}
+\DoxyCodeLine{\Hypertarget{_input_event_handler_8cs_source_l00046}00046\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_input_event_handler_8cs_source_l00047}00047\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{switch}\ ((VoiceActions)voiceEvent.EventID)}
+\DoxyCodeLine{\Hypertarget{_input_event_handler_8cs_source_l00048}00048\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_input_event_handler_8cs_source_l00049}00049\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ VoiceActions.Create:}
+\DoxyCodeLine{\Hypertarget{_input_event_handler_8cs_source_l00050}00050\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Get\ Shape\ and\ Color\ slots\ values\ }}
+\DoxyCodeLine{\Hypertarget{_input_event_handler_8cs_source_l00051}00051\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{string}\ shapeName\ =\ UtilityScript.GetSlotValue(voiceEvent.EventName,\ \textcolor{stringliteral}{"{}Shape"{}});}
+\DoxyCodeLine{\Hypertarget{_input_event_handler_8cs_source_l00052}00052\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{string}\ colorName\ =\ UtilityScript.GetSlotValue(voiceEvent.EventName,\ \textcolor{stringliteral}{"{}Color"{}});}
+\DoxyCodeLine{\Hypertarget{_input_event_handler_8cs_source_l00053}00053\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\textcolor{keywordtype}{string}.IsNullOrEmpty(shapeName))}
+\DoxyCodeLine{\Hypertarget{_input_event_handler_8cs_source_l00054}00054\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_input_event_handler_8cs_source_l00055}00055\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Debug.LogError(\textcolor{stringliteral}{"{}Shape\ not\ found"{}});}
+\DoxyCodeLine{\Hypertarget{_input_event_handler_8cs_source_l00056}00056\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_input_event_handler_8cs_source_l00057}00057\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_input_event_handler_8cs_source_l00058}00058\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\textcolor{keywordtype}{string}.IsNullOrEmpty(colorName))}
+\DoxyCodeLine{\Hypertarget{_input_event_handler_8cs_source_l00059}00059\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ colorName\ =\ \textcolor{stringliteral}{"{}white"{}};}
+\DoxyCodeLine{\Hypertarget{_input_event_handler_8cs_source_l00060}00060\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Color?\ nullableColor\ =\ UtilityScript.StringToColor(colorName);}
+\DoxyCodeLine{\Hypertarget{_input_event_handler_8cs_source_l00061}00061\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (nullableColor\ ==\ \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_input_event_handler_8cs_source_l00062}00062\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_input_event_handler_8cs_source_l00063}00063\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Debug.LogWarning(\textcolor{stringliteral}{"{}The\ color\ is\ invalid,\ will\ not\ create\ a\ shape"{}});}
+\DoxyCodeLine{\Hypertarget{_input_event_handler_8cs_source_l00064}00064\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_input_event_handler_8cs_source_l00065}00065\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_input_event_handler_8cs_source_l00066}00066\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Perform\ explicit\ conversion\ from\ nullable\ Color\ to\ non-\/nullable\ Color}}
+\DoxyCodeLine{\Hypertarget{_input_event_handler_8cs_source_l00067}00067\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Color\ color\ =\ nullableColor\ ??\ Color.white;}
+\DoxyCodeLine{\Hypertarget{_input_event_handler_8cs_source_l00068}00068\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \_createObjectAction.\mbox{\hyperlink{class_m_m_i_1_1_create_object_action_aaadec377f997f02db3ad3351a60816a3}{CreateNewObject}}(\_eyeTracking.GazeMarkerPosition,\ color,\ shapeName);}
+\DoxyCodeLine{\Hypertarget{_input_event_handler_8cs_source_l00069}00069\ }
+\DoxyCodeLine{\Hypertarget{_input_event_handler_8cs_source_l00070}00070\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{_input_event_handler_8cs_source_l00071}00071\ }
+\DoxyCodeLine{\Hypertarget{_input_event_handler_8cs_source_l00072}00072\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ VoiceActions.ChangeColor:}
+\DoxyCodeLine{\Hypertarget{_input_event_handler_8cs_source_l00073}00073\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ colorName\ =\ UtilityScript.GetSlotValue(voiceEvent.EventName,\ \textcolor{stringliteral}{"{}Color"{}});}
+\DoxyCodeLine{\Hypertarget{_input_event_handler_8cs_source_l00074}00074\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ nullableColor\ =\ UtilityScript.StringToColor(colorName);}
+\DoxyCodeLine{\Hypertarget{_input_event_handler_8cs_source_l00075}00075\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (nullableColor\ ==\ \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_input_event_handler_8cs_source_l00076}00076\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_input_event_handler_8cs_source_l00077}00077\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Debug.LogWarning(\textcolor{stringliteral}{"{}Invalid\ color\ "{}}\ +\ colorName);}
+\DoxyCodeLine{\Hypertarget{_input_event_handler_8cs_source_l00078}00078\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_input_event_handler_8cs_source_l00079}00079\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_input_event_handler_8cs_source_l00080}00080\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ color\ =\ nullableColor\ ??\ (Color)nullableColor;}
+\DoxyCodeLine{\Hypertarget{_input_event_handler_8cs_source_l00081}00081\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \_interactorsManager.\mbox{\hyperlink{class_m_m_i_1_1_interactors_manager_a3b5de6d1a6a2b4ffa411b5df7666f620}{ChangeSelectedObjectColor}}(color);}
+\DoxyCodeLine{\Hypertarget{_input_event_handler_8cs_source_l00082}00082\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{_input_event_handler_8cs_source_l00083}00083\ }
+\DoxyCodeLine{\Hypertarget{_input_event_handler_8cs_source_l00084}00084\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ VoiceActions.Delete:}
+\DoxyCodeLine{\Hypertarget{_input_event_handler_8cs_source_l00085}00085\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ DeleteObject();}
+\DoxyCodeLine{\Hypertarget{_input_event_handler_8cs_source_l00086}00086\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{_input_event_handler_8cs_source_l00087}00087\ }
+\DoxyCodeLine{\Hypertarget{_input_event_handler_8cs_source_l00088}00088\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ VoiceActions.Group:}
+\DoxyCodeLine{\Hypertarget{_input_event_handler_8cs_source_l00089}00089\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{string}\ action\ =\ UtilityScript.GetSlotValue(voiceEvent.EventName,\ \textcolor{stringliteral}{"{}Action"{}});}
+\DoxyCodeLine{\Hypertarget{_input_event_handler_8cs_source_l00090}00090\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ isStartAction\ =\ action\ ==\ \textcolor{stringliteral}{"{}Start"{}}\ ||\ action\ ==\ \textcolor{stringliteral}{"{}Begin"{}};}
+\DoxyCodeLine{\Hypertarget{_input_event_handler_8cs_source_l00091}00091\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (isStartAction)\ \_interactorsManager.\mbox{\hyperlink{class_m_m_i_1_1_interactors_manager_add396464959efd0128c302a9cbf3cc57}{StartGrouping}}();}
+\DoxyCodeLine{\Hypertarget{_input_event_handler_8cs_source_l00092}00092\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \_interactorsManager.\mbox{\hyperlink{class_m_m_i_1_1_interactors_manager_a3d249caaf5b49866c26b5b367e986fb6}{CompleteGrouping}}();}
+\DoxyCodeLine{\Hypertarget{_input_event_handler_8cs_source_l00093}00093\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{_input_event_handler_8cs_source_l00094}00094\ }
+\DoxyCodeLine{\Hypertarget{_input_event_handler_8cs_source_l00095}00095\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ VoiceActions.Selection:}
+\DoxyCodeLine{\Hypertarget{_input_event_handler_8cs_source_l00096}00096\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{string}\ selection\ =\ UtilityScript.GetSlotValue(voiceEvent.EventName,\ \textcolor{stringliteral}{"{}Selection"{}});}
+\DoxyCodeLine{\Hypertarget{_input_event_handler_8cs_source_l00097}00097\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \_interactorsManager.\mbox{\hyperlink{class_m_m_i_1_1_interactors_manager_a6de4bb5c53585d41f639d6d4bc020b72}{SelectObjectToGroup}}(selection\ ==\ \textcolor{stringliteral}{"{}Select"{}});}
+\DoxyCodeLine{\Hypertarget{_input_event_handler_8cs_source_l00098}00098\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{_input_event_handler_8cs_source_l00099}00099\ }
+\DoxyCodeLine{\Hypertarget{_input_event_handler_8cs_source_l00100}00100\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ VoiceActions.Scale:}
+\DoxyCodeLine{\Hypertarget{_input_event_handler_8cs_source_l00101}00101\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{string}\ upDownValue\ =\ UtilityScript.GetSlotValue(voiceEvent.EventName,\ \textcolor{stringliteral}{"{}UpDown"{}});}
+\DoxyCodeLine{\Hypertarget{_input_event_handler_8cs_source_l00102}00102\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ isScaleUp\ =\ upDownValue\ ==\ \textcolor{stringliteral}{"{}Up"{}}\ ||\ upDownValue\ ==\ \textcolor{stringliteral}{"{}Bigger"{}};}
+\DoxyCodeLine{\Hypertarget{_input_event_handler_8cs_source_l00103}00103\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{string}\ percentageString\ =\ UtilityScript.GetSlotValue(voiceEvent.EventName,\ \textcolor{stringliteral}{"{}Percentage"{}});}
+\DoxyCodeLine{\Hypertarget{_input_event_handler_8cs_source_l00104}00104\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ percent\ =\ Int32.Parse(percentageString);}
+\DoxyCodeLine{\Hypertarget{_input_event_handler_8cs_source_l00105}00105\ }
+\DoxyCodeLine{\Hypertarget{_input_event_handler_8cs_source_l00106}00106\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \_interactorsManager.\mbox{\hyperlink{class_m_m_i_1_1_interactors_manager_aaf168d42a9a46784d75400e97001f8df}{ScaleSelectedObject}}(percent,\ isScaleUp);}
+\DoxyCodeLine{\Hypertarget{_input_event_handler_8cs_source_l00107}00107\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{_input_event_handler_8cs_source_l00108}00108\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_input_event_handler_8cs_source_l00109}00109\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_input_event_handler_8cs_source_l00110}00110\ }
+\DoxyCodeLine{\Hypertarget{_input_event_handler_8cs_source_l00114}00114\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ DeleteObject()}
+\DoxyCodeLine{\Hypertarget{_input_event_handler_8cs_source_l00115}00115\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_input_event_handler_8cs_source_l00116}00116\ \ \ \ \ \ \ \ \ \ \ \ \ var\ objToDelete\ =\ \mbox{\hyperlink{class_m_m_i_1_1_interactors_manager}{InteractorsManager}}.Instance.GetSelectedObject;}
+\DoxyCodeLine{\Hypertarget{_input_event_handler_8cs_source_l00117}00117\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (objToDelete\ ==\ \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_input_event_handler_8cs_source_l00118}00118\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_input_event_handler_8cs_source_l00119}00119\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Debug.LogError(\textcolor{stringliteral}{"{}No\ object\ has\ been\ selected\ yet"{}});}
+\DoxyCodeLine{\Hypertarget{_input_event_handler_8cs_source_l00120}00120\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_input_event_handler_8cs_source_l00121}00121\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_input_event_handler_8cs_source_l00122}00122\ \ \ \ \ \ \ \ \ \ \ \ \ objToDelete.gameObject.SetActive(\textcolor{keyword}{false});}
+\DoxyCodeLine{\Hypertarget{_input_event_handler_8cs_source_l00123}00123\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_input_event_handler_8cs_source_l00124}00124\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_input_event_handler_8cs_source_l00125}00125\ \}}
+
+\end{DoxyCode}

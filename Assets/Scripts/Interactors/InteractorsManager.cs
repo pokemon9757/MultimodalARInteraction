@@ -9,6 +9,7 @@ namespace MMI
 {
     public class InteractorsManager : MonoBehaviour
     {
+        // Get the currently or lastly selected object
         public InteractableObject GetSelectedObject
         {
             get
@@ -91,6 +92,9 @@ namespace MMI
             }
         }
 
+        /// <summary>
+        /// Start grouping mode
+        /// </summary>
         public void StartGrouping()
         {
             if (_isInGroupMode)
@@ -101,6 +105,9 @@ namespace MMI
             _isInGroupMode = true;
         }
 
+        /// <summary>
+        /// End grouping mode, group all selected object
+        /// </summary>
         public void CompleteGrouping()
         {
             if (!_isInGroupMode)
@@ -135,6 +142,10 @@ namespace MMI
             _lastSelectedObject = null;
         }
 
+        /// <summary>
+        /// Add the currently selected object to a list of objects to group once the CompleteGroup function is called 
+        /// </summary>
+        /// <param name="active">Add the object if True, otherwise Remove  </param>
         public void SelectObjectToGroup(bool active)
         {
             string action = active ? "select" : "deselect";
@@ -171,7 +182,11 @@ namespace MMI
             }
         }
 
-        public void ChangeSelectedObjectColor(string colorName)
+        /// <summary>
+        /// Change the material color of the currently selected object
+        /// </summary>
+        /// <param name="color">The new color to change into</param>
+        public void ChangeSelectedObjectColor(Color color)
         {
             var obj = GetSelectedObject;
             if (obj == null)
@@ -184,16 +199,15 @@ namespace MMI
                 Debug.LogError("Cannot change color of a selected object in group mode");
                 return;
             }
-            Color color;
-            if (!ColorUtility.TryParseHtmlString(colorName.ToLower(), out color))
-            {
-                Debug.LogError("Invalid color name " + colorName);
-                color = Color.gray;
-            }
             obj.UpdateColor(color);
         }
 
-        public void ScaleSelectedObject(string percentageString, bool scaleUp)
+        /// <summary>
+        /// Scale the gameobject by the given percentage
+        /// </summary>
+        /// <param name="percentageString">A number string</param>
+        /// <param name="scaleUp">Scale up if True, otherwise scale down</param>
+        public void ScaleSelectedObject(int percent, bool scaleUp)
         {
             var obj = GetSelectedObject;
             if (obj == null)
@@ -201,7 +215,6 @@ namespace MMI
                 Debug.LogError("No object has been selected yet");
                 return;
             }
-            int percent = Int32.Parse(percentageString);
             Vector3 origScale = obj.transform.localScale;
             obj.transform.localScale = scaleUp ? origScale + (origScale * percent / 100f) : origScale - (origScale * percent / 100f);
         }

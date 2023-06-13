@@ -15,24 +15,24 @@ MonoBehaviour:
   AllVoiceIntents: []
   VoiceCommandsToAdd:
   - Id: 0
-    Value: (Hi|[Hello there] | Greetings)
+    Value: '[Hi|Hello there?] | Greetings'
   - Id: 1
     Value: '[Create|Generate|Make] [a|an]? {Color}? {Shape} '
   - Id: 2
-    Value: (Set|Change|Make)? (that|this|it)? {Color}
+    Value: '[(Set|Change)? {Pronoun}? color to {Color}] | [Make {Pronoun}? {Color}]'
   - Id: 3
     Value: Delete|Remove|Erase|Destroy
   - Id: 4
-    Value: '{Action} Group'
+    Value: '{Action} Group|Grouping'
   - Id: 5
     Value: '{Selection}'
   - Id: 6
-    Value: '[Scale {UpDown} by? {Percentage} percent?] | [Make it|that|this {Percentage}
-      percent {UpDown}'
+    Value: '[Scale {UpDown} by? {Percentage} percent?] | [Make {Pronoun} {Percentage}
+      percent {UpDown}] '
   - Id: 7
-    Value: Turn? UI {OnOff}
+    Value: '[Turn? UI {OnOff}] | [[Turn {OnOff} UI ]'
   - Id: 8
-    Value: '[Toggle? UI? lock] | [lock UI?]'
+    Value: UI lock
   - Id: 9
     Value: Open|Display menu? {MenuName}
   - Id: 10
@@ -96,5 +96,9 @@ MonoBehaviour:
     values:
     - Overview
     - Controls
-    - Issues
     - Status
+  - name: Pronoun
+    values:
+    - that
+    - this
+    - it

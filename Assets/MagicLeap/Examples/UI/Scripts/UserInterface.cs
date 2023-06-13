@@ -246,6 +246,7 @@ namespace MagicLeap.Examples
 
         private void CreateSceneButtons()
         {
+            if (scenesListTransform == null) return;
             string activeSceneName = SceneManager.GetActiveScene().name;
 
             for (int i = 0; i < SceneManager.sceneCountInBuildSettings; i++)

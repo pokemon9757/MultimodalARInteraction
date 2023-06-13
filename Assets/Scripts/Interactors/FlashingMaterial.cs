@@ -23,7 +23,7 @@ namespace MMI
                 {
                     float emissiveIntensity = Mathf.Lerp(_minIntensity, _maxIntensity, (float)_timer / _transitionTime);
                     entry.Key.material.color = entry.Value * emissiveIntensity;
-                    entry.Key.material.SetColor("_EmissionColor", entry.Value * emissiveIntensity);
+                    //entry.Key.material.SetColor("_EmissionColor", entry.Value * emissiveIntensity);
                 }
                 _timer += _tweeningForward ? Time.deltaTime : -Time.deltaTime;
                 if (_timer <= 0 || _timer >= _transitionTime)
@@ -34,6 +34,10 @@ namespace MMI
             }
         }
 
+        /// <summary>
+        /// Set the flashing of material
+        /// </summary>
+        /// <param name="active">If True, enable the material flashing. Otherwise disable</param>
         public void EnableFlashing(bool active)
         {
             if (_renderers == null || _renderers.Length == 0) _renderers = GetComponentsInChildren<MeshRenderer>();
@@ -52,7 +56,7 @@ namespace MMI
                 foreach (KeyValuePair<MeshRenderer, Color> entry in _renderersOrigColors)
                 {
                     entry.Key.material.color = entry.Value;
-                    entry.Key.material.SetColor("_EmissionColor", entry.Value);
+                    //entry.Key.material.SetColor("_EmissionColor", entry.Value);
                 }
         }
     }

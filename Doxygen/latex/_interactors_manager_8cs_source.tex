@@ -1,0 +1,206 @@
+\doxysection{Interactors\+Manager.\+cs}
+\hypertarget{_interactors_manager_8cs_source}{}\label{_interactors_manager_8cs_source}\index{Assets/Scripts/Interactors/InteractorsManager.cs@{Assets/Scripts/Interactors/InteractorsManager.cs}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00001}00001\ \textcolor{keyword}{using\ }System;}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00002}00002\ \textcolor{keyword}{using\ }System.Collections;}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00003}00003\ \textcolor{keyword}{using\ }System.Collections.Generic;}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00004}00004\ \textcolor{keyword}{using\ }System.Linq;}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00005}00005\ \textcolor{keyword}{using\ }UnityEngine;}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00006}00006\ }
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00007}00007\ }
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00008}00008\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_m_m_i}{MMI}}}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00009}00009\ \{}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00010}\mbox{\hyperlink{class_m_m_i_1_1_interactors_manager}{00010}}\ \ \ \ \ \textcolor{keyword}{public}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_m_m_i_1_1_interactors_manager}{InteractorsManager}}\ :\ MonoBehaviour}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00011}00011\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00012}00012\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Get\ the\ currently\ or\ lastly\ selected\ object}}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00013}00013\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_m_m_i_1_1_interactable_object}{InteractableObject}}\ GetSelectedObject}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00014}00014\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00015}00015\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{get}}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00016}00016\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00017}00017\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \_selectedObject\ ?\ \_selectedObject\ :\ \_lastSelectedObject;}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00018}00018\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00019}00019\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00020}00020\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}\ Color\ \_selectedColor\ =\ Color.blue;}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00021}00021\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}\ \textcolor{keyword}{static}\ \mbox{\hyperlink{class_m_m_i_1_1_interactors_manager}{InteractorsManager}}\ Instance}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00022}00022\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00023}00023\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{get}}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00024}00024\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00025}00025\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Check\ if\ the\ instance\ is\ null}}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00026}00026\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\_instance\ ==\ \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00027}00027\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00028}00028\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Find\ an\ existing\ instance\ in\ the\ scene}}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00029}00029\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \_instance\ =\ FindObjectOfType<InteractorsManager>();}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00030}00030\ }
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00031}00031\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ If\ no\ instance\ exists,\ create\ a\ new\ one}}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00032}00032\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\_instance\ ==\ \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00033}00033\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00034}00034\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ GameObject\ singletonObject\ =\ \textcolor{keyword}{new}\ GameObject();}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00035}00035\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \_instance\ =\ singletonObject.AddComponent<\mbox{\hyperlink{class_m_m_i_1_1_interactors_manager}{InteractorsManager}}>();}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00036}00036\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ singletonObject.name\ =\ \textcolor{stringliteral}{"{}InteractorsManager"{}};}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00037}00037\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ DontDestroyOnLoad(singletonObject);}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00038}00038\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00039}00039\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00040}00040\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \_instance;}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00041}00041\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00042}00042\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00043}00043\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{class_m_m_i_1_1_interactors_manager}{InteractorsManager}}\ \_instance;}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00044}00044\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_m_m_i_1_1_interactable_object}{InteractableObject}}\ \_selectedObject;}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00045}00045\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_m_m_i_1_1_interactable_object}{InteractableObject}}\ \_lastSelectedObject;}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00046}00046\ \ \ \ \ \ \ \ \ Dictionary<InteractableObject,\ bool>\ \_objectsToGroupDict\ =\ \textcolor{keyword}{new}();}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00047}00047\ \ \ \ \ \ \ \ \ Dictionary<InteractableObject,\ Color>\ \_objectsOriginalColor\ =\ \textcolor{keyword}{new}();}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00048}00048\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \_isInGroupMode\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00049}00049\ }
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00050}00050\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ Awake()}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00051}00051\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00052}00052\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Ensure\ that\ only\ one\ instance\ exists}}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00053}00053\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\_instance\ !=\ \textcolor{keyword}{null}\ \&\&\ \_instance\ !=\ \textcolor{keyword}{this})}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00054}00054\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00055}00055\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Destroy(gameObject);}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00056}00056\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00057}00057\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00058}00058\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00059}00059\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \_instance\ =\ \textcolor{keyword}{this};}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00060}00060\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ DontDestroyOnLoad(gameObject);}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00061}00061\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00062}00062\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00063}00063\ }
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00064}00064\ }
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00068}\mbox{\hyperlink{class_m_m_i_1_1_interactors_manager_aab39b997a64a569d2964fe4a99d60d59}{00068}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_m_m_i_1_1_interactors_manager_aab39b997a64a569d2964fe4a99d60d59}{TriggerSelectObject}}(\mbox{\hyperlink{class_m_m_i_1_1_interactable_object}{InteractableObject}}\ obj,\ \textcolor{keywordtype}{bool}\ active)}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00069}00069\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00070}00070\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (obj\ ==\ \textcolor{keyword}{null})\ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00071}00071\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\_selectedObject\ !=\ obj)}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00072}00072\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00073}00073\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Trying\ to\ disable\ a\ not\ selected\ object}}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00074}00074\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!active)\ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00075}00075\ }
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00076}00076\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Set\ active\ a\ new\ selected\ object}}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00077}00077\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \_selectedObject?.\mbox{\hyperlink{class_m_m_i_1_1_interactable_object_ab1d5502df09c9366c8394e5c71a2620c}{SetSelected}}(\textcolor{keyword}{false});}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00078}00078\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \_selectedObject\ =\ obj;}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00079}00079\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \_selectedObject.\mbox{\hyperlink{class_m_m_i_1_1_interactable_object_ab1d5502df09c9366c8394e5c71a2620c}{SetSelected}}(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00080}00080\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00081}00081\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00082}00082\ }
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00083}00083\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Else\ \ \_selectedObject\ ==\ obj}}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00084}00084\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Trying\ to\ select\ an\ already\ selected\ object}}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00085}00085\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (active)\ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00086}00086\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Deselect\ current\ object}}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00087}00087\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\_selectedObject\ !=\ \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00088}00088\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00089}00089\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \_selectedObject.\mbox{\hyperlink{class_m_m_i_1_1_interactable_object_ab1d5502df09c9366c8394e5c71a2620c}{SetSelected}}(\textcolor{keyword}{false});}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00090}00090\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\_lastSelectedObject\ !=\ \_selectedObject)\ \_lastSelectedObject\ =\ \_selectedObject;}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00091}00091\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \_selectedObject\ =\ \textcolor{keyword}{null};}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00092}00092\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00093}00093\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00094}00094\ }
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00098}\mbox{\hyperlink{class_m_m_i_1_1_interactors_manager_add396464959efd0128c302a9cbf3cc57}{00098}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_m_m_i_1_1_interactors_manager_add396464959efd0128c302a9cbf3cc57}{StartGrouping}}()}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00099}00099\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00100}00100\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\_isInGroupMode)}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00101}00101\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00102}00102\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Debug.LogWarning(\textcolor{stringliteral}{"{}Already\ started\ grouping,\ cannot\ start\ group"{}});}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00103}00103\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00104}00104\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00105}00105\ \ \ \ \ \ \ \ \ \ \ \ \ \_isInGroupMode\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00106}00106\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00107}00107\ }
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00111}\mbox{\hyperlink{class_m_m_i_1_1_interactors_manager_a3d249caaf5b49866c26b5b367e986fb6}{00111}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_m_m_i_1_1_interactors_manager_a3d249caaf5b49866c26b5b367e986fb6}{CompleteGrouping}}()}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00112}00112\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00113}00113\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!\_isInGroupMode)}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00114}00114\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00115}00115\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Debug.LogWarning(\textcolor{stringliteral}{"{}Haven't\ started\ grouping,\ cannot\ complete\ group\ "{}});}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00116}00116\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00117}00117\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00118}00118\ \ \ \ \ \ \ \ \ \ \ \ \ \_isInGroupMode\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00119}00119\ }
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00120}00120\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Perform\ grouping\ }}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00121}00121\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\_objectsToGroupDict.Count\ ==\ 0)\ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00122}00122\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ setParentPos\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00123}00123\ \ \ \ \ \ \ \ \ \ \ \ \ Transform\ parent\ =\ \textcolor{keyword}{new}\ GameObject(\textcolor{stringliteral}{"{}Grouped\ Objects"{}}).transform;}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00124}00124\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{foreach}\ (\mbox{\hyperlink{class_m_m_i_1_1_interactable_object}{InteractableObject}}\ obj\ \textcolor{keywordflow}{in}\ \_objectsToGroupDict.Keys)}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00125}00125\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00126}00126\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!obj.gameObject.activeSelf)\ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00127}00127\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{class_m_m_i_1_1_interactable_object_a4a04c2c7a0e49d7aa0195ac128bc5a1a}{RecoverUpdatedColors}}();}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00128}00128\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Destroy(obj.GetComponent<\mbox{\hyperlink{class_m_m_i_1_1_interactable_object}{InteractableObject}}>());}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00129}00129\ }
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00130}00130\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Set\ the\ parent\ transform\ to\ the\ first\ child}}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00131}00131\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!setParentPos)}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00132}00132\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00133}00133\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ parent.SetPositionAndRotation(obj.transform.position,\ obj.transform.rotation);}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00134}00134\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ parent.localScale\ =\ obj.transform.localScale;}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00135}00135\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ setParentPos\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00136}00136\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00137}00137\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.transform.parent\ =\ parent;}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00138}00138\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00139}00139\ \ \ \ \ \ \ \ \ \ \ \ \ parent.gameObject.AddComponent<\mbox{\hyperlink{class_m_m_i_1_1_interactable_object}{InteractableObject}}>();}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00140}00140\ \ \ \ \ \ \ \ \ \ \ \ \ \_objectsToGroupDict.Clear();}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00141}00141\ \ \ \ \ \ \ \ \ \ \ \ \ \_selectedObject\ =\ \textcolor{keyword}{null};}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00142}00142\ \ \ \ \ \ \ \ \ \ \ \ \ \_lastSelectedObject\ =\ \textcolor{keyword}{null};}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00143}00143\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00144}00144\ }
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00149}\mbox{\hyperlink{class_m_m_i_1_1_interactors_manager_a6de4bb5c53585d41f639d6d4bc020b72}{00149}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_m_m_i_1_1_interactors_manager_a6de4bb5c53585d41f639d6d4bc020b72}{SelectObjectToGroup}}(\textcolor{keywordtype}{bool}\ active)}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00150}00150\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00151}00151\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{string}\ action\ =\ active\ ?\ \textcolor{stringliteral}{"{}select"{}}\ :\ \textcolor{stringliteral}{"{}deselect"{}};}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00152}00152\ }
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00153}00153\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!\_isInGroupMode)}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00154}00154\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00155}00155\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Debug.LogError(\textcolor{stringliteral}{"{}Cannot\ perform\ "{}}\ +\ action\ +\ \textcolor{stringliteral}{"{},\ not\ in\ group\ mode"{}});}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00156}00156\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00157}00157\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00158}00158\ }
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00159}00159\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Take\ the\ last\ selected\ object\ if\ the\ currently\ selected\ is\ null}}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00160}00160\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_m_m_i_1_1_interactable_object}{InteractableObject}}\ obj\ =\ \_selectedObject\ ?\ \_selectedObject\ :\ \_lastSelectedObject;}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00161}00161\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (obj\ ==\ \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00162}00162\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00163}00163\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Debug.LogWarning(\textcolor{stringliteral}{"{}Cannot\ perform\ "{}}\ +\ action\ +\ \textcolor{stringliteral}{"{}\ since\ no\ object\ has\ been\ recorded"{}});}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00164}00164\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00165}00165\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00166}00166\ }
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00167}00167\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ If\ selecting}}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00168}00168\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (active)}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00169}00169\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00170}00170\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{class_m_m_i_1_1_interactable_object_a40eb6977edf43c9e628660fc1209e30a}{UpdateColor}}(\_selectedColor);}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00171}00171\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \_objectsToGroupDict[obj]\ =\ active;}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00172}00172\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00173}00173\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Else\ if\ deselecting}}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00174}00174\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00175}00175\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00176}00176\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Recover\ to\ the\ original\ color\ if\ the\ dict\ contains\ the\ obj}}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00177}00177\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\_objectsToGroupDict.ContainsKey(obj))}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00178}00178\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00179}00179\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{class_m_m_i_1_1_interactable_object_a4a04c2c7a0e49d7aa0195ac128bc5a1a}{RecoverUpdatedColors}}();}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00180}00180\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \_objectsToGroupDict.Remove(obj);}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00181}00181\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00182}00182\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00183}00183\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00184}00184\ }
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00189}\mbox{\hyperlink{class_m_m_i_1_1_interactors_manager_a3b5de6d1a6a2b4ffa411b5df7666f620}{00189}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_m_m_i_1_1_interactors_manager_a3b5de6d1a6a2b4ffa411b5df7666f620}{ChangeSelectedObjectColor}}(Color\ color)}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00190}00190\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00191}00191\ \ \ \ \ \ \ \ \ \ \ \ \ var\ obj\ =\ GetSelectedObject;}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00192}00192\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (obj\ ==\ \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00193}00193\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00194}00194\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Debug.LogError(\textcolor{stringliteral}{"{}No\ object\ has\ been\ selected\ yet"{}});}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00195}00195\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00196}00196\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00197}00197\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\_isInGroupMode\ \&\&\ \_objectsToGroupDict.ContainsKey(obj))}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00198}00198\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00199}00199\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Debug.LogError(\textcolor{stringliteral}{"{}Cannot\ change\ color\ of\ a\ selected\ object\ in\ group\ mode"{}});}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00200}00200\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00201}00201\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00202}00202\ \ \ \ \ \ \ \ \ \ \ \ \ obj.\mbox{\hyperlink{class_m_m_i_1_1_interactable_object_a40eb6977edf43c9e628660fc1209e30a}{UpdateColor}}(color);}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00203}00203\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00204}00204\ }
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00210}\mbox{\hyperlink{class_m_m_i_1_1_interactors_manager_aaf168d42a9a46784d75400e97001f8df}{00210}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_m_m_i_1_1_interactors_manager_aaf168d42a9a46784d75400e97001f8df}{ScaleSelectedObject}}(\textcolor{keywordtype}{int}\ percent,\ \textcolor{keywordtype}{bool}\ scaleUp)}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00211}00211\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00212}00212\ \ \ \ \ \ \ \ \ \ \ \ \ var\ obj\ =\ GetSelectedObject;}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00213}00213\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (obj\ ==\ \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00214}00214\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00215}00215\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Debug.LogError(\textcolor{stringliteral}{"{}No\ object\ has\ been\ selected\ yet"{}});}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00216}00216\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00217}00217\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00218}00218\ \ \ \ \ \ \ \ \ \ \ \ \ Vector3\ origScale\ =\ obj.transform.localScale;}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00219}00219\ \ \ \ \ \ \ \ \ \ \ \ \ obj.transform.localScale\ =\ scaleUp\ ?\ origScale\ +\ (origScale\ *\ percent\ /\ 100f)\ :\ origScale\ -\/\ (origScale\ *\ percent\ /\ 100f);}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00220}00220\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00221}00221\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_interactors_manager_8cs_source_l00222}00222\ \}}
+
+\end{DoxyCode}

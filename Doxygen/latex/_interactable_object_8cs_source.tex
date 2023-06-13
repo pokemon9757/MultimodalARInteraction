@@ -1,0 +1,77 @@
+\doxysection{Interactable\+Object.\+cs}
+\hypertarget{_interactable_object_8cs_source}{}\label{_interactable_object_8cs_source}\index{Assets/Scripts/Interactors/InteractableObject.cs@{Assets/Scripts/Interactors/InteractableObject.cs}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_interactable_object_8cs_source_l00001}00001\ \textcolor{keyword}{using\ }System.Collections;}
+\DoxyCodeLine{\Hypertarget{_interactable_object_8cs_source_l00002}00002\ \textcolor{keyword}{using\ }System.Collections.Generic;}
+\DoxyCodeLine{\Hypertarget{_interactable_object_8cs_source_l00003}00003\ \textcolor{keyword}{using\ }Microsoft.MixedReality.Toolkit.Input;}
+\DoxyCodeLine{\Hypertarget{_interactable_object_8cs_source_l00004}00004\ \textcolor{keyword}{using\ }Microsoft.MixedReality.Toolkit.UI;}
+\DoxyCodeLine{\Hypertarget{_interactable_object_8cs_source_l00005}00005\ \textcolor{keyword}{using\ }UnityEngine;}
+\DoxyCodeLine{\Hypertarget{_interactable_object_8cs_source_l00006}00006\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_m_m_i}{MMI}}}
+\DoxyCodeLine{\Hypertarget{_interactable_object_8cs_source_l00007}00007\ \{}
+\DoxyCodeLine{\Hypertarget{_interactable_object_8cs_source_l00008}00008\ \ \ \ \ [RequireComponent(typeof(Rigidbody),\ typeof(FlashingMaterial),\ typeof(ObjectManipulator))]}
+\DoxyCodeLine{\Hypertarget{_interactable_object_8cs_source_l00009}00009\ \ \ \ \ [RequireComponent(typeof(MinMaxScaleConstraint))]}
+\DoxyCodeLine{\Hypertarget{_interactable_object_8cs_source_l00010}\mbox{\hyperlink{class_m_m_i_1_1_interactable_object}{00010}}\ \ \ \ \ \textcolor{keyword}{public}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_m_m_i_1_1_interactable_object}{InteractableObject}}\ :\ MonoBehaviour}
+\DoxyCodeLine{\Hypertarget{_interactable_object_8cs_source_l00011}00011\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_interactable_object_8cs_source_l00012}00012\ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}\ MeshRenderer[]\ \_renderers;}
+\DoxyCodeLine{\Hypertarget{_interactable_object_8cs_source_l00013}00013\ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}\ \mbox{\hyperlink{class_m_m_i_1_1_flashing_material}{FlashingMaterial}}\ \_materialFlash;}
+\DoxyCodeLine{\Hypertarget{_interactable_object_8cs_source_l00014}00014\ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}\ Rigidbody\ \_rb;}
+\DoxyCodeLine{\Hypertarget{_interactable_object_8cs_source_l00015}00015\ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}\ Dictionary<MeshRenderer,\ Color>\ \_cachedColorsDict\ =\ \textcolor{keyword}{new}();}
+\DoxyCodeLine{\Hypertarget{_interactable_object_8cs_source_l00016}00016\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ Awake()}
+\DoxyCodeLine{\Hypertarget{_interactable_object_8cs_source_l00017}00017\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_interactable_object_8cs_source_l00018}00018\ \ \ \ \ \ \ \ \ \ \ \ \ gameObject.tag\ =\ \textcolor{stringliteral}{"{}InteractableObject"{}};}
+\DoxyCodeLine{\Hypertarget{_interactable_object_8cs_source_l00019}00019\ \ \ \ \ \ \ \ \ \ \ \ \ \_renderers\ =\ gameObject.GetComponentsInChildren<MeshRenderer>();}
+\DoxyCodeLine{\Hypertarget{_interactable_object_8cs_source_l00020}00020\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{foreach}\ (var\ r\ \textcolor{keywordflow}{in}\ \_renderers)}
+\DoxyCodeLine{\Hypertarget{_interactable_object_8cs_source_l00021}00021\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_interactable_object_8cs_source_l00022}00022\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (r.gameObject.GetComponent<NearInteractionGrabbable>()\ ==\ \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_interactable_object_8cs_source_l00023}00023\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ r.gameObject.AddComponent<NearInteractionGrabbable>();}
+\DoxyCodeLine{\Hypertarget{_interactable_object_8cs_source_l00024}00024\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_interactable_object_8cs_source_l00025}00025\ \ \ \ \ \ \ \ \ \ \ \ \ \_materialFlash\ =\ GetComponent<FlashingMaterial>();}
+\DoxyCodeLine{\Hypertarget{_interactable_object_8cs_source_l00026}00026\ \ \ \ \ \ \ \ \ \ \ \ \ \_rb\ =\ GetComponent<Rigidbody>();}
+\DoxyCodeLine{\Hypertarget{_interactable_object_8cs_source_l00027}00027\ \ \ \ \ \ \ \ \ \ \ \ \ \_rb.isKinematic\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_interactable_object_8cs_source_l00028}00028\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_interactable_object_8cs_source_l00029}00029\ }
+\DoxyCodeLine{\Hypertarget{_interactable_object_8cs_source_l00034}\mbox{\hyperlink{class_m_m_i_1_1_interactable_object_a40eb6977edf43c9e628660fc1209e30a}{00034}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_m_m_i_1_1_interactable_object_a40eb6977edf43c9e628660fc1209e30a}{UpdateColor}}(Color\ c)}
+\DoxyCodeLine{\Hypertarget{_interactable_object_8cs_source_l00035}00035\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_interactable_object_8cs_source_l00036}00036\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_m_m_i_1_1_interactable_object_ab1d5502df09c9366c8394e5c71a2620c}{SetSelected}}(\textcolor{keyword}{false});}
+\DoxyCodeLine{\Hypertarget{_interactable_object_8cs_source_l00037}00037\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{foreach}\ (MeshRenderer\ r\ \textcolor{keywordflow}{in}\ \_renderers)}
+\DoxyCodeLine{\Hypertarget{_interactable_object_8cs_source_l00038}00038\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_interactable_object_8cs_source_l00039}00039\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \_cachedColorsDict[r]\ =\ r.material.color;}
+\DoxyCodeLine{\Hypertarget{_interactable_object_8cs_source_l00040}00040\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ r.material.color\ =\ c;}
+\DoxyCodeLine{\Hypertarget{_interactable_object_8cs_source_l00041}00041\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ r.material.SetColor(\textcolor{stringliteral}{"{}\_EmissionColor"{}},\ c);}
+\DoxyCodeLine{\Hypertarget{_interactable_object_8cs_source_l00042}00042\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_interactable_object_8cs_source_l00043}00043\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_interactable_object_8cs_source_l00044}00044\ }
+\DoxyCodeLine{\Hypertarget{_interactable_object_8cs_source_l00048}\mbox{\hyperlink{class_m_m_i_1_1_interactable_object_a4a04c2c7a0e49d7aa0195ac128bc5a1a}{00048}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_m_m_i_1_1_interactable_object_a4a04c2c7a0e49d7aa0195ac128bc5a1a}{RecoverUpdatedColors}}()}
+\DoxyCodeLine{\Hypertarget{_interactable_object_8cs_source_l00049}00049\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_interactable_object_8cs_source_l00050}00050\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_m_m_i_1_1_interactable_object_ab1d5502df09c9366c8394e5c71a2620c}{SetSelected}}(\textcolor{keyword}{false});}
+\DoxyCodeLine{\Hypertarget{_interactable_object_8cs_source_l00051}00051\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\_cachedColorsDict\ ==\ \textcolor{keyword}{null}\ ||\ \_cachedColorsDict.Count\ ==\ 0)}
+\DoxyCodeLine{\Hypertarget{_interactable_object_8cs_source_l00052}00052\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_interactable_object_8cs_source_l00053}00053\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Debug.LogError(\textcolor{stringliteral}{"{}Cannot\ recover\ updated\ color\ as\ dict\ is\ empty"{}});}
+\DoxyCodeLine{\Hypertarget{_interactable_object_8cs_source_l00054}00054\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_interactable_object_8cs_source_l00055}00055\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_interactable_object_8cs_source_l00056}00056\ }
+\DoxyCodeLine{\Hypertarget{_interactable_object_8cs_source_l00057}00057\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{foreach}\ (MeshRenderer\ r\ \textcolor{keywordflow}{in}\ \_renderers)}
+\DoxyCodeLine{\Hypertarget{_interactable_object_8cs_source_l00058}00058\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_interactable_object_8cs_source_l00059}00059\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Color\ c\ =\ \_cachedColorsDict[r];}
+\DoxyCodeLine{\Hypertarget{_interactable_object_8cs_source_l00060}00060\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ r.material.color\ =\ c;}
+\DoxyCodeLine{\Hypertarget{_interactable_object_8cs_source_l00061}00061\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ r.material.SetColor(\textcolor{stringliteral}{"{}\_EmissionColor"{}},\ c);}
+\DoxyCodeLine{\Hypertarget{_interactable_object_8cs_source_l00062}00062\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_interactable_object_8cs_source_l00063}00063\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_interactable_object_8cs_source_l00064}00064\ }
+\DoxyCodeLine{\Hypertarget{_interactable_object_8cs_source_l00069}\mbox{\hyperlink{class_m_m_i_1_1_interactable_object_ab1d5502df09c9366c8394e5c71a2620c}{00069}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_m_m_i_1_1_interactable_object_ab1d5502df09c9366c8394e5c71a2620c}{SetSelected}}(\textcolor{keywordtype}{bool}\ active)}
+\DoxyCodeLine{\Hypertarget{_interactable_object_8cs_source_l00070}00070\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_interactable_object_8cs_source_l00071}00071\ \ \ \ \ \ \ \ \ \ \ \ \ \_materialFlash.\mbox{\hyperlink{class_m_m_i_1_1_flashing_material_ab4490eca1998ddac94fcc973ca9dfb9d}{EnableFlashing}}(active);}
+\DoxyCodeLine{\Hypertarget{_interactable_object_8cs_source_l00072}00072\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_interactable_object_8cs_source_l00073}00073\ }
+\DoxyCodeLine{\Hypertarget{_interactable_object_8cs_source_l00074}00074\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ OnDestroy()}
+\DoxyCodeLine{\Hypertarget{_interactable_object_8cs_source_l00075}00075\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_interactable_object_8cs_source_l00076}00076\ \ \ \ \ \ \ \ \ \ \ \ \ Destroy(GetComponent<FlashingMaterial>());}
+\DoxyCodeLine{\Hypertarget{_interactable_object_8cs_source_l00077}00077\ \ \ \ \ \ \ \ \ \ \ \ \ Destroy(GetComponent<MinMaxScaleConstraint>());}
+\DoxyCodeLine{\Hypertarget{_interactable_object_8cs_source_l00078}00078\ \ \ \ \ \ \ \ \ \ \ \ \ Destroy(GetComponent<ObjectManipulator>());}
+\DoxyCodeLine{\Hypertarget{_interactable_object_8cs_source_l00079}00079\ \ \ \ \ \ \ \ \ \ \ \ \ Destroy(GetComponent<Rigidbody>());}
+\DoxyCodeLine{\Hypertarget{_interactable_object_8cs_source_l00080}00080\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_interactable_object_8cs_source_l00081}00081\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_interactable_object_8cs_source_l00082}00082\ \}}
+
+\end{DoxyCode}

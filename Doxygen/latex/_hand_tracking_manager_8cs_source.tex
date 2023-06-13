@@ -1,0 +1,35 @@
+\doxysection{Hand\+Tracking\+Manager.\+cs}
+\hypertarget{_hand_tracking_manager_8cs_source}{}\label{_hand_tracking_manager_8cs_source}\index{Assets/Scripts/Depreciated/HandTrackingManager.cs@{Assets/Scripts/Depreciated/HandTrackingManager.cs}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_hand_tracking_manager_8cs_source_l00001}00001\ \textcolor{keyword}{using\ }System.Collections.Generic;}
+\DoxyCodeLine{\Hypertarget{_hand_tracking_manager_8cs_source_l00002}00002\ \textcolor{keyword}{using\ }UnityEngine;}
+\DoxyCodeLine{\Hypertarget{_hand_tracking_manager_8cs_source_l00003}00003\ \textcolor{keyword}{using\ }UnityEngine.UI;}
+\DoxyCodeLine{\Hypertarget{_hand_tracking_manager_8cs_source_l00004}00004\ \textcolor{keyword}{using\ }UnityEngine.XR;}
+\DoxyCodeLine{\Hypertarget{_hand_tracking_manager_8cs_source_l00005}00005\ \textcolor{keyword}{using\ }UnityEngine.XR.MagicLeap;}
+\DoxyCodeLine{\Hypertarget{_hand_tracking_manager_8cs_source_l00006}00006\ }
+\DoxyCodeLine{\Hypertarget{_hand_tracking_manager_8cs_source_l00007}00007\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_m_m_i}{MMI}}}
+\DoxyCodeLine{\Hypertarget{_hand_tracking_manager_8cs_source_l00008}00008\ \{}
+\DoxyCodeLine{\Hypertarget{_hand_tracking_manager_8cs_source_l00009}\mbox{\hyperlink{class_m_m_i_1_1_hand_tracking_manager}{00009}}\ \ \ \ \ \textcolor{keyword}{public}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_m_m_i_1_1_hand_tracking_manager}{HandTrackingManager}}\ :\ MonoBehaviour}
+\DoxyCodeLine{\Hypertarget{_hand_tracking_manager_8cs_source_l00010}00010\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_hand_tracking_manager_8cs_source_l00011}00011\ \ \ \ \ \ \ \ \ [SerializeField,\ Tooltip(\textcolor{stringliteral}{"{}Default:\ True.\ Set\ to\ false\ to\ not\ have\ a\ pre\ render\ Handtracking\ update.\ Not\ recommended\ for\ handtracking\ with\ visuals\ as\ this\ can\ affect\ smoothness."{}})]}
+\DoxyCodeLine{\Hypertarget{_hand_tracking_manager_8cs_source_l00012}00012\ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}\ \textcolor{keywordtype}{bool}\ preRenderHandUpdate\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_hand_tracking_manager_8cs_source_l00013}00013\ }
+\DoxyCodeLine{\Hypertarget{_hand_tracking_manager_8cs_source_l00017}00017\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ Start()}
+\DoxyCodeLine{\Hypertarget{_hand_tracking_manager_8cs_source_l00018}00018\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_hand_tracking_manager_8cs_source_l00019}00019\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ HAND\_TRACKING\ is\ a\ normal\ permission,\ so\ we\ don't\ request\ it\ at\ runtime.\ It\ is\ auto-\/granted\ if\ included\ in\ the\ app\ manifest.}}
+\DoxyCodeLine{\Hypertarget{_hand_tracking_manager_8cs_source_l00020}00020\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ If\ it's\ missing\ from\ the\ manifest,\ the\ permission\ is\ not\ available.}}
+\DoxyCodeLine{\Hypertarget{_hand_tracking_manager_8cs_source_l00021}00021\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!MLPermissions.CheckPermission(MLPermission.HandTracking).IsOk)}
+\DoxyCodeLine{\Hypertarget{_hand_tracking_manager_8cs_source_l00022}00022\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_hand_tracking_manager_8cs_source_l00023}00023\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Debug.LogError(\$\textcolor{stringliteral}{"{}You\ must\ include\ the\ \{MLPermission.HandTracking\}\ permission\ in\ the\ AndroidManifest.xml\ to\ run\ this\ example."{}});}
+\DoxyCodeLine{\Hypertarget{_hand_tracking_manager_8cs_source_l00024}00024\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ enabled\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_hand_tracking_manager_8cs_source_l00025}00025\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_hand_tracking_manager_8cs_source_l00026}00026\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_hand_tracking_manager_8cs_source_l00027}00027\ }
+\DoxyCodeLine{\Hypertarget{_hand_tracking_manager_8cs_source_l00028}00028\ \ \ \ \ \ \ \ \ \ \ \ \ InputSubsystem.Extensions.MLHandTracking.StartTracking();}
+\DoxyCodeLine{\Hypertarget{_hand_tracking_manager_8cs_source_l00029}00029\ \ \ \ \ \ \ \ \ \ \ \ \ InputSubsystem.Extensions.MLHandTracking.SetPreRenderHandUpdate(preRenderHandUpdate);}
+\DoxyCodeLine{\Hypertarget{_hand_tracking_manager_8cs_source_l00030}00030\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_hand_tracking_manager_8cs_source_l00031}00031\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_hand_tracking_manager_8cs_source_l00032}00032\ \}}
+
+\end{DoxyCode}

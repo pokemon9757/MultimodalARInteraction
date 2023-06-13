@@ -5,13 +5,12 @@ using Microsoft.MixedReality.Toolkit.UI;
 using UnityEngine;
 namespace MMI
 {
-    [RequireComponent(typeof(Rigidbody), typeof(FlashingMaterial), typeof(ObjectManipulator))]
+    [RequireComponent(typeof(FlashingMaterial), typeof(ObjectManipulator))]
     [RequireComponent(typeof(MinMaxScaleConstraint))]
     public class InteractableObject : MonoBehaviour
     {
         private MeshRenderer[] _renderers;
         private FlashingMaterial _materialFlash;
-        private Rigidbody _rb;
         private Dictionary<MeshRenderer, Color> _cachedColorsDict = new();
         void Awake()
         {
@@ -23,10 +22,12 @@ namespace MMI
                     r.gameObject.AddComponent<NearInteractionGrabbable>();
             }
             _materialFlash = GetComponent<FlashingMaterial>();
-            _rb = GetComponent<Rigidbody>();
-            _rb.isKinematic = true;
         }
 
+        /// <summary>
+        /// Update the material color of all renderers in the object, cache the previous colors into a dict for recovery 
+        /// </summary>
+        /// <param name="c">New color</param>
         public void UpdateColor(Color c)
         {
             SetSelected(false);
@@ -38,6 +39,9 @@ namespace MMI
             }
         }
 
+        /// <summary>
+        /// Recover the material color of all renderers to the cached dict
+        /// </summary>
         public void RecoverUpdatedColors()
         {
             SetSelected(false);
@@ -55,6 +59,10 @@ namespace MMI
             }
         }
 
+        /// <summary>
+        /// Enable flashing of the object to indicate that it's being hovered by a pointer
+        /// </summary>
+        /// <param name="active">Enable if True, Disable if False</param>
         public void SetSelected(bool active)
         {
             _materialFlash.EnableFlashing(active);

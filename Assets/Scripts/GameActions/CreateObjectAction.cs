@@ -10,11 +10,17 @@ namespace MMI
             public string ShapeName;
             public GameObject Prefab;
         }
-        [SerializeField] ShapePrefabKVP[] _prefabsKVP;
-        [SerializeField] Vector3 _initialScale;
-        [SerializeField] Material _initialMaterial;
-        GameObject _createdObject;
+        [SerializeField, Tooltip("The shape name and corresponding prefab to create")] ShapePrefabKVP[] _prefabsKVP;
+        [SerializeField, Tooltip("The scale of created object at the start")] Vector3 _initialScale;
+        [SerializeField, Tooltip("The default material of created object")] Material _initialMaterial;
 
+
+        /// <summary>
+        /// Create a new game object with given params
+        /// </summary>
+        /// <param name="pos">World Position</param>
+        /// <param name="color">Color</param>
+        /// <param name="shapeName">Shape to create</param>
         public void CreateNewObject(Vector3 pos, Color color, string shapeName)
         {
             // Get prefab based on shapeName
@@ -32,7 +38,7 @@ namespace MMI
                 Debug.LogError("Cannot find what you are looking for with ... " + shapeName);
                 return;
             }
-            _createdObject = Instantiate(selectedPrefab);
+            GameObject _createdObject = Instantiate(selectedPrefab);
             _createdObject.transform.position = pos;
             _createdObject.transform.localScale = _initialScale;
             var renderer = _createdObject.GetComponent<MeshRenderer>();

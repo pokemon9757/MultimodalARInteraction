@@ -18,7 +18,6 @@ GameObject:
   - component: {fileID: 5098563883763984763}
   - component: {fileID: 8169434462980812329}
   - component: {fileID: 2785238525638521699}
-  - component: {fileID: -3342679616501828310}
   m_Layer: 0
   m_Name: Sphere
   m_TagString: Untagged
@@ -120,7 +119,7 @@ MonoBehaviour:
   targetObject: {fileID: 7767948558783534717}
   boundsOverride: {fileID: 2785238525638521699}
   boundsCalculationMethod: 0
-  activation: 3
+  activation: 1
   flattenAxis: 0
   uniformScaleOnFlattenedAxis: 1
   boxPadding: {x: 0, y: 0, z: 0}
@@ -130,8 +129,8 @@ MonoBehaviour:
     type: 3}
   scaleHandlesConfiguration: {fileID: 114048139386862018, guid: e9e54ebd208487c409e32502a50a1f20,
     type: 3}
-  rotationHandlesConfiguration: {fileID: 114187175676110674, guid: e9e54ebd208487c409e32502a50a1f20,
-    type: 3}
+  rotationHandlesConfiguration: {fileID: 11400000, guid: b132928f03eed0d49bd6bdf6d2d12f01,
+    type: 2}
   translationHandlesConfiguration: {fileID: 0}
   handleProximityEffectConfiguration: {fileID: 114927192352316934, guid: e9e54ebd208487c409e32502a50a1f20,
     type: 3}
@@ -189,9 +188,8 @@ MonoBehaviour:
   moveLerpTime: 0.001
   rotateLerpTime: 0.001
   scaleLerpTime: 0.001
-  enableConstraints: 1
-  constraintsManager: {fileID: 4398171891215599695, guid: 5ccca88d2f65448458cfe0d385517643,
-    type: 3}
+  enableConstraints: 0
+  constraintsManager: {fileID: 3164753467224505725}
   elasticsManager: {fileID: 0}
   onManipulationStarted:
     m_PersistentCalls:
@@ -270,30 +268,3 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!54 &-3342679616501828310
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7767948558783534717}
-  serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 0
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0

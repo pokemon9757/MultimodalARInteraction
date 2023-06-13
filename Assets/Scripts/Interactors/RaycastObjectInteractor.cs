@@ -6,6 +6,12 @@ namespace MMI
 {
     public class RaycastObjectInteractor : BaseObjectInteractor
     {
+        /// <summary>
+        /// Perform Raycast and trigger InteractorManager.TriggerSelect object if an Interactable object is hit  
+        /// </summary>
+        /// <param name="origin">The origin of the ray</param>
+        /// <param name="direction">The direction of the ray</param>
+        /// <param name="distance">How far the ray can go</param>
         public void PerformRaycast(Vector3 origin, Vector3 direction, float distance)
         {
             // Perform a raycast in a given direction

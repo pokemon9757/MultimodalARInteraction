@@ -1,0 +1,83 @@
+\doxysection{UIManager.\+cs}
+\hypertarget{_u_i_manager_8cs_source}{}\label{_u_i_manager_8cs_source}\index{Assets/Scripts/UIManager.cs@{Assets/Scripts/UIManager.cs}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_u_i_manager_8cs_source_l00001}00001\ \textcolor{keyword}{using\ }System.Collections;}
+\DoxyCodeLine{\Hypertarget{_u_i_manager_8cs_source_l00002}00002\ \textcolor{keyword}{using\ }System.Collections.Generic;}
+\DoxyCodeLine{\Hypertarget{_u_i_manager_8cs_source_l00003}00003\ \textcolor{keyword}{using\ }MagicLeap.Examples;}
+\DoxyCodeLine{\Hypertarget{_u_i_manager_8cs_source_l00004}00004\ \textcolor{keyword}{using\ }UnityEngine;}
+\DoxyCodeLine{\Hypertarget{_u_i_manager_8cs_source_l00005}00005\ \textcolor{keyword}{using\ }UnityEngine.Events;}
+\DoxyCodeLine{\Hypertarget{_u_i_manager_8cs_source_l00006}00006\ \textcolor{keyword}{using\ }UnityEngine.EventSystems;}
+\DoxyCodeLine{\Hypertarget{_u_i_manager_8cs_source_l00007}00007\ \textcolor{keyword}{using\ }UnityEngine.UI;}
+\DoxyCodeLine{\Hypertarget{_u_i_manager_8cs_source_l00008}00008\ \textcolor{keyword}{using\ }UnityEngine.XR.MagicLeap;}
+\DoxyCodeLine{\Hypertarget{_u_i_manager_8cs_source_l00009}00009\ }
+\DoxyCodeLine{\Hypertarget{_u_i_manager_8cs_source_l00010}00010\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_m_m_i}{MMI}}}
+\DoxyCodeLine{\Hypertarget{_u_i_manager_8cs_source_l00011}00011\ \{}
+\DoxyCodeLine{\Hypertarget{_u_i_manager_8cs_source_l00012}\mbox{\hyperlink{class_m_m_i_1_1_u_i_manager}{00012}}\ \ \ \ \ \textcolor{keyword}{public}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_m_m_i_1_1_u_i_manager}{UIManager}}\ :\ MonoBehaviour}
+\DoxyCodeLine{\Hypertarget{_u_i_manager_8cs_source_l00013}00013\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_u_i_manager_8cs_source_l00014}00014\ \ \ \ \ \ \ \ \ [SerializeField]\ \mbox{\hyperlink{class_m_m_i_1_1_voice_intents}{VoiceIntents}}\ \_voice;}
+\DoxyCodeLine{\Hypertarget{_u_i_manager_8cs_source_l00015}00015\ \ \ \ \ \ \ \ \ [SerializeField]\ UIButton\ \_overviewMenuBtn;}
+\DoxyCodeLine{\Hypertarget{_u_i_manager_8cs_source_l00016}00016\ \ \ \ \ \ \ \ \ [SerializeField]\ UIButton\ \_controlsMenuBtn;}
+\DoxyCodeLine{\Hypertarget{_u_i_manager_8cs_source_l00017}00017\ \ \ \ \ \ \ \ \ [SerializeField]\ UIButton\ \_issuesMenuBtn;}
+\DoxyCodeLine{\Hypertarget{_u_i_manager_8cs_source_l00018}00018\ \ \ \ \ \ \ \ \ [SerializeField]\ UIButton\ \_statusMenuBtn;}
+\DoxyCodeLine{\Hypertarget{_u_i_manager_8cs_source_l00019}00019\ \ \ \ \ \ \ \ \ [SerializeField,\ Tooltip(\textcolor{stringliteral}{"{}The\ text\ used\ to\ display\ status\ information\ for\ the\ example."{}})]}
+\DoxyCodeLine{\Hypertarget{_u_i_manager_8cs_source_l00020}00020\ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}\ Text\ \_statusText\ =\ \textcolor{keyword}{null};}
+\DoxyCodeLine{\Hypertarget{_u_i_manager_8cs_source_l00021}00021\ \ \ \ \ \ \ \ \ [SerializeField]\ UIToggleButton\ \_viewlockBtn;}
+\DoxyCodeLine{\Hypertarget{_u_i_manager_8cs_source_l00022}00022\ \ \ \ \ \ \ \ \ [SerializeField]\ UnityEvent\ \_viewLockAction;}
+\DoxyCodeLine{\Hypertarget{_u_i_manager_8cs_source_l00023}00023\ \ \ \ \ \ \ \ \ [SerializeField]\ GameObject\ \_userInterface;}
+\DoxyCodeLine{\Hypertarget{_u_i_manager_8cs_source_l00024}00024\ \ \ \ \ \ \ \ \ \textcolor{keyword}{enum}\ UIVoiceCommands}
+\DoxyCodeLine{\Hypertarget{_u_i_manager_8cs_source_l00025}00025\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_u_i_manager_8cs_source_l00026}00026\ \ \ \ \ \ \ \ \ \ \ \ \ Greetings\ =\ 0,}
+\DoxyCodeLine{\Hypertarget{_u_i_manager_8cs_source_l00027}00027\ \ \ \ \ \ \ \ \ \ \ \ \ SetActive\ =\ 7,}
+\DoxyCodeLine{\Hypertarget{_u_i_manager_8cs_source_l00028}00028\ \ \ \ \ \ \ \ \ \ \ \ \ ToggleLock\ =\ 8,}
+\DoxyCodeLine{\Hypertarget{_u_i_manager_8cs_source_l00029}00029\ \ \ \ \ \ \ \ \ \ \ \ \ SetMenu\ =\ 9,}
+\DoxyCodeLine{\Hypertarget{_u_i_manager_8cs_source_l00030}00030\ \ \ \ \ \ \ \ \ \ \ \ \ Help\ =\ 10}
+\DoxyCodeLine{\Hypertarget{_u_i_manager_8cs_source_l00031}00031\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_u_i_manager_8cs_source_l00032}00032\ }
+\DoxyCodeLine{\Hypertarget{_u_i_manager_8cs_source_l00033}00033\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ Start()}
+\DoxyCodeLine{\Hypertarget{_u_i_manager_8cs_source_l00034}00034\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_u_i_manager_8cs_source_l00035}00035\ \ \ \ \ \ \ \ \ \ \ \ \ \_voice.\mbox{\hyperlink{class_m_m_i_1_1_voice_intents_a5d63860f115ad7d3a8661edefc4ca60f}{OnCommandDetected}}.AddListener(OnCommandDetected);}
+\DoxyCodeLine{\Hypertarget{_u_i_manager_8cs_source_l00036}00036\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_u_i_manager_8cs_source_l00037}00037\ }
+\DoxyCodeLine{\Hypertarget{_u_i_manager_8cs_source_l00038}00038\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ OnCommandDetected(\textcolor{keywordtype}{bool}\ wasSuccessful,\ MLVoice.IntentEvent\ voiceEvent)}
+\DoxyCodeLine{\Hypertarget{_u_i_manager_8cs_source_l00039}00039\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_u_i_manager_8cs_source_l00040}00040\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{switch}\ ((UIVoiceCommands)voiceEvent.EventID)}
+\DoxyCodeLine{\Hypertarget{_u_i_manager_8cs_source_l00041}00041\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_u_i_manager_8cs_source_l00042}00042\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ UIVoiceCommands.Greetings:}
+\DoxyCodeLine{\Hypertarget{_u_i_manager_8cs_source_l00043}00043\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \_statusText.text\ +=\ \textcolor{stringliteral}{"{}\(\backslash\)nOh\ hello\ there\string~\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{_u_i_manager_8cs_source_l00044}00044\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{_u_i_manager_8cs_source_l00045}00045\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ UIVoiceCommands.SetActive:}
+\DoxyCodeLine{\Hypertarget{_u_i_manager_8cs_source_l00046}00046\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ isOn\ =\ UtilityScript.GetSlotValue(voiceEvent.EventName,\ \textcolor{stringliteral}{"{}OnOff"{}})\ ==\ \textcolor{stringliteral}{"{}On"{}};}
+\DoxyCodeLine{\Hypertarget{_u_i_manager_8cs_source_l00047}00047\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \_userInterface.SetActive(isOn);}
+\DoxyCodeLine{\Hypertarget{_u_i_manager_8cs_source_l00048}00048\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{_u_i_manager_8cs_source_l00049}00049\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ UIVoiceCommands.ToggleLock:}
+\DoxyCodeLine{\Hypertarget{_u_i_manager_8cs_source_l00050}00050\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \_viewlockBtn.Pressed();}
+\DoxyCodeLine{\Hypertarget{_u_i_manager_8cs_source_l00051}00051\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \_viewLockAction?.Invoke();}
+\DoxyCodeLine{\Hypertarget{_u_i_manager_8cs_source_l00052}00052\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{_u_i_manager_8cs_source_l00053}00053\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ UIVoiceCommands.SetMenu:}
+\DoxyCodeLine{\Hypertarget{_u_i_manager_8cs_source_l00054}00054\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{string}\ menuType\ =\ UtilityScript.GetSlotValue(voiceEvent.EventName,\ \textcolor{stringliteral}{"{}MenuName"{}});}
+\DoxyCodeLine{\Hypertarget{_u_i_manager_8cs_source_l00055}00055\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{switch}\ (menuType)}
+\DoxyCodeLine{\Hypertarget{_u_i_manager_8cs_source_l00056}00056\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_u_i_manager_8cs_source_l00057}00057\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \textcolor{stringliteral}{"{}Overview"{}}:}
+\DoxyCodeLine{\Hypertarget{_u_i_manager_8cs_source_l00058}00058\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \_overviewMenuBtn.Pressed();}
+\DoxyCodeLine{\Hypertarget{_u_i_manager_8cs_source_l00059}00059\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{_u_i_manager_8cs_source_l00060}00060\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \textcolor{stringliteral}{"{}Controls"{}}:}
+\DoxyCodeLine{\Hypertarget{_u_i_manager_8cs_source_l00061}00061\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \_controlsMenuBtn.Pressed();}
+\DoxyCodeLine{\Hypertarget{_u_i_manager_8cs_source_l00062}00062\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{_u_i_manager_8cs_source_l00063}00063\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \textcolor{stringliteral}{"{}Issues"{}}:}
+\DoxyCodeLine{\Hypertarget{_u_i_manager_8cs_source_l00064}00064\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \_issuesMenuBtn.Pressed();}
+\DoxyCodeLine{\Hypertarget{_u_i_manager_8cs_source_l00065}00065\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{_u_i_manager_8cs_source_l00066}00066\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \textcolor{stringliteral}{"{}Status"{}}:}
+\DoxyCodeLine{\Hypertarget{_u_i_manager_8cs_source_l00067}00067\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \_statusMenuBtn.Pressed();}
+\DoxyCodeLine{\Hypertarget{_u_i_manager_8cs_source_l00068}00068\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{_u_i_manager_8cs_source_l00069}00069\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_u_i_manager_8cs_source_l00070}00070\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{_u_i_manager_8cs_source_l00071}00071\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ UIVoiceCommands.Help:}
+\DoxyCodeLine{\Hypertarget{_u_i_manager_8cs_source_l00072}00072\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \_controlsMenuBtn.Pressed();}
+\DoxyCodeLine{\Hypertarget{_u_i_manager_8cs_source_l00073}00073\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{_u_i_manager_8cs_source_l00074}00074\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_u_i_manager_8cs_source_l00075}00075\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_u_i_manager_8cs_source_l00076}00076\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_u_i_manager_8cs_source_l00077}00077\ \}}
+
+\end{DoxyCode}
