@@ -19,22 +19,13 @@ namespace MMI
             Scale = 6, /**< Scale selected object */
         }
         [SerializeField] InteractorsManager _interactorsManager;
-        [SerializeField] GestureTracking _gestureTracking;
         [SerializeField] EyeTracking _eyeTracking;
         [SerializeField] VoiceIntents _voiceItents;
         [SerializeField] CreateObjectAction _createObjectAction;
 
         void Start()
         {
-            _eyeTracking.Init();
-            _gestureTracking.Init();
             _voiceItents.OnCommandDetected.AddListener(OnCommandDetected);
-        }
-
-        void Update()
-        {
-            _eyeTracking.ProcessAbility();
-            _gestureTracking.ProcessAbility();
         }
 
         /// <summary>
@@ -44,6 +35,7 @@ namespace MMI
         /// <param name="voiceEvent">The voice event data</param>
         void OnCommandDetected(bool wasSuccessful, MLVoice.IntentEvent voiceEvent)
         {
+            Debug.Log("Input handler command detected " + voiceEvent.EventName);
             switch ((VoiceActions)voiceEvent.EventID)
             {
                 case VoiceActions.Create:
@@ -52,7 +44,7 @@ namespace MMI
                     string colorName = UtilityScript.GetSlotValue(voiceEvent.EventName, "Color");
                     if (string.IsNullOrEmpty(shapeName))
                     {
-                        Debug.LogError("Shape not found");
+                        Debug.LogError("Shape not found " + shapeName);
                         return;
                     }
                     if (string.IsNullOrEmpty(colorName))

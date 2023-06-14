@@ -36,7 +36,12 @@ namespace MMI
             _permissionCallbacks.OnPermissionGranted += OnPermissionGranted;
         }
 
-        public void Init()
+        void Update()
+        {
+            ProcessAbility();
+        }
+
+        void Start()
         {
             _mlInputs = new MagicLeapInputs();
             _mlInputs.Enable();
@@ -44,7 +49,7 @@ namespace MMI
             MLPermissions.RequestPermission(MLPermission.EyeTracking, _permissionCallbacks);
         }
 
-        public void ProcessAbility()
+        void ProcessAbility()
         {
             if (!_permissionGranted)
             {

@@ -1,6 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using UnityEngine;
 using UnityEngine.Events;
@@ -12,9 +10,9 @@ namespace MMI
     public class VoiceIntents : MonoBehaviour
     {
         public UnityEvent<bool, MLVoice.IntentEvent> OnCommandDetected;
-
-        [SerializeField, Tooltip("The text used to display status information for the example.")]
-        private Text _statusText = null;
+        [SerializeField] float _statusResetDelay = 3f;
+        [SerializeField] private Text _statusText = null;
+        [SerializeField] private Text _pocketUIStatusText = null;
         [SerializeField, Tooltip("The configuration file that holds the list of intents used for this application.")]
         private MLVoiceIntentsConfiguration voiceConfiguration;
 
@@ -32,17 +30,17 @@ namespace MMI
         private GameObject voiceInputErrorPopup;
 
         private static bool userPromptedForSetting;
-
         private readonly MLPermissions.Callbacks permissionCallbacks = new MLPermissions.Callbacks();
+        private Coroutine resetStatusCoroutine;
 
-        private void Awake()
+        void Awake()
         {
             permissionCallbacks.OnPermissionDenied += OnPermissionDenied;
             permissionCallbacks.OnPermissionDeniedAndDontAskAgain += OnPermissionDenied;
         }
 
 
-        private void Start()
+        void Start()
         {
             mlInputs = new MagicLeapInputs();
             mlInputs.Enable();
@@ -56,7 +54,7 @@ namespace MMI
                 Initialize();
         }
 
-        private void Initialize()
+        void Initialize()
         {
             if (!MLPermissions.CheckPermission(MLPermission.VoiceInput).IsOk)
             {
@@ -103,7 +101,7 @@ namespace MMI
             }
         }
 
-        private void OnDestroy()
+        void OnDestroy()
         {
             MLVoice.OnVoiceEvent -= VoiceEvent;
             controllerActions.Bumper.performed -= HandleOnBumper;
@@ -112,29 +110,34 @@ namespace MMI
             permissionCallbacks.OnPermissionDeniedAndDontAskAgain -= OnPermissionDenied;
         }
 
-
-        void Update()
-        {
-            UpdateStatus();
-        }
-
-        private void UpdateStatus()
-        {
-            _statusText.text = $"<color=#B7B7B8><b>Voice Intents Data</b></color>\n{startupStatus}";
-            _statusText.text += "\n\nIs Processing: " + isProcessing;
-            _statusText.text += lastResults;
-        }
-
         void VoiceEvent(in bool wasSuccessful, in MLVoice.IntentEvent voiceEvent)
         {
             OnCommandDetected.Invoke(wasSuccessful, voiceEvent);
-            Debug.Log("Voice event " + voiceEvent.EventName);
             StringBuilder strBuilder = new StringBuilder();
-            strBuilder.Append($"\n\n<color=#B7B7B8><b>Recognized voice command:</b></color> <i>{voiceEvent.EventName}</i>");
+            strBuilder.Append($"<color=#B7B7B8><b>Recognized voice command:</b></color> <i>{voiceEvent.EventName}</i>");
             lastResults = strBuilder.ToString();
+            _statusText.text = lastResults;
+            _pocketUIStatusText.text = lastResults;
+
+            // If the coroutine is already running, stop it
+            if (resetStatusCoroutine != null)
+            {
+                StopCoroutine(resetStatusCoroutine);
+            }
+
+            // Start the coroutine
+            resetStatusCoroutine = StartCoroutine(ResetStatusDescription());
         }
 
-        private void HandleOnBumper(InputAction.CallbackContext obj)
+        IEnumerator ResetStatusDescription()
+        {
+            yield return new WaitForSeconds(_statusResetDelay);
+            string text = "Listening to your beautiful voice...\nFeel free to <b>shout</b> for help if you need assistance (not at me though)!";
+            _statusText.text = text;
+            _pocketUIStatusText.text = text;
+        }
+
+        void HandleOnBumper(InputAction.CallbackContext obj)
         {
             bool bumperDown = obj.ReadValueAsButton();
 
@@ -169,12 +172,12 @@ namespace MMI
             }
         }
 
-        private void OnPermissionDenied(string permission)
+        void OnPermissionDenied(string permission)
         {
             startupStatus = "<color=#ff0000><b>Permission Denied!</b></color>";
         }
 
-        public void OnVoiceInputSettingsPopupOpen()
+        void OnVoiceInputSettingsPopupOpen()
         {
             UnityEngine.XR.MagicLeap.SettingsIntentsLauncher.LaunchSystemVoiceInputSettings();
 
@@ -184,7 +187,7 @@ namespace MMI
             }
         }
 
-        public void OnVoiceInputSettingsPopupCancel()
+        void OnVoiceInputSettingsPopupCancel()
         {
             if (voiceInputSettingsPopup != null)
             {

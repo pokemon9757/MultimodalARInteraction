@@ -12,7 +12,6 @@ namespace MMI
         }
         [SerializeField, Tooltip("The shape name and corresponding prefab to create")] ShapePrefabKVP[] _prefabsKVP;
         [SerializeField, Tooltip("The scale of created object at the start")] Vector3 _initialScale;
-        [SerializeField, Tooltip("The default material of created object")] Material _initialMaterial;
 
 
         /// <summary>
@@ -41,8 +40,6 @@ namespace MMI
             GameObject _createdObject = Instantiate(selectedPrefab);
             _createdObject.transform.position = pos;
             _createdObject.transform.localScale = _initialScale;
-            var renderer = _createdObject.GetComponent<MeshRenderer>();
-            renderer.material = _initialMaterial;
             var interactable = _createdObject.AddComponent<InteractableObject>();
             interactable.UpdateColor(color);
         }

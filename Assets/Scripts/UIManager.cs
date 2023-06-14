@@ -20,6 +20,7 @@ namespace MMI
         private Text _statusText = null;
         [SerializeField] UIToggleButton _viewlockBtn;
         [SerializeField] UnityEvent _viewLockAction;
+        bool _isUILocked = true;
         [SerializeField] GameObject _userInterface;
         [SerializeField] GameObject _pocketUI;
         enum UIVoiceCommands
@@ -44,11 +45,16 @@ namespace MMI
                     _statusText.text += "\nOh hello there~\n";
                     break;
                 case UIVoiceCommands.SetActive:
-                    bool isOn = UtilityScript.GetSlotValue(voiceEvent.EventName, "OnOff") == "On";
+                    var onValue = UtilityScript.GetSlotValue(voiceEvent.EventName, "OnOff");
+                    bool isOn = onValue == "On" || onValue == "Enable";
                     _userInterface.SetActive(isOn);
                     _pocketUI.SetActive(!isOn);
                     break;
                 case UIVoiceCommands.ToggleLock:
+                    onValue = UtilityScript.GetSlotValue(voiceEvent.EventName, "OnOff");
+                    isOn = onValue == "On" || onValue == "Enable";
+                    if (isOn == _isUILocked) return;
+                    _isUILocked = isOn;
                     _viewlockBtn.Pressed();
                     _viewLockAction?.Invoke();
                     break;

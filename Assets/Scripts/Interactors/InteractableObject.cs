@@ -5,8 +5,7 @@ using Microsoft.MixedReality.Toolkit.UI;
 using UnityEngine;
 namespace MMI
 {
-    [RequireComponent(typeof(FlashingMaterial), typeof(ObjectManipulator))]
-    [RequireComponent(typeof(MinMaxScaleConstraint))]
+    [RequireComponent(typeof(FlashingMaterial))]
     public class InteractableObject : MonoBehaviour
     {
         private MeshRenderer[] _renderers;
@@ -71,9 +70,6 @@ namespace MMI
         void OnDestroy()
         {
             Destroy(GetComponent<FlashingMaterial>());
-            Destroy(GetComponent<MinMaxScaleConstraint>());
-            Destroy(GetComponent<ObjectManipulator>());
-            Destroy(GetComponent<Rigidbody>());
         }
     }
 }

@@ -68,7 +68,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: f211f7920835d67419d1e13a798b6664, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -189,7 +189,7 @@ MonoBehaviour:
   rotateLerpTime: 0.001
   scaleLerpTime: 0.001
   enableConstraints: 0
-  constraintsManager: {fileID: 4398171891215599695, guid: 5ccca88d2f65448458cfe0d385517643,
+  constraintsManager: {fileID: 9083420167299748603, guid: 60707cf9a5c276e4792899880a74ade6,
     type: 3}
   elasticsManager: {fileID: 0}
   onManipulationStarted:
