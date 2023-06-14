@@ -58,7 +58,7 @@ namespace MMI
                     // Perform explicit conversion from nullable Color to non-nullable Color
                     Color color = nullableColor ?? Color.white;
                     _createObjectAction.CreateNewObject(_eyeTracking.GazeMarkerPosition, color, shapeName);
-
+                    AudioManager.Instance.ActionDoneAudio.Play();
                     break;
 
                 case VoiceActions.ChangeColor:
@@ -71,6 +71,7 @@ namespace MMI
                     }
                     color = nullableColor ?? (Color)nullableColor;
                     _interactorsManager.ChangeSelectedObjectColor(color);
+                    AudioManager.Instance.ActionDoneAudio.Play();
                     break;
 
                 case VoiceActions.Delete:
@@ -86,7 +87,13 @@ namespace MMI
 
                 case VoiceActions.Selection:
                     string selection = UtilityScript.GetSlotValue(voiceEvent.EventName, "Selection");
-                    _interactorsManager.SelectObjectToGroup(selection == "Select");
+                    bool isSelecting = selection == "Select";
+                    bool result = _interactorsManager.SelectObjectToGroup(isSelecting);
+                    if (result)
+                        if (isSelecting)
+                            AudioManager.Instance.SelectAudio.Play();
+                        else
+                            AudioManager.Instance.DeselectAudio.Play();
                     break;
 
                 case VoiceActions.Scale:
@@ -96,6 +103,7 @@ namespace MMI
                     int percent = Int32.Parse(percentageString);
 
                     _interactorsManager.ScaleSelectedObject(percent, isScaleUp);
+                    AudioManager.Instance.ActionDoneAudio.Play();
                     break;
             }
         }
@@ -112,6 +120,7 @@ namespace MMI
                 return;
             }
             objToDelete.gameObject.SetActive(false);
+            AudioManager.Instance.DeleteAudio.Play();
         }
     }
 }

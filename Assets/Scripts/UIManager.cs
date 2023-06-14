@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using MagicLeap.Examples;
 using UnityEngine;
 using UnityEngine.Events;
@@ -16,13 +17,14 @@ namespace MMI
         [SerializeField] UIButton _controlsMenuBtn;
         [SerializeField] UIButton _issuesMenuBtn;
         [SerializeField] UIButton _statusMenuBtn;
-        [SerializeField, Tooltip("The text used to display status information for the example.")]
-        private Text _statusText = null;
+        [SerializeField] private Text _statusText = null;
+        [SerializeField] private Text _pocketUIStatusText = null;
+        [SerializeField] float _statusResetDelay = 3f;
         [SerializeField] UIToggleButton _viewlockBtn;
         [SerializeField] UnityEvent _viewLockAction;
-        bool _isUILocked = true;
         [SerializeField] GameObject _userInterface;
         [SerializeField] GameObject _pocketUI;
+        bool _isUILocked = true;
         enum UIVoiceCommands
         {
             Greetings = 0,
@@ -31,6 +33,7 @@ namespace MMI
             SetMenu = 9,
             Help = 10
         }
+        private Coroutine resetStatusCoroutine;
 
         void Start()
         {
@@ -43,6 +46,7 @@ namespace MMI
             {
                 case UIVoiceCommands.Greetings:
                     _statusText.text += "\nOh hello there~\n";
+                    AudioManager.Instance.HelloAudio.Play();
                     break;
                 case UIVoiceCommands.SetActive:
                     var onValue = UtilityScript.GetSlotValue(voiceEvent.EventName, "OnOff");
@@ -80,6 +84,29 @@ namespace MMI
                     _controlsMenuBtn.Pressed();
                     break;
             }
+
+            // Update status text 
+            StringBuilder strBuilder = new StringBuilder();
+            strBuilder.Append($"<color=#B7B7B8><b>Recognized voice command:</b></color> <i>{voiceEvent.EventName}</i>");
+            string text = strBuilder.ToString();
+            _statusText.text = text;
+            _pocketUIStatusText.text = text;
+
+            // If the coroutine is already running, stop it
+            if (resetStatusCoroutine != null)
+                StopCoroutine(resetStatusCoroutine);
+
+            // Start the coroutine
+            resetStatusCoroutine = StartCoroutine(ResetStatusDescription());
+        }
+
+        IEnumerator ResetStatusDescription()
+        {
+            yield return new WaitForSeconds(_statusResetDelay);
+            string text = "Listening to your beautiful voice...\nFeel free to <b>shout</b> for help if you need assistance (not at me though)!";
+            _statusText.text = text;
+            _pocketUIStatusText.text = text;
         }
     }
+
 }

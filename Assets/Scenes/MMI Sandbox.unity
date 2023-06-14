@@ -203,12 +203,12 @@ PrefabInstance:
     - target: {fileID: 9144045079751414315, guid: 6906f74934047d24e9a47bbdd1afb57a,
         type: 3}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9144045079751414315, guid: 6906f74934047d24e9a47bbdd1afb57a,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9144045079751414315, guid: 6906f74934047d24e9a47bbdd1afb57a,
         type: 3}
@@ -1004,6 +1004,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Size
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9144045081777754227, guid: 6906f74934047d24e9a47bbdd1afb57a,
+        type: 3}
+      propertyPath: m_Value
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2269,9 +2274,6 @@ MonoBehaviour:
   OnCommandDetected:
     m_PersistentCalls:
       m_Calls: []
-  _statusResetDelay: 8
-  _statusText: {fileID: 45625177}
-  _pocketUIStatusText: {fileID: 1314132204}
   voiceConfiguration: {fileID: 11400000, guid: 7a77f4586a76a6b4fbd47edbdb7bcca8, type: 2}
   voiceInputSettingsPopup: {fileID: 1924560279}
   voiceInputErrorPopup: {fileID: 954185733}
@@ -2437,6 +2439,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 982450161}
   - {fileID: 1970535455}
   - {fileID: 63846254}
   - {fileID: 1698502822}
@@ -4777,6 +4780,56 @@ Transform:
   m_Father: {fileID: 562373275}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &982450160
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 982450161}
+  - component: {fileID: 982450162}
+  m_Layer: 0
+  m_Name: AudioManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &982450161
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 982450160}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 429200372}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &982450162
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 982450160}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75714c67b57e15a41b3adaea5c3c7d30, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _volume: 0.7
+  _helloClip: {fileID: 8300000, guid: 70d573b29a26963448bb17801a2ffa65, type: 3}
+  _actionDoneClip: {fileID: 8300000, guid: 8cd3e4efea816654cb641bca5c30dcef, type: 3}
+  _objectDeleteClip: {fileID: 8300000, guid: 7ad13284e0d75d941a07631188c6cff3, type: 3}
+  _objectSelectClip: {fileID: 8300000, guid: 13ad719f14620654f8f7588baaa5f9c4, type: 3}
+  _objectDeselectClip: {fileID: 8300000, guid: fadf362fe835b1a4a8127301dd2ab41c, type: 3}
 --- !u!1 &995709382
 GameObject:
   m_ObjectHideFlags: 0
@@ -7834,6 +7887,8 @@ MonoBehaviour:
   _issuesMenuBtn: {fileID: 2102899425}
   _statusMenuBtn: {fileID: 859877809}
   _statusText: {fileID: 45625177}
+  _pocketUIStatusText: {fileID: 1314132204}
+  _statusResetDelay: 8
   _viewlockBtn: {fileID: 443528700}
   _viewLockAction:
     m_PersistentCalls:

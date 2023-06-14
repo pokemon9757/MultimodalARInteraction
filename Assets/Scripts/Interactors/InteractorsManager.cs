@@ -146,14 +146,15 @@ namespace MMI
         /// Add the currently selected object to a list of objects to group once the CompleteGroup function is called 
         /// </summary>
         /// <param name="active">Add the object if True, otherwise Remove  </param>
-        public void SelectObjectToGroup(bool active)
+        /// <returns>True if the action was a success</returns>
+        public bool SelectObjectToGroup(bool active)
         {
             string action = active ? "select" : "deselect";
 
             if (!_isInGroupMode)
             {
                 Debug.LogError("Cannot perform " + action + ", not in group mode");
-                return;
+                return false;
             }
 
             // Take the last selected object if the currently selected is null
@@ -161,7 +162,7 @@ namespace MMI
             if (obj == null)
             {
                 Debug.LogWarning("Cannot perform " + action + " since no object has been recorded");
-                return;
+                return false;
             }
 
             // If selecting
@@ -180,6 +181,7 @@ namespace MMI
                     _objectsToGroupDict.Remove(obj);
                 }
             }
+            return true;
         }
 
         /// <summary>

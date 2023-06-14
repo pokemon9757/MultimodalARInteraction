@@ -10,12 +10,9 @@ namespace MMI
     public class VoiceIntents : MonoBehaviour
     {
         public UnityEvent<bool, MLVoice.IntentEvent> OnCommandDetected;
-        [SerializeField] float _statusResetDelay = 3f;
-        [SerializeField] private Text _statusText = null;
-        [SerializeField] private Text _pocketUIStatusText = null;
+
         [SerializeField, Tooltip("The configuration file that holds the list of intents used for this application.")]
         private MLVoiceIntentsConfiguration voiceConfiguration;
-
         private MagicLeapInputs mlInputs;
         private MagicLeapInputs.ControllerActions controllerActions;
 
@@ -31,14 +28,12 @@ namespace MMI
 
         private static bool userPromptedForSetting;
         private readonly MLPermissions.Callbacks permissionCallbacks = new MLPermissions.Callbacks();
-        private Coroutine resetStatusCoroutine;
 
         void Awake()
         {
             permissionCallbacks.OnPermissionDenied += OnPermissionDenied;
             permissionCallbacks.OnPermissionDeniedAndDontAskAgain += OnPermissionDenied;
         }
-
 
         void Start()
         {
@@ -113,30 +108,7 @@ namespace MMI
         void VoiceEvent(in bool wasSuccessful, in MLVoice.IntentEvent voiceEvent)
         {
             OnCommandDetected.Invoke(wasSuccessful, voiceEvent);
-            StringBuilder strBuilder = new StringBuilder();
-            strBuilder.Append($"<color=#B7B7B8><b>Recognized voice command:</b></color> <i>{voiceEvent.EventName}</i>");
-            lastResults = strBuilder.ToString();
-            _statusText.text = lastResults;
-            _pocketUIStatusText.text = lastResults;
-
-            // If the coroutine is already running, stop it
-            if (resetStatusCoroutine != null)
-            {
-                StopCoroutine(resetStatusCoroutine);
-            }
-
-            // Start the coroutine
-            resetStatusCoroutine = StartCoroutine(ResetStatusDescription());
         }
-
-        IEnumerator ResetStatusDescription()
-        {
-            yield return new WaitForSeconds(_statusResetDelay);
-            string text = "Listening to your beautiful voice...\nFeel free to <b>shout</b> for help if you need assistance (not at me though)!";
-            _statusText.text = text;
-            _pocketUIStatusText.text = text;
-        }
-
         void HandleOnBumper(InputAction.CallbackContext obj)
         {
             bool bumperDown = obj.ReadValueAsButton();
