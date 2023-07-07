@@ -7,11 +7,11 @@ namespace MMI
     public class AudioManager : Singleton<AudioManager>
     {
         [SerializeField] float _volume = 1;
-        [SerializeField] AudioClip _helloClip;
-        [SerializeField] AudioClip _actionDoneClip;
-        [SerializeField] AudioClip _objectDeleteClip;
-        [SerializeField] AudioClip _objectSelectClip;
-        [SerializeField] AudioClip _objectDeselectClip;
+        [SerializeField, Tooltip("Say hello to the user")] AudioClip _helloClip;
+        [SerializeField, Tooltip("Once an action is performed successfully")] AudioClip _actionDoneClip;
+        [SerializeField, Tooltip("Once the delete action is performed successfully")] AudioClip _objectDeleteClip;
+        [SerializeField, Tooltip("Once an object is selected by the gaze")] AudioClip _objectSelectClip;
+        [SerializeField, Tooltip("Once an object is deselected by the gaze ")] AudioClip _objectDeselectClip;
 
         public Audio HelloAudio { get; private set; }
         public Audio ActionDoneAudio { get; private set; }

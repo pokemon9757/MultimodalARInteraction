@@ -12,28 +12,28 @@ namespace MMI
 {
     public class UIManager : MonoBehaviour
     {
-        [SerializeField] VoiceIntents _voice;
+        [SerializeField, Tooltip("The systen Voice Intent")] VoiceIntents _voice;
         [SerializeField] UIButton _overviewMenuBtn;
         [SerializeField] UIButton _controlsMenuBtn;
         [SerializeField] UIButton _issuesMenuBtn;
         [SerializeField] UIButton _statusMenuBtn;
-        [SerializeField] private Text _statusText = null;
-        [SerializeField] private Text _pocketUIStatusText = null;
-        [SerializeField] float _statusResetDelay = 3f;
+        [SerializeField, Tooltip("The text used to display recognized voice command")] Text _statusText = null;
+        [SerializeField, Tooltip("Pocket UI text used to display recognized voice command")] Text _pocketUIStatusText = null;
+        [SerializeField, Tooltip("The delay time in seconds to reset the recognized voice command")] float _statusResetDelay = 3f;
         [SerializeField] UIToggleButton _viewlockBtn;
-        [SerializeField] UnityEvent _viewLockAction;
-        [SerializeField] GameObject _userInterface;
-        [SerializeField] GameObject _pocketUI;
+        [SerializeField, Tooltip("The unity event triggered when the view lock voice command is recognized")] UnityEvent _viewLockAction;
+        [SerializeField, Tooltip("The parent of the main UI")] GameObject _userInterface;
+        [SerializeField, Tooltip("The pocket UI in case user wants to disable the main UI")] GameObject _pocketUI;
         bool _isUILocked = true;
+        Coroutine resetStatusCoroutine;
         enum UIVoiceCommands
         {
-            Greetings = 0,
-            SetActive = 7,
-            ToggleLock = 8,
-            SetMenu = 9,
-            Help = 10
+            Greetings = 0, /**< User says hello */
+            SetActive = 7, /**< User wants to disable/enable the UI */
+            ToggleLock = 8,/**< User wants to lock/unlock the UI movement */
+            SetMenu = 9,/**< User wants to change the UI menu */
+            Help = 10 /**< Ask for assistance */
         }
-        private Coroutine resetStatusCoroutine;
 
         void Start()
         {

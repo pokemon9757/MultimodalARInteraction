@@ -12,7 +12,6 @@ namespace MMI
         /// <param name="inputString">event name from ML voice event</param>
         /// <param name="keyword">Data slot</param>
         /// <returns>Slot value, null if not found</returns>
-
         public static string GetSlotValue(string inputString, string keyword)
         {
             string pattern = $@"{{\s*{keyword}\s*(.*?)}}"; // Regular expression pattern

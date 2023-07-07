@@ -12,8 +12,6 @@ namespace MMI
     /// </summary>
     public class EyeTracking : MonoBehaviour
     {
-        [Tooltip("Display the game object along the eye gaze ray at a default distance (in meters).")]
-        [SerializeField] float _maxDistanceInMeters = 2f;
         [SerializeField, Tooltip("Fixation Point marker")] Transform _eyesMarker;
         [SerializeField] RaycastObjectInteractor _rayInteractor;
         public Vector3 GazeFixationPoint { get { return _eyesActions.Data.ReadValue<UnityEngine.InputSystem.XR.Eyes>().fixationPoint; } }
@@ -53,6 +51,7 @@ namespace MMI
         {
             if (!_permissionGranted)
             {
+                Debug.LogError("Permission for eye tracking isn't granted");
                 return;
             }
 
@@ -65,12 +64,6 @@ namespace MMI
             // Manually set fixation point marker so we can apply rotation, since UnityXREyes
             // does not provide it
             Vector3 markerPosition = GazeFixationPoint;
-            float dist = Vector3.Distance(GazeOrigin, GazeFixationPoint);
-
-            if (dist > _maxDistanceInMeters)
-            {
-                markerPosition = GazeOrigin + GazeDirection.normalized * _maxDistanceInMeters;
-            }
             _eyesMarker.position = markerPosition;
             _eyesMarker.rotation = Quaternion.LookRotation(GazeFixationPoint - Camera.main.transform.position);
             _rayInteractor.PerformRaycast(GazeOrigin, GazeDirection, Mathf.Infinity);

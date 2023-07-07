@@ -9,15 +9,8 @@ namespace MMI
 {
     public class InteractorsManager : MonoBehaviour
     {
-        // Get the currently or lastly selected object
-        public InteractableObject GetSelectedObject
-        {
-            get
-            {
-                return _selectedObject ? _selectedObject : _lastSelectedObject;
-            }
-        }
-        public Color _selectedColor = Color.blue;
+
+        [SerializeField] Color _selectedObjectColor = Color.blue;
         public static InteractorsManager Instance
         {
             get
@@ -47,6 +40,14 @@ namespace MMI
         Dictionary<InteractableObject, Color> _objectsOriginalColor = new();
         bool _isInGroupMode = false;
 
+        // Get the currently or lastly selected object
+        public InteractableObject GetSelectedObject
+        {
+            get
+            {
+                return _selectedObject ? _selectedObject : _lastSelectedObject;
+            }
+        }
         void Awake()
         {
             // Ensure that only one instance exists
@@ -168,7 +169,7 @@ namespace MMI
             // If selecting
             if (active)
             {
-                obj.UpdateColor(_selectedColor);
+                obj.UpdateColor(_selectedObjectColor);
                 _objectsToGroupDict[obj] = active;
             }
             // Else if deselecting
